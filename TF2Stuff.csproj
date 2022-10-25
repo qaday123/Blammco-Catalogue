@@ -1,0 +1,824 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6D7A494-722E-4763-959B-C2D6B6A42B01}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ExampleMod</RootNamespace>
+    <AssemblyName>ExampleMod</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Characters\Characters.cs" />
+    <Compile Include="Extras\JarateGoop.cs" />
+    <Compile Include="Extras\JarateStatusEffect.cs" />
+    <Compile Include="Guns\Baby Face%27s Blaster.cs" />
+    <Compile Include="Passives\Bootlegger.cs" />
+    <Compile Include="Passives\Ali-Baba%27s-Wee-Booties.cs" />
+    <Compile Include="Guns\Short Circuit.cs" />
+    <Compile Include="Guns\StockRocket.cs" />
+    <Compile Include="Guns\Dragun%27s Fury.cs" />
+    <Compile Include="Passives\LEM_Gray.cs" />
+    <Compile Include="Guns\Soda Popper.cs" />
+    <Compile Include="Passives\Powerjack.cs" />
+    <Compile Include="Actives\Medigun.cs" />
+    <Compile Include="Actives\Quick Fix.cs" />
+    <Compile Include="Toolbox with Stolen Things\MoarColours.cs" />
+    <Compile Include="Toolbox with Stolen Things\EasyGoopDefinitions.cs" />
+    <Compile Include="Toolbox with Stolen Things\NN Goop Handler.cs" />
+    <Compile Include="Toolbox with Stolen Things\Components.cs" />
+    <Compile Include="Toolbox with Stolen Things\ToolsIStoleForVFX.cs" />
+    <Compile Include="Toolbox with Stolen Things\ToolsIStoleForGuns.cs" />
+    <Compile Include="Guns\Widowmaker.cs" />
+    <Compile Include="Guns\The Agent.cs" />
+    <Compile Include="Actives\Sandman.cs" />
+    <Compile Include="Guns\Cleaver.cs" />
+    <Compile Include="Guns\Winger.cs" />
+    <Compile Include="Guns\Scattergun.cs" />
+    <Compile Include="Guns\Shortstop.cs" />
+    <Compile Include="Toolbox with Stolen Things\ToolsIStoleForEffects.cs" />
+    <Compile Include="Passives\Equalizer.cs" />
+    <Compile Include="Passives\ExamplePassive.cs" />
+    <Compile Include="Passives\Calculus.cs" />
+    <Compile Include="Guns\Force-A-Nature.cs" />
+    <Compile Include="Guns\Syringe Gun.cs" />
+    <Compile Include="Guns\Sasha.cs" />
+    <Compile Include="Toolbox with Stolen Things\resourceLoaderSoundbanks.cs" />
+    <Compile Include="Toolbox with Stolen Things\AudioResourceLoader.cs" />
+    <Compile Include="Passives\Recon Pouch.cs" />
+    <Compile Include="Toolbox with Stolen Things\GunTools.cs" />
+    <Compile Include="Guns\Pipe Launcher.cs" />
+    <Compile Include="Guns\Pretty Boy%27s Pocket Pistol.cs" />
+    <Compile Include="Guns\Single Gun Test.cs" />
+    <Compile Include="Actives\Jarate.cs" />
+    <Compile Include="Actives\Invis Watch.cs" />
+    <Compile Include="Actives\TestActive.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\StatusEffectVFX\jarate_effect_icon.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipempty.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipfull.png" />
+    <EmbeddedResource Include="Resources\actives\example_active_sprite.png" />
+    <EmbeddedResource Include="Resources\actives\inviswatch_sprite.png" />
+    <EmbeddedResource Include="Resources\actives\sandman_sprite.png" />
+    <EmbeddedResource Include="Resources\actives\kritzkrieg_sprite.png" />
+    <EmbeddedResource Include="Resources\actives\medigun_sprite.png" />
+    <EmbeddedResource Include="Resources\actives\quick-fix_sprite.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\cleaver\cleaver_clipempty.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\cleaver\cleaver_clipfull.png" />
+    <EmbeddedResource Include="Characters\Scout\bosscard.png" />
+    <EmbeddedResource Include="Characters\Scout\characterdata.txt" />
+    <EmbeddedResource Include="Characters\Scout\facecard.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_appearance_001.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_appearance_002.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_appearance_003.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_appearance_004.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_appearance_005.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_appearance_006.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_appearance_007.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_appearance_008.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_appearance_009.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_appearance_010.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_appearance_011.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_idle_001.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_idle_002.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_idle_003.png" />
+    <EmbeddedResource Include="Characters\Scout\foyercard\rogue_alt_facecard_idle_004.png" />
+    <EmbeddedResource Include="Characters\Scout\icon.png" />
+    <EmbeddedResource Include="Characters\Scout\loadoutsprites\a_pbpp.png" />
+    <EmbeddedResource Include="Characters\Scout\loadoutsprites\b_scattergun.png" />
+    <EmbeddedResource Include="Characters\Scout\loadoutsprites\c_reconpouch.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\facecard1.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\facecard2.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\facecard3.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_block_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_block_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_block_hit_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_dodge_left_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_dodge_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_dodge_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_dodge_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_duck_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_duck_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_exhaust_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_exhaust_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_exhaust_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_hit_left_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_hit_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_hit_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_hit_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_hit_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_hit_right_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_idle_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_idle_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_idle_004.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_knockout_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_knockout_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_knockout_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_knockout_004.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_knockout_005.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_knockout_006.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_knockout_007.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_miss_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_miss_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_miss_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_miss_right_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_punch_blocked_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_punch_blocked_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_punch_blocked_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_punch_blocked_right_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_punch_left_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_punch_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_punch_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_punch_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_punch_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_punch_right_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_star_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_star_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_star_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_star_004.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_star_005.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_star_006.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_star_007.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_star_008.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_star_009.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_win_001.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_win_002.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_win_003.png" />
+    <EmbeddedResource Include="Characters\Scout\punchout\sprites\scout_punch_win_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\mr_shadow.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\paradox_hand_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_008.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_008.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_009.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_010.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_011.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_012.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_013.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_014.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_open_fake_015.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_recover_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_recover_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_recover_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_recover_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_recover_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_recover_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_chest_recover_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_death_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_death_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_death_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_death_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_death_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_death_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_death_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_death_008.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_death_009.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_back_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_back_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_back_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_back_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_back_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_back_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_back_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_back_008.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_back_009.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_front_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_front_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_front_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_front_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_front_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_front_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_front_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_front_008.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_front_009.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_000.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_001_02.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_002_02.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_004_02.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_back_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_back_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_back_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_back_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_back_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_back_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_back_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_back_008.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_dodge_left_back_009.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_left_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_left_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_right_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_back_right_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_left_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_left_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_right_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_front_right_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_sneeze_front_left_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_sneeze_front_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_sneeze_front_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_sneeze_front_left_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_sneeze_front_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_sneeze_front_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_sneeze_front_right_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_ghost_sneeze_front_right_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_backwards_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_backwards_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_backwards_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_backwards_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_backwards_hands2_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_backwards_hands2_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_backwards_hands2_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_backwards_hands2_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hands_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hands_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hands_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hands_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hands_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hands_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_left_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_left_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_left_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_left_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_right_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_right_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_right_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_back_hand_right_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hands_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hands_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hands_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hands_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hands_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hands_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_left_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_left_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_left_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_left_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_right_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_right_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_right_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_front_hand_right_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_hands2_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_hands2_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_hands2_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_hands2_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_hands_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_hands_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_hands_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_idle_hands_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_back_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_back_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_back_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_back_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_front_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_front_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_front_hand_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_front_hand_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_front_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_front_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_front_right_hand_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_jetpack_front_right_hand_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pet_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pet_right_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_down_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_down_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_down_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_down_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_down_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pitfall_down_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pit_return_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pit_return_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pit_return_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pit_return_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pit_return_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_pit_return_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_hands2_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_hands2_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_hands2_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_hands2_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_hands2_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_backward_hands2_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_doorway_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_doorway_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_doorway_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_doorway_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_doorway_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_doorway_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_doorway_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_doorway_008.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_doorway_009.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_doorway_010.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands2_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands2_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands2_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands2_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands2_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands2_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_left_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_left_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_left_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_back_hands_left_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands2_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands2_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands2_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands2_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands2_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands2_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_forward_hands_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands2_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands2_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands2_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands2_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands2_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands2_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_left_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_left_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_left_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_left_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_left_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_run_front_hands_left_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_choose_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_choose_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_choose_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_choose_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_choose_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_choose_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_choose_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_choose_008.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_choose_009.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_crouch_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_crouch_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_crouch_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_crouch_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_crouch_draw_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_crouch_draw_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_crouch_draw_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_crouch_draw_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_idle_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_idle_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_idle_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_idle_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_idle_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_pose_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_pose_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_pose_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_pose_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_pose_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_pose_dance_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_pose_dance_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_pose_dance_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_thumbs_up_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_thumbs_up_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_thumbs_up_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_thumbs_up_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_thumbs_up_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_thumbs_up_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_select_thumbs_up_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_shadow.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_shot_death_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_shot_death_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_shot_death_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_shot_death_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_shot_death_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_shot_death_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_shot_death_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_shot_death_008.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_shot_death_009.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_shot_death_010.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_slide_altright_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_slide_right_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_slide_up_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spaceflail_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spaceflail_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spaceflail_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spaceflail_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spaceflail_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spaceflail_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spaceflail_007.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spaceflail_008.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spin_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spin_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spin_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spin_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spin_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_spin_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_down_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_down_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_down_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_down_hands_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_down_hands_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_down_hands_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_down_twohands_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_down_twohands_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_down_twohands_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_hands_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_hands_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_hands_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_hands_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_twohands_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_twohands_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_twohands_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_twohands_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_up_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_up_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_up_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_up_twohand_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_up_twohand_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tablekick_up_twohand_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tarnisher_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tarnisher_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tarnisher_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tarnisher_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tarnisher_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_tarnisher_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_weaponget_001.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_weaponget_002.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_weaponget_003.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_weaponget_004.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_weaponget_005.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_weaponget_006.png" />
+    <EmbeddedResource Include="Characters\Scout\sprites\rogue_hand_001.png" />
+    <Content Include="icon.ico" />
+    <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipempty_OLD.png" />
+    <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipfull_OLD.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\syringegun\syringegun_clipempty.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\syringegun\syringegun_clipfull.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\shortstop\inverseshell_clipempty.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\shortstop\inverseshell_clipfull.png" />
+    <EmbeddedResource Include="Resources\passives\calculus_sprite.png" />
+    <EmbeddedResource Include="Resources\passives\equalizer_sprite.png" />
+    <EmbeddedResource Include="Resources\passives\example_item_sprite.png" />
+    <EmbeddedResource Include="Resources\passives\scout_bag_sprite.png" />
+    <EmbeddedResource Include="Resources\passives\powerjack_sprite.png" />
+    <EmbeddedResource Include="Resources\passives\LEM.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\rocket\rocket_clipempty.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\rocket\rocket_clipfull.png" />
+    <EmbeddedResource Include="Resources\passives\ali_babas_booties_sprite.png" />
+    <EmbeddedResource Include="Resources\passives\bootlegger_sprite.png" />
+    <EmbeddedResource Include="Resources\ThrowableActives\jarate_burst_001.png" />
+    <EmbeddedResource Include="Resources\ThrowableActives\jarate_burst_002.png" />
+    <EmbeddedResource Include="Resources\ThrowableActives\jarate_burst_003.png" />
+    <EmbeddedResource Include="Resources\ThrowableActives\jarate_burst_004.png" />
+    <EmbeddedResource Include="Resources\ThrowableActives\jarate_icon.png" />
+    <EmbeddedResource Include="Resources\ThrowableActives\jarate_spin_001.png" />
+    <EmbeddedResource Include="Resources\ThrowableActives\jarate_spin_002.png" />
+    <EmbeddedResource Include="Resources\ThrowableActives\jarate_spin_003.png" />
+    <EmbeddedResource Include="Resources\ThrowableActives\jarate_spin_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\HarmonyX.2.7.0\lib\net35\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Alexandria, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.Alexandria.0.2.11\lib\net35\Alexandria.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.GameLibs.2.1.9.1\lib\net35\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.GameLibs.2.1.9.1\lib\net35\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx, Version=5.4.21.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\BepInEx.BaseLib.5.4.21\lib\net35\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <HintPath>packages\Ionic.Zip.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="ModTheGungeonAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.ModTheGungeonAPI.1.5.5\lib\net35\ModTheGungeonAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour, Version=21.12.13.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MonoMod.RuntimeDetour.21.12.13.1\lib\net35\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils, Version=21.12.13.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MonoMod.Utils.21.12.13.1\lib\net35\MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PlayMaker, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.GameLibs.2.1.9.1\lib\net35\PlayMaker.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticlesLegacyModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.ParticlesLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTracking, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.SpriteShapeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StandardEvents, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StyleSheetsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.StyleSheetsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Timeline, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UNETModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.UNETModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WebModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.WebModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\EtG.UnityEngine.1.0.0\lib\UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\soundtest.bnk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="APIs\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\BepInEx.Core.5.4.21\build\BepInEx.Core.targets" Condition="Exists('packages\BepInEx.Core.5.4.21\build\BepInEx.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\BepInEx.Core.5.4.21\build\BepInEx.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\BepInEx.Core.5.4.21\build\BepInEx.Core.targets'))" />
+  </Target>
+</Project>
