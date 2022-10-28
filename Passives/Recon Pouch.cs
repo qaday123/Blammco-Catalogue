@@ -27,7 +27,7 @@ namespace ExampleMod
             //Ammonomicon entry variables
             string shortDesc = "I'm runnin' circles around ya!";
             string longDesc = "Increases movement and firing speed. Owned by that obnoxious Boston Boy. \n\n" +
-                              "Scout never really used this pouch very much. Nevertheless, he always brought it with him during his mercenary days."+
+                              "Scout never really used this pouch very much. Nevertheless, he always brought it with him during his mercenary days. "+
                               "Too bad it can't hold much, though. A memento of his childhood, perhaps?";
 
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");

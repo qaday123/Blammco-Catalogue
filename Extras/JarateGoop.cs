@@ -7,17 +7,17 @@ public class JarateGoop : SpecialGoopBehaviourDoer
 {
     public static void Init()
     {
-        EasyGoopDefinitions.JarateGoop = ScriptableObject.CreateInstance<GoopDefinition>();
-        EasyGoopDefinitions.JarateGoop.CanBeIgnited = false;
-        EasyGoopDefinitions.JarateGoop.damagesEnemies = false;
-        EasyGoopDefinitions.JarateGoop.damagesPlayers = false;
-        EasyGoopDefinitions.JarateGoop.baseColor32 = MoreColours.jarateyellow;
-        EasyGoopDefinitions.JarateGoop.goopTexture = EasyGoopDefinitions.WaterGoop.goopTexture;
+        CustomGoops.JarateGoop = ScriptableObject.CreateInstance<GoopDefinition>();
+        CustomGoops.JarateGoop.CanBeIgnited = false;
+        CustomGoops.JarateGoop.damagesEnemies = false;
+        CustomGoops.JarateGoop.damagesPlayers = false;
+        CustomGoops.JarateGoop.baseColor32 = MoreColours.jarateyellow;
+        CustomGoops.JarateGoop.goopTexture = GoopUtility.WaterDef.goopTexture;
         //EasyGoopDefinitions.JarateGoop.CanBeElectrified = true;
-        EasyGoopDefinitions.JarateGoop.usesLifespan = true;
-        EasyGoopDefinitions.JarateGoop.lifespan = 30f;
-        EasyGoopDefinitions.JarateGoop.name = "piss";
-        GoopUtility.RegisterComponentToGoopDefinition(EasyGoopDefinitions.JarateGoop, typeof(JarateGoop));
+        CustomGoops.JarateGoop.usesLifespan = true;
+        CustomGoops.JarateGoop.lifespan = 30f;
+        CustomGoops.JarateGoop.name = "piss";
+        GoopUtility.RegisterComponentToGoopDefinition(CustomGoops.JarateGoop, typeof(JarateGoop));
     }
     public override void DoGoopEffectUpdate(DeadlyDeadlyGoopManager goop, GameActor actor, IntVector2 position)
     {

@@ -1,5 +1,6 @@
 ﻿using Alexandria.ItemAPI;
 using Alexandria.CharacterAPI;
+using Alexandria.Misc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace ExampleMod
     public class Module : BaseUnityPlugin
     {
         public const string NAME = "BlammCo Catalogue";
-        public const string VERSION = "0.0.0";
+        public const string VERSION = "1.0.0";
         public const string GUID = "qaday.etg.blammcocatalogue";
         public static readonly string TEXT_COLOR = "#FFFF10";
 
@@ -93,18 +94,19 @@ namespace ExampleMod
             JarateEffectSetup.Init();
 
             //Goop Setup
-            EasyGoopDefinitions.DefineDefaultGoops();
+            GoopUtility.Init();
+            CustomGoops.DefineGoops();
             DoGoopEffectHook.Init();
             JarateGoop.Init();
 
             //Characters
             var data = Loader.BuildCharacter("ExampleMod/Characters/Scout", "qaday.etg.blammcocatalogue",
-                    new Vector3(22.3f, 27.3f),
-                    false,
-                     new Vector3(28.1f, 43.1f),
-                     false,
-                     false,
-                     false,
+                    new Vector3(15.8f, 25.3f), // position of char
+                    false, // has alt skin
+                     new Vector3(28.1f, 43.1f),  // position of alt skin swapper
+                     false, // idk what this means
+                     false, // Seperate animations w/wo armour
+                     false, // Armour health
                      true, //Sprites used by paradox
                      false, //Glows
                      null, //Glow Mat
@@ -114,7 +116,7 @@ namespace ExampleMod
                      ""); //Past ID String*/
 
             ETGMod.StartGlobalCoroutine(this.delayedstarthandler());
-            Log($"{NAME} v{VERSION} started successfully.", TEXT_COLOR);
+            Log($"{NAME} v{VERSION} supplies have dropped!", TEXT_COLOR);
         }
         public static void Log(string text, string color="#FFFFFF")
         {
@@ -136,7 +138,7 @@ namespace ExampleMod
 
                 TF2Characters.Scout = ETGModCompatibility.ExtendEnum<PlayableCharacters>(Module.GUID, "Scout");
                 //ETGModConsole.Log($"{ETGModCompatibility.ExtendEnum<PlayableCharacters>(Module.GUID, "Scout")}");
-                ETGModConsole.Log("(Also finished DelayedInitialisation)");
+                //ETGModConsole.Log("(Also finished DelayedInitialisation)");
             }
             catch (Exception e)
             {

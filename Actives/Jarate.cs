@@ -125,7 +125,7 @@ namespace ExampleMod
         {
             public override void OnEffect(GameObject obj)
             {
-                DeadlyDeadlyGoopManager goop = DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.JarateGoop);
+                DeadlyDeadlyGoopManager goop = DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(CustomGoops.JarateGoop);
                 // A Null Exception occurs here but I have no idea why
                 goop.TimedAddGoopCircle(obj.transform.position + new Vector3(14f/16f,14f/16f), 3.25f, 0.75f, true);
                 RoomHandler absoluteRoom = base.transform.position.GetAbsoluteRoom();
