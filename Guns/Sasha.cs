@@ -49,7 +49,6 @@ namespace ExampleMod
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.C;
             gun.encounterTrackable.EncounterGuid = "sasha";
-            ID = gun.PickupObjectId;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.SMALL_BULLET;
 
@@ -68,6 +67,7 @@ namespace ExampleMod
             projectile.transform.parent = gun.barrelOffset;
             
             ETGMod.Databases.Items.Add(gun, false, "ANY");
+            ID = gun.PickupObjectId;
         }
         public static int ID;
         public override void OnPostFired(PlayerController player, Gun gun)

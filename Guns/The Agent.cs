@@ -59,12 +59,12 @@ namespace ExampleMod
             projectile.baseData.force = 10f;
             projectile.AdditionalScaleMultiplier = 1.25f;
             projectile.transform.parent = gun.barrelOffset;
-            ID = gun.PickupObjectId;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.MEDIUM_BULLET;
             gun.barrelOffset.transform.localPosition += new Vector3(0.5f, 0.75f, 0);
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
+            ID = gun.PickupObjectId;
         }
         public static int ID;
         public override void OnPostFired(PlayerController player, Gun gun)

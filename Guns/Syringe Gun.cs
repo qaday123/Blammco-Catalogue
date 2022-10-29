@@ -58,7 +58,6 @@ namespace ExampleMod
             gun.quality = PickupObject.ItemQuality.D;
             gun.encounterTrackable.EncounterGuid = "syringe gun";
             gun.AddToSubShop(ItemBuilder.ShopType.Goopton);
-            ID = gun.PickupObjectId;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
 
             //Cloning
@@ -85,6 +84,7 @@ namespace ExampleMod
             //projectile.SetProjectileSpriteRight("syringe", 6, 1, false, null); // smaller texture
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
+            ID = gun.PickupObjectId;
         }
         public static int ID;
 

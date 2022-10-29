@@ -77,10 +77,10 @@ namespace ExampleMod
             gun.DefaultModule.customAmmoType = "burning hand";
             gun.barrelOffset.transform.localPosition += new Vector3(1f, 0.625f, 0);
             //gun.transform.position += new Vector3(2f, 0.5f, 0f);
-            ID = gun.PickupObjectId;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
+            ID = gun.PickupObjectId;
         }
         public void Pressurisation(Gun gun) // this absolutely does not do what its supposed to do
         {

@@ -55,8 +55,9 @@ namespace ExampleMod
             projectile.baseData.speed = 26f;
             projectile.transform.parent = gun.barrelOffset;
             ETGMod.Databases.Items.Add(gun, false, "ANY");
+            ID = gun.PickupObjectId;
         }
-
+        public static int ID;
         public override void OnPostFired(PlayerController player, Gun gun)
         {
             // Sound setup

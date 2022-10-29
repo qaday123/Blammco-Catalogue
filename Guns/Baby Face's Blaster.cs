@@ -74,12 +74,12 @@ namespace ExampleMod
             gun.Volley.DecreaseFinalSpeedPercentMin = -25f;
             gun.Volley.IncreaseFinalSpeedPercentMax = 30f;
             gun.barrelOffset.transform.localPosition += new Vector3(8f/16f, 10f/16f);
-            ID = gun.PickupObjectId;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             //gun.transform.position += new Vector3(3f/16f, 10f/16f);
             gun.CanBeDropped = false; // gun breaks when dropped? make it undroppable
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
+            ID = gun.PickupObjectId;
         }
         //if (GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON)
         public override void PostProcessProjectile(Projectile projectile)

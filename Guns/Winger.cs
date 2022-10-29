@@ -56,7 +56,6 @@ namespace ExampleMod
             gun.quality = PickupObject.ItemQuality.C;
             gun.encounterTrackable.EncounterGuid = "The Winger";
             gun.AddToSubShop(ItemBuilder.ShopType.Trorc);
-            ID = gun.PickupObjectId;
 
             //Cloning
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
@@ -74,7 +73,7 @@ namespace ExampleMod
             projectile.transform.parent = gun.barrelOffset;
             
             ETGMod.Databases.Items.Add(gun, false, "ANY");
-
+            ID = gun.PickupObjectId;
         }
         public static int ID;
         public override void OnPostFired(PlayerController player, Gun gun)

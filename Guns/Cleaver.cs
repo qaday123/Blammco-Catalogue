@@ -53,7 +53,6 @@ namespace ExampleMod
             gun.quality = PickupObject.ItemQuality.D;
             gun.encounterTrackable.EncounterGuid = "Throwing Cleaver";
             gun.AddToSubShop(ItemBuilder.ShopType.Cursula);
-            ID = gun.PickupObjectId;
 
             //Cloning
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
@@ -127,6 +126,7 @@ namespace ExampleMod
             gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile> { chargeProj };
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
+            ID = gun.PickupObjectId;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 5;
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;

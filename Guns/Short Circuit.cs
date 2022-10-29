@@ -57,7 +57,6 @@ namespace ExampleMod
             gun.quality = PickupObject.ItemQuality.A;
             gun.encounterTrackable.EncounterGuid = "Short Circuit";
             gun.AddToSubShop(ItemBuilder.ShopType.Trorc);
-            ID = gun.PickupObjectId;
 
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
             projectile.gameObject.SetActive(false);
@@ -138,6 +137,7 @@ namespace ExampleMod
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = "pulse blue";
+            ID = gun.PickupObjectId;
 
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_shortcircuit_shoot";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;

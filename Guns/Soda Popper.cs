@@ -76,11 +76,11 @@ namespace ExampleMod
             gun.Volley.IncreaseFinalSpeedPercentMax = 30f;
             gun.Volley.DecreaseFinalSpeedPercentMin = -30f;
             gun.barrelOffset.transform.localPosition += new Vector3(5f/16f, 5f/16f, 0);
-            ID = gun.PickupObjectId;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             gun.carryPixelOffset += new IntVector2(4,1);
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
+            ID = gun.PickupObjectId;
         }
         public static int ID;
 

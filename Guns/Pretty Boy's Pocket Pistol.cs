@@ -64,10 +64,9 @@ namespace ExampleMod
             projectile.transform.parent = gun.barrelOffset;
             gun.barrelOffset.transform.localPosition += new Vector3(1f/16f, 11f/16f, 0);
             gun.carryPixelOffset += new IntVector2(3, 0);
-            ID = gun.PickupObjectId;
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
-
+            ID = gun.PickupObjectId;
         }
         public static int ID;
         public override void OnPostFired(PlayerController player, Gun gun)

@@ -52,7 +52,6 @@ namespace ExampleMod
             gun.quality = PickupObject.ItemQuality.C;
             gun.encounterTrackable.EncounterGuid = "Stock Rocket Launcher";
             gun.AddToSubShop(ItemBuilder.ShopType.Trorc);
-            ID = gun.PickupObjectId;
 
             //Cloning
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
@@ -78,6 +77,7 @@ namespace ExampleMod
                 "ExampleMod/Resources/CustomGunAmmoTypes/rocket/rocket_clipempty");
             ExplosiveModifier explode = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
             explode.explosionData = rocketexplosion;
+            ID = gun.PickupObjectId;
         }
         public static int ID;
         public override void OnPostFired(PlayerController player, Gun gun)
