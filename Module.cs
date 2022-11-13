@@ -66,6 +66,8 @@ namespace ExampleMod
             Widowmaker.Add();
             Winger.Add();
 
+            //test.Add();
+
             // ----- ACTIVES -----
             //InvisWatch.Register(); //fix
             Jarate.Register(); // also fix // FIXED

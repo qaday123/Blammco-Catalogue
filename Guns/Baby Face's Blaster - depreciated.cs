@@ -14,7 +14,7 @@ using System.Diagnostics;
  * Balancing: My main concern is that by making you lose half your boost if you dodge roll means that it might force players into
               constantly holding the gun (and it's not an amazing gun, either), so keep an eye on that.
 */
-namespace ExampleMod
+namespace ExampleM
 {
     public class BabyFaceBlaster : AdvancedGunBehavior
     {
@@ -117,7 +117,6 @@ namespace ExampleMod
         private bool HasReloaded;
         protected override void Update()
         {
-            base.Update();
             if (gun.CurrentOwner)
             {
 
@@ -131,29 +130,29 @@ namespace ExampleMod
                 }
             }
         }
-        //override 
-        protected override void OnPickup(GameActor owner)
+        protected override void OnPickup(GameActor player)
         {
-            base.OnPickup(owner);
-            //ETGModConsole.Log("OnPickup Triggered");
-            (owner as PlayerController).healthHaver.OnDamaged += this.OnDamaged;
-            (owner as PlayerController).OnPreDodgeRoll += this.OnDodgeRoll;
-            //StatChange((owner as PlayerController).CurrentGun);
+            base.OnPickup(player);
+            ETGModConsole.Log("OnPickup Was Triggered");
+            (player as PlayerController).healthHaver.OnDamaged += this.OnDamaged;
+            (player as PlayerController).OnPreDodgeRoll += this.OnDodgeRoll;
+            StatChange((player as PlayerController).CurrentGun);
         }
-        protected override void OnPostDrop(GameActor owner)
+        protected override void OnPostDrop(GameActor player)
         {
-            base.OnPostDrop(owner);
-            //ETGModConsole.Log("OnDrop Triggered");
-            (owner as PlayerController).healthHaver.OnDamaged -= this.OnDamaged;
-            (owner as PlayerController).OnPreDodgeRoll -= this.OnDodgeRoll;
-            //ETGModConsole.Log("Action unsubcsription successful");
+            ETGModConsole.Log("OnDrop Was Triggered");
+            base.OnPostDrop(player);
+            (player as PlayerController).healthHaver.OnDamaged += this.OnDamaged;
+            (player as PlayerController).OnPreDodgeRoll += this.OnDodgeRoll;
+            StatChange((player as PlayerController).CurrentGun);
         }
-        /*public override void OnDestroy()
+        public override void OnDestroy()
         {
             (Owner as PlayerController).healthHaver.OnDamaged -= this.OnDamaged;
             (Owner as PlayerController).OnPreDodgeRoll += this.OnDodgeRoll;
+            StatChange((Owner as PlayerController).CurrentGun);
             base.OnDestroy();
-        }*/
+        }
         private void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
         {
             bullethits = 0;
@@ -178,73 +177,7 @@ namespace ExampleMod
                 AkSoundEngine.PostEvent("Play_scatter_gun_reload", base.gameObject);
             }
         }
-        //override
-        //
-        
 
-        /*public override void OnPlayerPickup(PlayerController player)
-        {
-            //ETGModConsole.Log("OnPickup Was Triggered");
-
-            base.OnPlayerPickup(player);
-            player.healthHaver.OnDamaged += this.OnDamaged;
-            player.OnPreDodgeRoll += this.OnDodgeRoll;
-            StatChange(player.CurrentGun);
-        }
-        /*public override void OnDroppedByPlayer(PlayerController player)
-        {
-            base.OnDroppedByPlayer(player);
-            //base.OnDroppedByPlayer(player);
-            if (this.gun != null)
-            {
-                //PlayerController player = this.gun.GunPlayerOwner();
-                ETGModConsole.Log("Gun does not null");
-                //base.OnDroppedByPlayer(player);
-                if (player != null)
-                {
-                    ETGModConsole.Log("Player does not null");
-                    bullethits = 0;
-                    player.healthHaver.OnDamaged -= this.OnDamaged;
-                    player.OnPreDodgeRoll -= this.OnDodgeRoll;
-                }
-                else if (player == null)
-                {
-                    ETGModConsole.Log("Player is nulling");
-                }
-                //base.OnDroppedByPlayer(player);
-            }
-            else
-            {
-                ETGModConsole.Log("Gun is nulling");
-            }
-        }*/
-        /*public override void OnDropped()
-        {
-            //PlayerController player = this.gun.GunPlayerOwner();
-            base.OnDropped();
-            PlayerController player = this.gun.CurrentOwner as PlayerController;
-            if (gun != null)
-            {
-                //PlayerController player = this.gun.GunPlayerOwner();
-                ETGModConsole.Log("Gun does not null");
-                //base.OnDroppedByPlayer(player);
-                if (player != null)
-                {
-                    ETGModConsole.Log("Player does not null");
-                    bullethits = 0;
-                    player.healthHaver.OnDamaged -= this.OnDamaged;
-                    player.OnPreDodgeRoll -= this.OnDodgeRoll;
-                }
-                else if (player == null)
-                {
-                    ETGModConsole.Log("Player is nulling");
-                }
-            }
-            //player.stats.RecalculateStats(player, true, false);
-            //StatChange(player.CurrentGun);
-            //base.OnDropped();
-            //base.OnDropped();
-        }*/
         public int bullethits;
         public float curdamage;
         public static int ID;

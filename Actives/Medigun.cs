@@ -80,40 +80,40 @@ namespace ExampleMod
                     {
                         projectile.Owner = user;
                         projectile.Shooter = user.specRigidbody;
-                        //user.DoPostProcessProjectile(projectile);
-                        projectile.OnHitEnemy += this.OnHitEnemy;
+                        user.DoPostProcessProjectile(projectile);
+                        //projectile.OnHitEnemy += this.OnHitEnemy;
                     }
                 }
             }
         }
         public void PostProcessProjectile(Projectile projectile)
         {
-            projectile.OnHitEnemy += this.OnHitEnemy;
+            //projectile.OnHitEnemy += this.OnHitEnemy;
             //base.PostProcessProjectile(projectile);
-            //ETGModConsole.Log("Proj hit");
+            ETGModConsole.Log("Proj hitst process'd");
         }
 
         /*IEnumerator MediShoot(PlayerController user)
-       {
-           AkSoundEngine.PostEvent("Play_WPN_blunderbuss_shot_01", gameObject);
-           for (int i = -4; i < 4; i++)
-           {
-               if (user != null)
-               {
-                   GameObject gameObject = SpawnManager.SpawnProjectile(Medigun.medibullets.gameObject, user.specRigidbody.UnitCenter + new Vector2(0f,0.125f), Quaternion.Euler(0, 0, (user.CurrentGun == null) ? 0f : user.CurrentGun.CurrentAngle + i * 6));
-                   Projectile projectile = medibullets.gameObject.GetComponent<Projectile>();
-                   if (projectile != null)
-                   {
-                       projectile.Owner = user;
-                       projectile.Shooter = user.specRigidbody;
-                       user.DoPostProcessProjectile(projectile);
-                       projectile.OnHitEnemy += this.OnHitEnemy;
-                   }
-               }
-           }
-           yield break;
-       }*/
-        private void OnHitEnemy(Projectile proj, SpeculativeRigidbody enemy, bool fatal)
+        {
+            AkSoundEngine.PostEvent("Play_WPN_blunderbuss_shot_01", gameObject);
+            for (int i = -4; i < 4; i++)
+            {
+                if (user != null)
+                {
+                    GameObject gameObject = SpawnManager.SpawnProjectile(Medigun.medibullets.gameObject, user.specRigidbody.UnitCenter + new Vector2(0f,0.125f), Quaternion.Euler(0, 0, (user.CurrentGun == null) ? 0f : user.CurrentGun.CurrentAngle + i * 6));
+                    Projectile projectile = medibullets.gameObject.GetComponent<Projectile>();
+                    if (projectile != null)
+                    {
+                        projectile.Owner = user;
+                        projectile.Shooter = user.specRigidbody;
+                        user.DoPostProcessProjectile(projectile);
+                        projectile.OnHitEnemy += this.OnHitEnemy;
+                    }
+                }
+            }
+            yield break;
+        }*/
+        public void OnHitEnemy(Projectile proj, SpeculativeRigidbody enemy, bool fatal)
         {
             ETGModConsole.Log("Enemy hit");
             if (enemy && enemy.healthHaver && !fatal)
