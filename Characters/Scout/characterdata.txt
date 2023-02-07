@@ -46,7 +46,7 @@ armor: 0
 	Health: 2
 	KnockbackMultiplier: 1
 	MoneyMultiplierFromEnemies: 1
-	MovementSpeed: 7.5
+	MovementSpeed: 7
 	PlayerBulletScale: 1
 	ProjectileSpeed: 1
 	RangeMultiplier: 1

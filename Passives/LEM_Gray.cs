@@ -24,7 +24,7 @@ namespace ExampleMod
             var item = obj.AddComponent<LEM_MkGRAY>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "100 More Years";
-            string longDesc = "Powered by what seems to be a mysterious gold-like metal, meant to be attatched through the spine, " +
+            string longDesc = "Powered by what seems to be a mysterious gold-like metal, meant to be attached through the spine, " +
                 "this contraption will imbue more life force into you.\n\nIt's running low on fuel, though, but perhaps it's just " +
                 "enough to last one... more... run...\nInscribed on the side is 'PROPERTY OF GRAY MANN, DO NOT TOUCH OR I WILL KILL YOU.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");

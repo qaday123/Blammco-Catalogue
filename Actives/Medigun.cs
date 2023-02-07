@@ -53,7 +53,7 @@ namespace ExampleMod
             medibullets.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(medibullets.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(medibullets);
-            medibullets.baseData.damage = 0f;
+            medibullets.baseData.damage = 10f; //0f;
             medibullets.baseData.speed = 28f;
             medibullets.baseData.range = 1000f;
             medibullets.collidesWithEnemies = true;
@@ -69,6 +69,8 @@ namespace ExampleMod
         public override void DoEffect(PlayerController user)
         {
             base.DoEffect(user);
+            AkSoundEngine.PostEvent("Play_OBJ_heart_heal_01", base.gameObject);
+            user.healthHaver.ApplyHealing(1);
             AkSoundEngine.PostEvent("Play_WPN_blunderbuss_shot_01", gameObject);
             for (int i = -4; i < 4; i++)
             {

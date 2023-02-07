@@ -70,7 +70,7 @@ namespace ExampleMod
             }
 
             // Gun tuning
-            gun.quality = PickupObject.ItemQuality.C;
+            gun.quality = PickupObject.ItemQuality.B;
             gun.encounterTrackable.EncounterGuid = "thespeedgun";
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.SHOTGUN;
             gun.Volley.UsesShotgunStyleVelocityRandomizer = true;

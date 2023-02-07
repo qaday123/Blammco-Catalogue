@@ -47,9 +47,13 @@ namespace ExampleMod
             FakePrefabHooks.Init();
             ItemBuilder.Init();
 
+            // YTBA --> YET TO BE ADDED
+
             // ----- GUNS -----
-            BabyFaceBlaster.Add(); // Player feedback on boost meter
+            BabyFaceBlaster.Add(); // Player feedback on boost meter // SYNERGIES YTBA:
+            BlackBox.Add(); // FIND OUT HOW TO PROCESS EXPLOSION DAMAGE // SYNERGIES YTBA: "Crutch Weapon"
             Cleaver.Add();
+            DirectHit.Add(); // SYNERGIES YTBA: "Direct Miss"
             DragunsFury.Add();
             ForceANature.Add(); // sprite bad
             PipeLauncher.Add();
@@ -58,19 +62,19 @@ namespace ExampleMod
             Scattergun.Add();
             ShortCircuit.Add(); // Ammo cost, sound and charged //DONE: projectile sprite (make better when more skilled)
             Shortstop.Add();
-            SodaPopper.Add();
+            SodaPopper.Add(); // Actually make hype work // SYNERGIES YTBA: Dual wield with FAN
             StockRocket.Add();
             //SingleGun.Add();
             SyringeGun.Add();
             TheAgent.Add();
             Widowmaker.Add();
-            Winger.Add();
+            Winger.Add(); // SYNERGIES YTBA: "Who's the clown now?"
 
             //test.Add();
 
             // ----- ACTIVES -----
             //InvisWatch.Register(); //fix
-            Jarate.Register(); // also fix // FIXED
+            Jarate.Register(); // also fix // FIXEDqqqqq
             Medigun.Register(); // finish
             Sandman.Register();
             TestActive.Register();

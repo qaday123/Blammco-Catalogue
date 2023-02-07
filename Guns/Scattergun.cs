@@ -34,7 +34,7 @@ namespace ExampleMod
 
             // gun setup
             gun.reloadTime = 1.3f;
-            gun.SetBaseMaxAmmo(200);
+            gun.SetBaseMaxAmmo(120);
             gun.gunClass = GunClass.SHOTGUN;
 
             for (int i = 0; i < 5; i++)
@@ -53,7 +53,7 @@ namespace ExampleMod
                 projectileModule.angleVariance = 12f;
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(projectileModule.projectiles[0]);
                 projectileModule.projectiles[0] = projectile;
-                projectile.baseData.damage = 4f;
+                projectile.baseData.damage = 3f;
                 projectile.baseData.speed *= 1f; //speed;
                 projectile.baseData.range = 9f;
                 projectile.baseData.force = 8f;
