@@ -56,6 +56,7 @@ namespace ExampleMod
             DirectHit.Add(); // SYNERGIES YTBA: "Direct Miss"
             DragunsFury.Add();
             ForceANature.Add(); // sprite bad
+            InfantryHandgun.Add();
             PipeLauncher.Add();
             PocketPistol.Add();
             Sasha.Add();
@@ -86,6 +87,7 @@ namespace ExampleMod
             Demoknight_Boots.Register();
             Equalizer.Register();
             //ExamplePassive.Register();
+            Patriots_Casket.Register();
             Powerjack.Register();
             Recon_Pouch.Register();
             LEM_MkGRAY.Register();
@@ -120,6 +122,21 @@ namespace ExampleMod
                      0, //Hegemony Cost
                      false, //HasPast
                      ""); //Past ID String*/
+
+            var data2 = Loader.BuildCharacter("ExampleMod/Characters/Soldier", "qaday.etg.blammcocatalogue",
+                    new Vector3(23.2f, 19f), // position of char
+                    false, // has alt skin
+                     new Vector3(28.1f, 43.1f),  // position of alt skin swapper
+                     false, // idk what this means
+                     false, // Seperate animations w/wo armour
+                     false, // Armour health
+                     true, //Sprites used by paradox
+                     false, //Glows
+                     null, //Glow Mat
+                     null, //Alt Skin Glow Mat
+                     0, //Hegemony Cost
+                     false, //HasPast
+                     ""); //Past ID String
 
             ETGMod.StartGlobalCoroutine(this.delayedstarthandler());
             Log($"{NAME} v{VERSION} supplies have dropped!", TEXT_COLOR);

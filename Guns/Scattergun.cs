@@ -76,6 +76,9 @@ namespace ExampleMod
             //ID = gun.PickupObjectId;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             //gun.transform.position += new Vector3(2f, 0.5f, 0f);
+            gun.shellCasing = (PickupObjectDatabase.GetById(202) as Gun).shellCasing;
+            gun.shellsToLaunchOnFire = 1;
+            gun.shellsToLaunchOnReload = 0;
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;

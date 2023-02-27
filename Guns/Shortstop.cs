@@ -103,6 +103,9 @@ namespace ExampleMod
             gun.Volley.UsesShotgunStyleVelocityRandomizer = false;
             gun.barrelOffset.transform.localPosition += new Vector3(0, 0.125f, 0);
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
+            gun.shellCasing = (PickupObjectDatabase.GetById(15) as Gun).shellCasing;
+            gun.shellsToLaunchOnFire = 0;
+            gun.shellsToLaunchOnReload = 4;
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;

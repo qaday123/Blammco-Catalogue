@@ -41,10 +41,13 @@ namespace ExampleMod
             gun.InfiniteAmmo = true;
             gun.gunClass = GunClass.SHITTY; //when as starting weapon reclass to 'SHITTY'
             gun.CanBeDropped = false;
+            gun.shellCasing = (PickupObjectDatabase.GetById(15) as Gun).shellCasing;
+            gun.shellsToLaunchOnFire = 1;
+            gun.clipObject = (PickupObjectDatabase.GetById(30) as Gun).clipObject;
+            gun.clipsToLaunchOnReload = 1;
 
-            
             // Gun tuning
-            gun.quality = PickupObject.ItemQuality.C;
+            gun.quality = PickupObject.ItemQuality.SPECIAL;
             gun.encounterTrackable.EncounterGuid = "PBPP";
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
 

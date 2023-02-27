@@ -43,7 +43,7 @@ namespace ExampleMod
             gun.DefaultModule.ammoCost = 1;
             gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
             gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-            gun.reloadTime = 1.1f;
+            gun.reloadTime = 0.8f;
             gun.DefaultModule.cooldownTime = 0.15f;
             gun.DefaultModule.numberOfShotsInClip = 5;
             gun.SetBaseMaxAmmo(250);
@@ -51,6 +51,10 @@ namespace ExampleMod
             gun.AddCurrentGunStatModifier(PlayerStats.StatType.DodgeRollSpeedMultiplier, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             gun.gunClass = GunClass.PISTOL;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD NOISE
+            gun.shellCasing = (PickupObjectDatabase.GetById(15) as Gun).shellCasing;
+            gun.shellsToLaunchOnFire = 1;
+            gun.clipObject = (PickupObjectDatabase.GetById(30) as Gun).clipObject;
+            gun.clipsToLaunchOnReload = 1;
 
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.C;

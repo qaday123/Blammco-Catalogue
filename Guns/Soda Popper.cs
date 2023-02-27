@@ -78,6 +78,9 @@ namespace ExampleMod
             gun.barrelOffset.transform.localPosition += new Vector3(5f/16f, 5f/16f, 0);
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             gun.carryPixelOffset += new IntVector2(4,1);
+            gun.shellCasing = (PickupObjectDatabase.GetById(202) as Gun).shellCasing;
+            gun.shellsToLaunchOnFire = 0;
+            gun.shellsToLaunchOnReload = 2;
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;

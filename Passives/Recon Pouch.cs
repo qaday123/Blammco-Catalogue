@@ -37,7 +37,7 @@ namespace ExampleMod
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RateOfFire, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
             //Rarity of the item
-            item.quality = PickupObject.ItemQuality./*SPECIAL*/B;
+            item.quality = PickupObject.ItemQuality.SPECIAL;
             ID = item.PickupObjectId;
         }
 

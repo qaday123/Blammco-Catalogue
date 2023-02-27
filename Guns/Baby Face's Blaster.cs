@@ -80,6 +80,9 @@ namespace ExampleMod
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             //gun.transform.position += new Vector3(3f/16f, 10f/16f);
             //gun.CanBeDropped = false; // gun breaks when dropped? make it undroppable
+            gun.shellCasing = (PickupObjectDatabase.GetById(202) as Gun).shellCasing;
+            gun.shellsToLaunchOnFire = 1;
+            gun.shellsToLaunchOnReload = 0;
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
@@ -135,7 +138,15 @@ namespace ExampleMod
         protected override void OnPickup(GameActor owner)
         {
             base.OnPickup(owner);
-            //ETGModConsole.Log("OnPickup Triggered");
+            PlayerController player_owner = (owner as PlayerController);
+            if (player_owner != null)
+            {
+                isprimary = true;
+            }
+            else
+            {
+                isprimary = false;
+            }
             (owner as PlayerController).healthHaver.OnDamaged += this.OnDamaged;
             (owner as PlayerController).OnPreDodgeRoll += this.OnDodgeRoll;
             //StatChange((owner as PlayerController).CurrentGun);
@@ -143,17 +154,27 @@ namespace ExampleMod
         protected override void OnPostDrop(GameActor owner)
         {
             base.OnPostDrop(owner);
-            //ETGModConsole.Log("OnDrop Triggered");
+            ETGModConsole.Log("OnDrop Triggered");
             (owner as PlayerController).healthHaver.OnDamaged -= this.OnDamaged;
             (owner as PlayerController).OnPreDodgeRoll -= this.OnDodgeRoll;
             //ETGModConsole.Log("Action unsubcsription successful");
         }
-        /*public override void OnDestroy()
+        public override void OnDestroy()
         {
-            (Owner as PlayerController).healthHaver.OnDamaged -= this.OnDamaged;
-            (Owner as PlayerController).OnPreDodgeRoll += this.OnDodgeRoll;
+            PlayerController player;
+            if (isprimary)
+            {
+                player = GameManager.Instance.PrimaryPlayer;
+            }
+            else 
+            {
+                player = GameManager.Instance.SecondaryPlayer;
+            }
+            //ETGModConsole.Log("OnDestroy triggered");
+            player.healthHaver.OnDamaged -= this.OnDamaged;
+            player.OnPreDodgeRoll -= this.OnDodgeRoll;
             base.OnDestroy();
-        }*/
+        }
         private void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
         {
             bullethits = 0;
@@ -176,6 +197,7 @@ namespace ExampleMod
                 AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
                 base.OnReloadPressed(player, gun, bSOMETHING);
                 AkSoundEngine.PostEvent("Play_scatter_gun_reload", base.gameObject);
+                //UnityEngine.GameObject.Destroy(this);
             }
         }
         //override
@@ -248,5 +270,6 @@ namespace ExampleMod
         public int bullethits;
         public float curdamage;
         public static int ID;
+        public static bool isprimary;
     }
 }

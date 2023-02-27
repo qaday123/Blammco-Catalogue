@@ -21,7 +21,7 @@ namespace ExampleMod
             
             //Gun descriptions
             gun.SetShortDescription("Don't Touch My Gun");
-            gun.SetLongDescription("Being the first minigun to ever mow down hordes of people in heavy's hands, it continues to be " +
+            gun.SetLongDescription("Being the first minigun to ever mow down hordes of people in Heavy's hands, it continues to be " +
                 "used to this day, exactly how it was before, nothing changed at all.\n\nFamously known to weigh one-fifty kilograms and " +
                 "cost 400,000 dollars to fire for twelve seconds. Fortunately, as most of the Gungeon's ammo is made of magic, most " +
                 "of it can be created perfectly and instantly without costing a fortune.");
@@ -44,6 +44,8 @@ namespace ExampleMod
             gun.gunClass = GunClass.FULLAUTO;
             gun.barrelOffset.transform.localPosition += new Vector3(0.75f, 0.125f, 0);
             gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(86) as Gun).muzzleFlashEffects;
+            gun.shellCasing = (PickupObjectDatabase.GetById(15) as Gun).shellCasing;
+            gun.shellsToLaunchOnFire = 1;
             gun.AddToSubShop(ItemBuilder.ShopType.Trorc);
 
             // Gun tuning
