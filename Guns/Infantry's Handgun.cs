@@ -84,7 +84,7 @@ namespace ExampleMod
             gun.Volley.IncreaseFinalSpeedPercentMax = 20f;
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
-            gun.barrelOffset.transform.localPosition += new Vector3(4f / 16f, 10f / 16f);
+            gun.barrelOffset.transform.localPosition += new Vector3(4f / 16f, 8f / 16f);
             gun.carryPixelOffset += new IntVector2(2, 0);
         }
         public static int ID;

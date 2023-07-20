@@ -37,11 +37,12 @@ namespace ExampleMod
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
 
             //Adds the actual passive effect to the item
-            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.MovementSpeed, 2, StatModifier.ModifyMethod.ADDITIVE);
-            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Health, 1, StatModifier.ModifyMethod.ADDITIVE);
+            //ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.MovementSpeed, 2, StatModifier.ModifyMethod.ADDITIVE);
+            //ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Health, 1, StatModifier.ModifyMethod.ADDITIVE);
 
             //Set the rarity of the item
-            item.quality = PickupObject.ItemQuality.D;
+            item.quality = PickupObject.ItemQuality.EXCLUDED;
+
         }
 
         public override void Pickup(PlayerController player)

@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Actives\Buffalo Steak.cs" />
     <Compile Include="Characters\Characters.cs" />
     <Compile Include="Extras\CustomGoops.cs" />
     <Compile Include="Extras\JarateGoop.cs" />
@@ -41,13 +42,17 @@
     <Compile Include="Guns\Baby Face%27s Blaster.cs" />
     <Compile Include="Guns\Baby Face%27s Blaster - depreciated.cs" />
     <Compile Include="Guns\Black Box.cs" />
+    <Compile Include="Guns\Caber.cs" />
     <Compile Include="Guns\Direct Hit.cs" />
     <Compile Include="Guns\Infantry%27s Handgun.cs" />
+    <Compile Include="Guns\Panic Attack.cs" />
     <Compile Include="Passives\Bootlegger.cs" />
     <Compile Include="Passives\Ali-Baba%27s-Wee-Booties.cs" />
     <Compile Include="Guns\Short Circuit.cs" />
     <Compile Include="Guns\StockRocket.cs" />
     <Compile Include="Guns\Dragun%27s Fury.cs" />
+    <Compile Include="Passives\Ubersaw.cs" />
+    <Compile Include="Passives\VFXTest.cs" />
     <Compile Include="Passives\LEM_Gray.cs" />
     <Compile Include="Guns\Soda Popper.cs" />
     <Compile Include="Passives\Powerjack.cs" />
@@ -87,6 +92,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\passives\ubersaw_sprite.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\vfxtest1\vfxtest1_001.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\vfxtest1\vfxtest1_002.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\vfxtest1\vfxtest1_003.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\vfxtest1\vfxtest1_004.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\vfxtest1\vfxtest1_005.png" />
     <EmbeddedResource Include="Resources\passives\patriot%27s_casket_sprite.png" />
     <EmbeddedResource Include="Resources\StatusEffectVFX\jarate_effect_icon.png" />
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipempty.png" />
@@ -1219,6 +1230,9 @@
     <EmbeddedResource Include="Characters\Soldier\newspritesetup\breach_idles\select_choose\marine_select_select_010.png" />
     <EmbeddedResource Include="Characters\Soldier\newspritesetup\breach_idles\select_choose\marine_select_select_011.png" />
     <Content Include="icon.ico" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\caber\caber_clipempty.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\caber\caber_clipfull.png" />
+    <EmbeddedResource Include="Resources\actives\steak_sprite.png" />
     <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipempty_OLD.png" />
     <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipfull_OLD.png" />
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\syringegun\syringegun_clipempty.png" />

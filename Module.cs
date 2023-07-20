@@ -51,12 +51,14 @@ namespace ExampleMod
 
             // ----- GUNS -----
             BabyFaceBlaster.Add(); // Player feedback on boost meter // SYNERGIES YTBA:
-            BlackBox.Add(); // FIND OUT HOW TO PROCESS EXPLOSION DAMAGE // SYNERGIES YTBA: "Crutch Weapon"
+            //BlackBox.Add(); // FIND OUT HOW TO PROCESS EXPLOSION DAMAGE // SYNERGIES YTBA: "Crutch Weapon"
+            Caber.Add();
             Cleaver.Add();
-            DirectHit.Add(); // SYNERGIES YTBA: "Direct Miss"
+            //DirectHit.Add(); // SYNERGIES YTBA: "Direct Miss"
             DragunsFury.Add();
             ForceANature.Add(); // sprite bad
             InfantryHandgun.Add();
+            Panic_Attack.Add();
             PipeLauncher.Add();
             PocketPistol.Add();
             Sasha.Add();
@@ -74,9 +76,10 @@ namespace ExampleMod
             //test.Add();
 
             // ----- ACTIVES -----
+            Buffalo_Steak.Register();
             //InvisWatch.Register(); //fix
             Jarate.Register(); // also fix // FIXEDqqqqq
-            Medigun.Register(); // finish
+            //Medigun.Register(); // finish
             Sandman.Register();
             TestActive.Register();
             Quick_Fix.Register();
@@ -86,11 +89,13 @@ namespace ExampleMod
             //Calculus.Register();
             Demoknight_Boots.Register();
             Equalizer.Register();
-            //ExamplePassive.Register();
-            Patriots_Casket.Register();
+            ExamplePassive.Register();
+            LEM_MkGRAY.Register();
+            Patriots_Casket.Register(); // add rocket jumping functionality
             Powerjack.Register();
             Recon_Pouch.Register();
-            LEM_MkGRAY.Register();
+            Ubersaw.Register(); // ADD SLASH VFX
+            //VFXTest.Register();
 
             // ----- GOOPS ----- thanks nn 
             //VFX Setup
@@ -138,14 +143,14 @@ namespace ExampleMod
                      false, //HasPast
                      ""); //Past ID String
 
-            ETGMod.StartGlobalCoroutine(this.delayedstarthandler());
+            ETGMod.StartGlobalCoroutine(this.DelayedStartHandler());
             Log($"{NAME} v{VERSION} supplies have dropped!", TEXT_COLOR);
         }
         public static void Log(string text, string color="#FFFFFF")
         {
             ETGModConsole.Log($"<color={color}>{text}</color>");
         }
-        public IEnumerator delayedstarthandler()
+        public IEnumerator DelayedStartHandler()
         {
             yield return null;
             this.DelayedInitialisation();
