@@ -121,39 +121,16 @@ namespace ExampleMod
                 component.Owner = user;
                 component.Shooter = user.specRigidbody;
             }
-            /*ball.OnHitEnemy += this.OnHitEnemy;
-            while (!hitenemy)
-            {
-                if (GameManager.INVARIANT_DELTA_TIME == 0f)
-                {
-                    elapsed += 0.05f;
-                    ETGModConsole.Log($"elapsed duration:{elapsed}");
-                }
-            }*/
+            //ball.OnHitEnemy += this.OnHitEnemy;
         }
         public float elapsed;
         public bool hitenemy;
-        /*private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
-        {
-            hitenemy = false;
-            elapsed = 0f;
-            while (!hitenemy)
-            {
-                if (GameManager.INVARIANT_DELTA_TIME == 0f)
-                {
-                    elapsed += 0.05f;
-                    ETGModConsole.Log($"elapsed duration:{elapsed}");
-                }
-            }
-            sourceProjectile.OnHitEnemy += this.OnHitEnemy;
-        }
 
         private void OnHitEnemy(Projectile proj, SpeculativeRigidbody enemy, bool fatal)
         {
-            hitenemy = true;
-            ETGModConsole.Log($"stun duration:{elapsed+4f}");
-            enemy.aiActor.behaviorSpeculator.Stun(elapsed + 4f, true);
-        }*/
+            ETGModConsole.Log($"hit");
+            //enemy.aiActor.behaviorSpeculator.Stun(elapsed + 4f, true);
+        }
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);

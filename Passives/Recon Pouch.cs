@@ -44,6 +44,7 @@ namespace ExampleMod
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);
+            
         }
 
         public override DebrisObject Drop(PlayerController player)

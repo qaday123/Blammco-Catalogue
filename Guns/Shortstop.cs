@@ -26,7 +26,7 @@ namespace ExampleMod
             
             // Sprite setup
             gun.SetupSprite(null, "shortstop_idle_001", 8);
-            gun.SetAnimationFPS(gun.shootAnimation, 12);
+            gun.SetAnimationFPS(gun.shootAnimation, 16);
             gun.SetAnimationFPS(gun.reloadAnimation, 8);
 
             // gun setup
@@ -70,14 +70,14 @@ namespace ExampleMod
                 {
                     proj.positionOffset += new Vector3(0f,0.25f,0f); 
                     projectile.baseData.damage = 8f;
-                    projectile.baseData.range = 3f;
+                    projectile.baseData.range = 3.5f;
                     projectile.baseData.force = 14f;
                 }
                 if (iterator == 4)
                 {
                     proj.positionOffset += new Vector3(0f, -0.25f, 0f);
                     projectile.baseData.damage = 8f;
-                    projectile.baseData.range = 3f;
+                    projectile.baseData.range = 3.5f;
                     projectile.baseData.force = 14f;
                 }
                 iterator++;
@@ -101,7 +101,8 @@ namespace ExampleMod
                 "ExampleMod/Resources/CustomGunAmmoTypes/shortstop/inverseshell_clipfull",
                 "ExampleMod/Resources/CustomGunAmmoTypes/shortstop/inverseshell_clipempty");
             gun.Volley.UsesShotgunStyleVelocityRandomizer = false;
-            gun.barrelOffset.transform.localPosition += new Vector3(0, 0.125f, 0);
+            gun.carryPixelOffset = new IntVector2(4, 1);
+            gun.barrelOffset.transform.localPosition += new Vector3(4f/16f, 7f/16f, 0);
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             gun.shellCasing = (PickupObjectDatabase.GetById(15) as Gun).shellCasing;
             gun.shellsToLaunchOnFire = 0;

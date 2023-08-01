@@ -2,6 +2,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Alexandria.ItemAPI;
+using Dungeonator;
 
 namespace ExampleMod
 {

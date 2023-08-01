@@ -49,11 +49,13 @@ namespace ExampleMod
                     else
                     {
                         Owner.carriedConsumables.Currency += 15;
+                        AkSoundEngine.PostEvent("Play_OBJ_coin_small_01", base.gameObject);
                     }
                 }
                 else
                 {
                     Owner.carriedConsumables.Currency += 20;
+                    AkSoundEngine.PostEvent("Play_OBJ_coin_small_01", base.gameObject);
                     Owner.AcquirePassiveItemPrefabDirectly(PickupObjectDatabase.GetById(127) as PassiveItem);
                 }
                 oldfloor = GameManager.Instance.Dungeon.tileIndices.tilesetId;

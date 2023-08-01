@@ -56,8 +56,9 @@ namespace ExampleMod
             Cleaver.Add();
             //DirectHit.Add(); // SYNERGIES YTBA: "Direct Miss"
             DragunsFury.Add();
-            ForceANature.Add(); // sprite bad
+            ForceANature.Add(); // sprite bad // NOT ANYMORE
             InfantryHandgun.Add();
+            //Nailgun.Add(); // Sound broken :(
             Panic_Attack.Add();
             PipeLauncher.Add();
             PocketPistol.Add();
@@ -76,6 +77,7 @@ namespace ExampleMod
             //test.Add();
 
             // ----- ACTIVES -----
+            Bonk_Soda.Register();
             Buffalo_Steak.Register();
             //InvisWatch.Register(); //fix
             Jarate.Register(); // also fix // FIXEDqqqqq
@@ -87,6 +89,7 @@ namespace ExampleMod
             // ----- PASSIVES -----
             Bootlegger.Register();
             //Calculus.Register();
+            Candy_Cane.Register();
             Demoknight_Boots.Register();
             Equalizer.Register();
             ExamplePassive.Register();
@@ -142,6 +145,11 @@ namespace ExampleMod
                      0, //Hegemony Cost
                      false, //HasPast
                      ""); //Past ID String
+
+            // SYNERGY SETUP
+            SynergyInitialiser.Initialise();
+            SynergyForms.AddSynergyFormes();
+
 
             ETGMod.StartGlobalCoroutine(this.DelayedStartHandler());
             Log($"{NAME} v{VERSION} supplies have dropped!", TEXT_COLOR);

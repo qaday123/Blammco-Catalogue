@@ -72,7 +72,8 @@ namespace ExampleMod
             gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
             gun.Volley.DecreaseFinalSpeedPercentMin = -45f;
             gun.Volley.IncreaseFinalSpeedPercentMax = 20f;
-            gun.barrelOffset.transform.localPosition += new Vector3(0, 0.375f, 0);
+            gun.barrelOffset.transform.localPosition += new Vector3(10/16f, 12/16f, 0);
+            gun.carryPixelOffset = new IntVector2(3, 0);
             //ID = gun.PickupObjectId;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             //gun.transform.position += new Vector3(2f, 0.5f, 0f);
