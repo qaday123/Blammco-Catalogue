@@ -11,7 +11,7 @@ namespace ExampleMod
     {
         public static void AddSynergyFormes()
         {
-            AddSynergyForm(26, Nailgun.ID, "What Could Have Been");
+            //AddSynergyForm(26, Nailgun.ID, "What Could Have Been");
         }
         public static void AddSynergyForm(int baseGun, int newGun, string synergy)
         {
