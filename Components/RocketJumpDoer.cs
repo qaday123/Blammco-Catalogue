@@ -13,8 +13,8 @@ using HutongGames.PlayMaker.Actions;
 using static UnityEngine.UI.GridLayoutGroup;
 
 /*
- * Jumping should decrease your fire bar over tiem if on fire
- * Some trap tiles count as tile collisions- find a way to check that and circumvent it
+ * Jumping should decrease your fire bar over tiem if on fire // done
+ * Some trap tiles count as tile collisions- find a way to check that and circumvent it // done
 */ 
 namespace ExampleMod
 {
@@ -27,6 +27,7 @@ namespace ExampleMod
             cancelJump = false;
 
         }
+        // find the item, or player the component is attached to.
         private void Start()
         {
             this.item = base.GetComponent<PassiveItem>();
@@ -39,6 +40,7 @@ namespace ExampleMod
         {
             if (player) { GameManager.Instance.StartCoroutine(CheckForRocketJump(player, position, data)); }
         }
+        // checks if the player is able to rocket jump when an explosion occurs
         private IEnumerator CheckForRocketJump(PlayerController player, Vector3 position, ExplosionData data)
         {
             bool isAbleToRocketJump = false;
@@ -46,7 +48,7 @@ namespace ExampleMod
             while (!isAbleToRocketJump && timer > 0)
             {
                 BraveInput instanceForPlayer = BraveInput.GetInstanceForPlayer(player.PlayerIDX);
-                timer -= 0.05f;
+                timer -= BraveTime.DeltaTime;
                 float distance = Vector3.Distance(position, player.sprite.WorldCenter.ToVector3ZUp());
                 if (distance <= (data.damageRadius + 0.2f) && (instanceForPlayer.ActiveActions.DodgeRollAction.IsPressed || player.IsDodgeRolling))
                 {
@@ -57,11 +59,12 @@ namespace ExampleMod
                     isAbleToRocketJump = true;
                     GameManager.Instance.StartCoroutine(HandleRocketJump(player));
                 }
-                yield return new WaitForSeconds(0.05f);
+                yield return null;
             }
 
             yield break;
         }
+        // does the actual "jump" itself
         private IEnumerator HandleRocketJump(PlayerController player)
         {
             //ETGModConsole.Log("HandleRocketJump started");
@@ -75,12 +78,15 @@ namespace ExampleMod
                 effect.targetHeight = 1f;
                 effect.OverrideImageShader = ShaderCache.Acquire("Brave/Internal/DownwellAfterImage");
                 effect.minTranslation = 8f / 16f;
-
-                player.ForceStopDodgeRoll();
-                player.ToggleHandRenderers(true);
-                player.ToggleGunRenderers(true);
+                // ^ handles all the VFX
+                if (player.IsDodgeRolling)
+                {
+                    player.ForceStopDodgeRoll();
+                    player.ToggleHandRenderers(true);
+                    player.ToggleGunRenderers(true);
+                }
                 player.stats.RecalculateStats(player);
-                player.OnPreDodgeRoll += OnDodgeRoll;
+                player.OnPreDodgeRoll += OnDodgeRoll; // assigns all the actions that would cancel the jump
                 player.healthHaver.OnDamaged += OnDamaged;
                 player.specRigidbody.OnPreTileCollision += OnHitWall;
                 player.specRigidbody.OnPreRigidbodyCollision += OnPreRigidbodyCollision;
@@ -88,7 +94,8 @@ namespace ExampleMod
                 effect.spawnShadows = true;
                 player.AdditionalCanDodgeRollWhileFlying.SetOverride("rocketjump", true);
                 isRocketJumping = true;
-                OnRocketJump.Invoke(player);
+                OnRocketJump.Invoke(player); // invokes the OnRocketJump action
+                // main "loop" of the jump, descelerates over time and checks for a low enough velocity to cancel the jump
                 while (!cancelJump && Mathf.Abs(jumpDirection.x) + Mathf.Abs(jumpDirection.y) > 7f && (Mathf.Abs(player.Velocity.x) + Mathf.Abs(player.Velocity.y) > 7f))
                 {
                     if (player.IsOnFire)
@@ -164,6 +171,7 @@ namespace ExampleMod
             float involuntaryGradient = involuntaryVal.y / involuntaryVal.x;
             float voluntaryGradient = voluntaryVal.y / voluntaryVal.x;
             involuntaryVal += jumpDirection;
+            // checks if a movement gradient is a similar direction to the jump, then cancels it to hinder air acceleration
             if (voluntaryGradient.IsBetweenRange(involuntaryGradient - (involuntaryGradient / 4), involuntaryGradient + (involuntaryGradient/4)))
             {
                 voluntaryVal /= 3f;
