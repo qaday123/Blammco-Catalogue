@@ -37,10 +37,12 @@ namespace ExampleMod
             PlayerController player = Owner as PlayerController;
             int moneyToGive;
             float healthChange = resultHealth - currentHealth;
+
             if (healthChange > 0)
             {
                 moneyToGive = (int)(25 * (healthChange / 0.5f));
                 player.carriedConsumables.Currency += moneyToGive;
+                player.BloopItemAboveHead(this.sprite);
                 AkSoundEngine.PostEvent("Play_OBJ_coin_large_01", base.gameObject);
                 
             }
@@ -52,11 +54,10 @@ namespace ExampleMod
             currentHealth = player.healthHaver.currentHealth;
             player.healthHaver.OnHealthChanged += OnHealthChanged;
         }
-
-        public override DebrisObject Drop(PlayerController player)
+        public override void DisableEffect(PlayerController player)
         {
             player.healthHaver.OnHealthChanged -= OnHealthChanged;
-            return base.Drop(player);
+            base.DisableEffect(player);
         }
         public static int ID;
     }

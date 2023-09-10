@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BepInEx;
+using HarmonyLib;
 using System.IO;
 using UnityEngine;
 using System.Collections;
@@ -23,18 +24,26 @@ namespace ExampleMod
     [BepInDependency(ETGModMainBehaviour.GUID)]
     [BepInDependency("etgmodding.etg.mtgapi")]
     [BepInDependency("alexandria.etgmod.alexandria")]
+    //[HarmonyPatch]
     public class Module : BaseUnityPlugin
     {
         public const string NAME = "BlammCo Catalogue";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "2.0.0";
         public const string GUID = "qaday.etg.blammcocatalogue";
         public static readonly string TEXT_COLOR = "#FFFF10";
+
+        public static List<string> NameShortsRemoved = new List<string>();
 
         public static Module instance;
 
 
         public void Start()
         {
+            foreach (string file in Directory.GetFiles(Paths.PluginPath, "*-ccremove.spapi", SearchOption.AllDirectories))
+            {
+                NameShortsRemoved.AddRange(File.ReadAllLines(file).Select(x => $"player{x.ToLowerInvariant()}"));
+            }
+            new Harmony(GUID).PatchAll();
             instance = this;
             AudioResourceLoader.LoadFromAssembly("soundtest.bnk", "BlammCo Catalogue");
             ETGModMainBehaviour.WaitForGameManagerStart(GMStart);
@@ -51,14 +60,14 @@ namespace ExampleMod
 
             // ----- GUNS -----
             BabyFaceBlaster.Add(); // Player feedback on boost meter // SYNERGIES YTBA:
-            //BlackBox.Add(); // FIND OUT HOW TO PROCESS EXPLOSION DAMAGE // SYNERGIES YTBA: "Crutch Weapon"
+            BlackBox.Add(); // FIND OUT HOW TO PROCESS EXPLOSION DAMAGE // SYNERGIES YTBA: "Crutch Weapon"
             Caber.Add();
             Cleaver.Add();
-            //DirectHit.Add(); // SYNERGIES YTBA: "Direct Miss"
+            DirectHit.Add(); // SYNERGIES YTBA: "Direct Miss"
             DragunsFury.Add();
             ForceANature.Add(); // sprite bad // NOT ANYMORE
             InfantryHandgun.Add();
-            //Nailgun.Add(); // Sound broken :(
+            LibertyLauncher.Add();
             Panic_Attack.Add();
             PipeLauncher.Add();
             PocketPistol.Add();
@@ -79,6 +88,7 @@ namespace ExampleMod
             // ----- ACTIVES -----
             Bonk_Soda.Register();
             Buffalo_Steak.Register();
+            Disciplinary_Action.Register();
             //InvisWatch.Register(); //fix
             Jarate.Register(); // also fix // FIXEDqqqqq
             //Medigun.Register(); // finish
@@ -92,13 +102,17 @@ namespace ExampleMod
             Candy_Cane.Register();
             Demoknight_Boots.Register();
             Equalizer.Register();
-            ExamplePassive.Register();
+            //ExamplePassive.Register();
+            Gunboats.Register();
             LEM_MkGRAY.Register();
             Patriots_Casket.Register(); // add rocket jumping functionality
             Powerjack.Register();
             Recon_Pouch.Register();
             Ubersaw.Register(); // ADD SLASH VFX
             //VFXTest.Register();
+
+            // UNFINISHED - COMMENT OUT NEXT UPDATE
+            //Nailgun.Add(); // Sound broken :(
 
             // ----- GOOPS ----- thanks nn 
             //VFX Setup
@@ -135,7 +149,7 @@ namespace ExampleMod
                     new Vector3(23.2f, 19f), // position of char
                     false, // has alt skin
                      new Vector3(28.1f, 43.1f),  // position of alt skin swapper
-                     false, // idk what this means
+                     true, // probably to get rid of certain breach features of characters?
                      false, // Seperate animations w/wo armour
                      false, // Armour health
                      true, //Sprites used by paradox
@@ -150,7 +164,6 @@ namespace ExampleMod
             SynergyInitialiser.Initialise();
             SynergyForms.AddSynergyFormes();
 
-
             ETGMod.StartGlobalCoroutine(this.DelayedStartHandler());
             Log($"{NAME} v{VERSION} supplies have dropped!", TEXT_COLOR);
         }
@@ -164,6 +177,16 @@ namespace ExampleMod
             this.DelayedInitialisation();
             yield break;
         }
+        
+        /*[HarmonyPatch(typeof(PlayerController), nameof(PlayerController.Start))]
+        [HarmonyPostfix]
+        public static void RemoveMarineHelmet(PlayerController __instance)
+        {
+            if (NameShortsRemoved.Contains(__instance.name.ToLowerInvariant().Replace("(clone)", "")))
+            {
+                __instance.lostAllArmorVFX = __instance.lostAllArmorAltVfx = null;
+            }
+        }*/
         public void DelayedInitialisation()
         {
             try
@@ -173,6 +196,7 @@ namespace ExampleMod
                 //CrossmodNPCLootPoolSetup.CheckItems();
 
                 TF2Characters.Scout = ETGModCompatibility.ExtendEnum<PlayableCharacters>(Module.GUID, "Scout");
+                TF2Characters.Soldier = ETGModCompatibility.ExtendEnum<PlayableCharacters>(Module.GUID, "Soldier");
                 //ETGModConsole.Log($"{ETGModCompatibility.ExtendEnum<PlayableCharacters>(Module.GUID, "Scout")}");
                 //ETGModConsole.Log("(Also finished DelayedInitialisation)");
             }

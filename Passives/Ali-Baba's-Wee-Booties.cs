@@ -38,9 +38,9 @@ namespace ExampleMod
             base.Pickup(player);
         }
 
-        public override DebrisObject Drop(PlayerController player)
+        public override void DisableEffect(PlayerController player)
         {
-            return base.Drop(player);
+            base.DisableEffect(player);
         }
         public static int ID;
     }

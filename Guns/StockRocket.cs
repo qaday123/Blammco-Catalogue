@@ -44,7 +44,7 @@ namespace ExampleMod
             gun.reloadTime = 1.8f;
             gun.DefaultModule.cooldownTime = 0.9f;
             gun.DefaultModule.numberOfShotsInClip = 4;
-            gun.SetBaseMaxAmmo(160);
+            gun.SetBaseMaxAmmo(120);
             gun.gunClass = GunClass.EXPLOSIVE;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD NOISE
 
@@ -62,7 +62,7 @@ namespace ExampleMod
 
             // More projectile setup
             projectile.baseData.damage = 10f;
-            projectile.baseData.speed = 26f;
+            projectile.baseData.speed = 22f;
             projectile.baseData.range = 50f;
             projectile.baseData.force = 10f;
             gun.barrelOffset.transform.localPosition += new Vector3(12f/16f,10f/16f);

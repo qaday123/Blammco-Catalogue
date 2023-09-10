@@ -57,11 +57,10 @@ namespace ExampleMod
             player.OnRolledIntoEnemy += OnRollHit;
            //player.OnAnyEnemyReceivedDamage += OnHit;
         }
-
-        public override DebrisObject Drop(PlayerController player)
+        public override void DisableEffect(PlayerController player)
         {
             player.OnRolledIntoEnemy -= OnRollHit;
-            return base.Drop(player);
+            base.DisableEffect(player);
         }
         public static int ID;
     }

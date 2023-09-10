@@ -8,5 +8,6 @@ namespace ExampleMod
     public class TF2Characters
     {
         public static PlayableCharacters Scout;
+        public static PlayableCharacters Soldier;
     }
 }

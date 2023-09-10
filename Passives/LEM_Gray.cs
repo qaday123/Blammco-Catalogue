@@ -71,11 +71,10 @@ namespace ExampleMod
             player.OnNewFloorLoaded += OnNewFloor;
             CalculateFloor();
         }
-
-        public override DebrisObject Drop(PlayerController player)
+        public override void DisableEffect(PlayerController player)
         {
             player.OnNewFloorLoaded -= OnNewFloor;
-            return base.Drop(player);
+            base.DisableEffect(player);
         }
         public static int ID;
         public GlobalDungeonData.ValidTilesets oldfloor;

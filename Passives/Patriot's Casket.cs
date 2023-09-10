@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Alexandria.ItemAPI;
+using System.Collections;
+using System.Threading;
+using System.Security.Policy;
+using HutongGames.PlayMaker.Actions;
+using Alexandria.Misc;
+using InControl.NativeProfile;
 
 namespace ExampleMod
 {
@@ -26,93 +32,139 @@ namespace ExampleMod
 
             //Ammonomicon entry variables
             string shortDesc = "God Bless";
-            string longDesc = "[Rocket jump stuff]" +
-                "\nOh, and also boosts your effectiveness with American weapons. Godspeed.";
+            string longDesc = "Permits you to rocket jump. To perform one, dodge roll in the blast radius of any explosion. Dodge roll " +
+                "while in the air to prematurely end the jump. Deal much more damage while jumping and gain a small boost for while after jumping.\n" +
+                "Oh, and also perform more effectively with American weapons. Godspeed.\n\nThe Soldier insists he was in the military, " +
+                "but ultimately was deemed too crazy to be accepted, so his companions say. Still, he jumps into battle bravely and swiftly, " +
+                "getting the jump on many enemies who don't expect his unconventional tactics.";
 
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
-
-            //Adds the actual passive effect to the item
-            //ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.MovementSpeed, 2, StatModifier.ModifyMethod.ADDITIVE);
-            //ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RateOfFire, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
             //Rarity of the item
             item.quality = PickupObject.ItemQuality.SPECIAL;
             ID = item.PickupObjectId;
         }
-        private void AddStat(PlayerStats.StatType statType, float amount, StatModifier.ModifyMethod method)
+        StatModifier damageBoost_jump = StatModifier.Create(PlayerStats.StatType.Damage, StatModifier.ModifyMethod.MULTIPLICATIVE, 3f);
+        StatModifier damageBoost_after = StatModifier.Create(PlayerStats.StatType.Damage, StatModifier.ModifyMethod.MULTIPLICATIVE, 2f);
+        StatModifier speedBoost = StatModifier.Create(PlayerStats.StatType.MovementSpeed, StatModifier.ModifyMethod.MULTIPLICATIVE, 1.4f);
+        List<StatModifier> statMods = new List<StatModifier>()
         {
-            StatModifier statModifier = new StatModifier();
-            statModifier.amount = amount;
-            statModifier.statToBoost = statType;
-            statModifier.modifyType = method;
-            foreach (StatModifier statModifier2 in this.passiveStatModifiers)
-            {
-                bool flag = statModifier2.statToBoost == statType;
-                if (flag)
-                {
-                    return;
-                }
-            }
-            bool flag2 = this.passiveStatModifiers == null;
-            if (flag2)
-            {
-                this.passiveStatModifiers = new StatModifier[]
-                {
-                    statModifier
-                };
-                return;
-            }
-            this.passiveStatModifiers = this.passiveStatModifiers.Concat(new StatModifier[]
-            {
-                statModifier
-            }).ToArray<StatModifier>();
+            StatModifier.Create(PlayerStats.StatType.Damage, StatModifier.ModifyMethod.MULTIPLICATIVE, 1.5f),
+            StatModifier.Create(PlayerStats.StatType.Accuracy, StatModifier.ModifyMethod.MULTIPLICATIVE, 0.8f),
+            StatModifier.Create(PlayerStats.StatType.Accuracy, StatModifier.ModifyMethod.MULTIPLICATIVE, 0.8f),
+            StatModifier.Create(PlayerStats.StatType.ReloadSpeed, StatModifier.ModifyMethod.MULTIPLICATIVE, 0.6f),
+        };
+        public bool activeOutline;
+        private void EnableVFX(PlayerController user)
+        {
+            Material outlineMaterial = SpriteOutlineManager.GetOutlineMaterial(user.sprite);
+            outlineMaterial.SetColor("_OverrideColor", new Color(200f, 200f, 200f));
         }
 
-        private void RemoveStat(PlayerStats.StatType statType)
+        private void DisableVFX(PlayerController user)
         {
-            List<StatModifier> list = new List<StatModifier>();
-            for (int i = 0; i < this.passiveStatModifiers.Length; i++)
-            {
-                bool flag = this.passiveStatModifiers[i].statToBoost != statType;
-                if (flag)
-                {
-                    list.Add(this.passiveStatModifiers[i]);
-                }
-            }
-            this.passiveStatModifiers = list.ToArray();
+            Material outlineMaterial = SpriteOutlineManager.GetOutlineMaterial(user.sprite);
+            outlineMaterial.SetColor("_OverrideColor", new Color(0f, 0f, 0f));
+        }
+        // these two are to prevent the outline breaking when taking damage
+        private IEnumerator GainOutline()
+        {
+            PlayerController user = this.Owner;
+            yield return new WaitForSeconds(0.05f);
+            EnableVFX(user);
+            yield break;
         }
 
+        private IEnumerator LoseOutline()
+        {
+            PlayerController user = this.Owner;
+            yield return new WaitForSeconds(0.05f);
+            DisableVFX(user);
+            yield break;
+        }
+        private void PlayerTookDamage(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
+        {
+            if (activeOutline)
+            {
+                GameManager.Instance.StartCoroutine(this.GainOutline());
+            }
+
+            else if (!activeOutline)
+            {
+                GameManager.Instance.StartCoroutine(this.LoseOutline());
+            }
+        }
         public void OnGunChanged(Gun previous, Gun current, bool newgun)
         {
-            //ETGModConsole.Log("Previous: " + previous.EncounterNameOrDisplayName + $", {previous.PickupObjectId}");
-            //ETGModConsole.Log("Current: " + current.EncounterNameOrDisplayName + $", {current.PickupObjectId}");
-            RemoveStat(PlayerStats.StatType.Damage);
-            RemoveStat(PlayerStats.StatType.Accuracy);
-            RemoveStat(PlayerStats.StatType.RateOfFire);
-            RemoveStat(PlayerStats.StatType.ReloadSpeed);
-            //ETGModConsole.Log($"Stats removed successfully");
-            //ETGModConsole.Log($"{american_ids.Contains(current.PickupObjectId)}");
-            if (american_ids.Contains(current.PickupObjectId))
+            if (current)
             {
-                AddStat(PlayerStats.StatType.Damage, 1.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                AddStat(PlayerStats.StatType.Accuracy, 0.8f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                AddStat(PlayerStats.StatType.RateOfFire, 1.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                AddStat(PlayerStats.StatType.ReloadSpeed, 0.6f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                ETGModConsole.Log($"Stats added successfully");
+                if (Owner != null)
+                {
+                    foreach (StatModifier modifier in statMods) { Owner.ownerlessStatModifiers.Remove(modifier); }
+                    if (american_ids.Contains(current.PickupObjectId))
+                    { foreach (StatModifier modifier in statMods) { Owner.ownerlessStatModifiers.Add(modifier); } }
+                   Owner.stats.RecalculateStats(Owner, true, false);
+                }
             }
-            Owner.stats.RecalculateStats(Owner, true, false);
         }
-
+        private void OnRocketJump(PlayerController player)
+        {
+            //ETGModConsole.Log("Rocket Jump Logged");
+            RemoveStats(player);
+            player.ownerlessStatModifiers.Add(damageBoost_jump);
+            player.stats.RecalculateStats(player);
+            AkSoundEngine.PostEvent("Play_ITM_Macho_Brace_Trigger_01", base.gameObject);
+            GameManager.Instance.StartCoroutine(GainOutline());
+            activeOutline = true;
+            GameManager.Instance.StartCoroutine(HandleStatusEffects(player));
+        }
+        private IEnumerator HandleStatusEffects(PlayerController player)
+        {
+            RocketJumpDoer jump = player.gameObject.GetOrAddComponent<RocketJumpDoer>();
+            while (jump.isRocketJumping) { yield return null; }
+            AddStats(player);
+            float timer = 2f;
+            while (!jump.isRocketJumping && timer > 0f) { timer -= 0.1f; yield return new WaitForSeconds(0.1f); }
+            RemoveStats(player);
+            yield break;
+        }
+        private void AddStats(PlayerController player)
+        {
+            player.ownerlessStatModifiers.Remove(damageBoost_jump);
+            player.ownerlessStatModifiers.Add(damageBoost_after);
+            player.ownerlessStatModifiers.Add(speedBoost);
+            player.stats.RecalculateStats(player);
+        }
+        private void RemoveStats(PlayerController player)
+        {
+            RocketJumpDoer jump = player.gameObject.GetOrAddComponent<RocketJumpDoer>();
+            player.ownerlessStatModifiers.Remove(damageBoost_jump);
+            player.ownerlessStatModifiers.Remove(damageBoost_after);
+            player.ownerlessStatModifiers.Remove(speedBoost);
+            player.stats.RecalculateStats(player);
+            if (!jump.isRocketJumping)
+            {
+                GameManager.Instance.StartCoroutine(LoseOutline());
+                activeOutline = false;
+            }
+        }
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);
+            RocketJumpDoer jump = player.gameObject.GetOrAddComponent<RocketJumpDoer>();
+            jump.OnRocketJump += OnRocketJump;
+            player.healthHaver.OnDamaged += PlayerTookDamage;
             player.GunChanged += this.OnGunChanged;
+            player.lostAllArmorVFX = null;
             OnGunChanged(player.CurrentGun, player.CurrentGun, false);
         }
 
         public override DebrisObject Drop(PlayerController player)
         {
+            RocketJumpDoer jump = player.gameObject.GetOrAddComponent<RocketJumpDoer>();
             player.GunChanged -= this.OnGunChanged;
+            player.healthHaver.OnDamaged -= PlayerTookDamage;
+            jump.OnRocketJump -= OnRocketJump;
             player.stats.RecalculateStats(player, true, false);
             return base.Drop(player);
         }
@@ -136,7 +188,7 @@ namespace ExampleMod
             23, // Gungeon Eagle
             38, // Magnum
             275, // Flare Gun
-            10, // Mega DOuser
+            10, // Mega Douser
         };
     }
 }

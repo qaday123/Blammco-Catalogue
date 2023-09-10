@@ -30,7 +30,7 @@ namespace ExampleMod
             var item = obj.AddComponent<Buffalo_Steak>();
 
             // Cooldown type
-            ItemBuilder.SetCooldownType(item, ItemBuilder.CooldownType.Damage, 1250f);
+            ItemBuilder.SetCooldownType(item, ItemBuilder.CooldownType.Damage, 750f);
 
             //Adds a sprite component to the object and adds your texture to the item sprite collection
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
@@ -50,6 +50,7 @@ namespace ExampleMod
         }
         public static int ID;
         public static float timer = 10f;
+        public bool isActive = false;
         StatModifier speed = StatModifier.Create(PlayerStats.StatType.MovementSpeed, StatModifier.ModifyMethod.MULTIPLICATIVE, 1.4f);
         StatModifier firerate = StatModifier.Create(PlayerStats.StatType.RateOfFire, StatModifier.ModifyMethod.MULTIPLICATIVE, 1.5f);
         StatModifier damage = StatModifier.Create(PlayerStats.StatType.Damage, StatModifier.ModifyMethod.MULTIPLICATIVE, 2f);
@@ -59,7 +60,7 @@ namespace ExampleMod
             AkSoundEngine.PostEvent("Play_OBJ_power_up_01", base.gameObject);
             StartEffect(user);
 
-            StartCoroutine(ItemBuilder.HandleDuration(this, 15f, user, EndEffect));
+            StartCoroutine(ItemBuilder.HandleDuration(this, 10f, user, EndEffect));
         }
         // VFX stolen from nn as a placeholder feedback VFX
         bool activeOutline = false;
@@ -104,9 +105,10 @@ namespace ExampleMod
         }
         private void StartEffect(PlayerController player)
         {
+            isActive = true;
             player.ChangeToGunSlot(0);
             player.GunChanged += OnGunChanged;
-            ETGModConsole.Log(player.startingGunIds);
+            //ETGModConsole.Log(player.startingGunIds);
             player.ownerlessStatModifiers.Add(speed);
             player.ownerlessStatModifiers.Add(firerate);
             player.ownerlessStatModifiers.Add(damage);
@@ -117,15 +119,19 @@ namespace ExampleMod
         }
         private void EndEffect(PlayerController player)
         {
-            player.GunChanged -= OnGunChanged;
-            player.IsGunLocked = false;
-            player.ownerlessStatModifiers.Remove(speed);
-            player.ownerlessStatModifiers.Remove(firerate);
-            player.ownerlessStatModifiers.Remove(damage);
-            player.ownerlessStatModifiers.Remove(reloadspeed);
-            player.stats.RecalculateStats(player, true, false);
-            DisableVFX(player);
-            activeOutline = false;
+            if (player && isActive)
+            {
+                player.GunChanged -= OnGunChanged;
+                player.IsGunLocked = false;
+                player.ownerlessStatModifiers.Remove(speed);
+                player.ownerlessStatModifiers.Remove(firerate);
+                player.ownerlessStatModifiers.Remove(damage);
+                player.ownerlessStatModifiers.Remove(reloadspeed);
+                player.stats.RecalculateStats(player, true, false);
+                DisableVFX(player);
+                activeOutline = false;
+                isActive = false;
+            }
         }
 
 
@@ -152,12 +158,14 @@ namespace ExampleMod
         {
             DebrisObject debrisObject = base.Drop(player);
             player.healthHaver.OnDamaged -= this.PlayerTookDamage;
+            EndEffect(player);
             return debrisObject;
         }
         public override void OnDestroy()
         {
             if (LastOwner)
             {
+                EndEffect(LastOwner);
                 LastOwner.healthHaver.OnDamaged -= this.PlayerTookDamage;
             }
             base.OnDestroy();

@@ -113,6 +113,7 @@ namespace ExampleMod
                     //enemy.projectile.baseData.damage *= 4*floormult; //this doesnt work
                     enemy.healthHaver.ApplyDamage(10*floormult,Vector2.zero, "oh shit scattergun did something", CoreDamageTypes.None, DamageCategory.Normal, true, null, false);
                     //ETGModConsole.Log("Damage applied successfully");
+                    VFXToolbox.DoStringSquirt("Meatshot!", enemy.sprite.WorldTopCenter, Color.red);
                 }
             }
         }

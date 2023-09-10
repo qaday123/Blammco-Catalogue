@@ -22,7 +22,7 @@ namespace ExampleMod
             gun.SetLongDescription("It's old, beaten, rusty, and doesn't even fire normally. Yet Soldier refused to use any other, " +
                 "at least usable weapon as a starter because they all weren't \"American\" according to him.\n\nNobody actually knows " +
                 "what that means except for the band of mercenaries who arrived here. They all looked really annoyed when asked, so " +
-                "they weren't bothered any further but it sounds like a planet. Quite an old one at that.");
+                "they weren't bothered any further.");
             
             // Sprite setup
             gun.SetupSprite(null, "infantry_idle_001", 8);
@@ -33,7 +33,7 @@ namespace ExampleMod
             gun.AddProjectileModuleFrom("ak-47", true, false);
             gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
             gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-            gun.reloadTime = 0.9f;
+            gun.reloadTime = 1.1f;
             gun.SetBaseMaxAmmo(300);
             gun.InfiniteAmmo = true;
             gun.gunClass = GunClass.SHITTY; //when as starting weapon reclass to 'SHITTY'
@@ -62,14 +62,14 @@ namespace ExampleMod
                 projectileModule.ammoCost = 1;
                 projectileModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
                 projectileModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-                projectileModule.cooldownTime = 0.25f;
+                projectileModule.cooldownTime = 0.3f;
                 projectileModule.numberOfShotsInClip = 7;
-                projectileModule.angleVariance = 10f;
+                projectileModule.angleVariance = 14f;
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(projectileModule.projectiles[0]);
                 projectileModule.projectiles[0] = projectile;
                 projectile.baseData.damage = 2f;
                 projectile.baseData.speed *= 0.8f; //speed;
-                projectile.baseData.range = 14f;
+                projectile.baseData.range = 20f;
                 projectile.baseData.force = 5f;
                 projectile.transform.parent = gun.barrelOffset;
                 projectile.gameObject.SetActive(false);

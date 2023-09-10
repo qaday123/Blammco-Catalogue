@@ -22,8 +22,9 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,10 +35,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Actives\Discliplinary Action.cs" />
     <Compile Include="Actives\Bonk Soda.cs" />
     <Compile Include="Actives\Buffalo Steak.cs" />
     <Compile Include="Characters\Characters.cs" />
+    <Compile Include="Components\RocketJumpDoer.cs" />
     <Compile Include="FormeSynergies.cs" />
+    <Compile Include="Guns\LibertyLauncher.cs" />
+    <Compile Include="Guns\Airstrike.cs" />
+    <Compile Include="Passives\Gunboats.cs" />
     <Compile Include="SynergyInitialiser.cs" />
     <Compile Include="Extras\CustomGoops.cs" />
     <Compile Include="Extras\JarateGoop.cs" />
@@ -64,9 +70,10 @@
     <Compile Include="Actives\Medigun.cs" />
     <Compile Include="Actives\Quick Fix.cs" />
     <Compile Include="Passives\Patriot%27s Casket.cs" />
+    <Compile Include="Toolbox with Stolen Things\storage.cs" />
     <Compile Include="Toolbox with Stolen Things\MoarColours.cs" />
     <Compile Include="Toolbox with Stolen Things\NN Goop Handler.cs" />
-    <Compile Include="Toolbox with Stolen Things\Components.cs" />
+    <Compile Include="Components\Misc Projectile Components.cs" />
     <Compile Include="Toolbox with Stolen Things\ToolsIStoleForVFX.cs" />
     <Compile Include="Toolbox with Stolen Things\ToolsIStoleForGuns.cs" />
     <Compile Include="Guns\Widowmaker.cs" />
@@ -97,6 +104,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_001.png" />
+    <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_002.png" />
+    <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_003.png" />
+    <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_004.png" />
+    <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_005.png" />
+    <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_006.png" />
+    <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_007.png" />
+    <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_008.png" />
+    <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_009.png" />
+    <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_010.png" />
+    <EmbeddedResource Include="Resources\passives\gunboats_sprite.png" />
+    <EmbeddedResource Include="Resources\StatusEffectVFX\slowed_effect_icon.png" />
     <EmbeddedResource Include="Resources\passives\candy_cane_sprite.png" />
     <EmbeddedResource Include="Resources\passives\ubersaw_sprite.png" />
     <EmbeddedResource Include="Resources\OtherVFX\vfxtest1\vfxtest1_001.png" />
@@ -1235,11 +1254,21 @@
     <EmbeddedResource Include="Characters\Soldier\newspritesetup\breach_idles\select_idle\marine_select_idle_006.png" />
     <EmbeddedResource Include="Characters\Soldier\newspritesetup\breach_idles\select_choose\marine_select_select_010.png" />
     <EmbeddedResource Include="Characters\Soldier\newspritesetup\breach_idles\select_choose\marine_select_select_011.png" />
-    <Content Include="icon.ico" />
+    <EmbeddedResource Include="Characters\Soldier\newspritesetup\idle_bw_twohands\marine_idle_back_right_hands2_001.png" />
+    <EmbeddedResource Include="Characters\Soldier\newspritesetup\idle_bw_twohands\marine_idle_back_right_hands2_002.png" />
+    <EmbeddedResource Include="Characters\Soldier\newspritesetup\idle_bw_twohands\marine_idle_back_right_hands2_003.png" />
+    <EmbeddedResource Include="Characters\Soldier\newspritesetup\idle_bw_twohands\marine_idle_back_right_hands2_004.png" />
+    <EmbeddedResource Include="Characters\Soldier\newspritesetup\idle_bw_twohands_armorless\marine_idle_back_right_hands2_001.png" />
+    <EmbeddedResource Include="Characters\Soldier\newspritesetup\idle_bw_twohands_armorless\marine_idle_back_right_hands2_002.png" />
+    <EmbeddedResource Include="Characters\Soldier\newspritesetup\idle_bw_twohands_armorless\marine_idle_back_right_hands2_003.png" />
+    <EmbeddedResource Include="Characters\Soldier\newspritesetup\idle_bw_twohands_armorless\marine_idle_back_right_hands2_004.png" />
+    <EmbeddedResource Include="Characters\Soldier\punchout\sprites\soldier_punch_idle_005.png" />
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\caber\caber_clipempty.png" />
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\caber\caber_clipfull.png" />
     <EmbeddedResource Include="Resources\actives\steak_sprite.png" />
     <EmbeddedResource Include="Resources\actives\bonk_can_sprite.png" />
+    <Content Include="icon.ico" />
+    <EmbeddedResource Include="Resources\actives\disciplinary_action_sprite.png" />
     <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipempty_OLD.png" />
     <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipfull_OLD.png" />
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\syringegun\syringegun_clipempty.png" />
@@ -1271,7 +1300,7 @@
       <HintPath>packages\HarmonyX.2.7.0\lib\net35\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Alexandria, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\EtG.Alexandria.0.2.25\lib\net35\Alexandria.dll</HintPath>
+      <HintPath>packages\EtG.Alexandria.0.3.23\lib\net35\Alexandria.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\EtG.GameLibs.2.1.9.1\lib\net35\Assembly-CSharp.dll</HintPath>

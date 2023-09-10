@@ -1,4 +1,5 @@
 ﻿using Alexandria.ItemAPI;
+using Brave.BulletScript;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,12 @@ namespace ExampleMod
             if (actor.aiActor)
             {
                 actor.healthHaver.AllDamageMultiplier += 0.75f;
+                Vector2 offset = new Vector2(0, 0.2f);
+                /*var obj = GameObject.Instantiate(jarateVFXObject);
+                obj.SetActive(true);
+                var sprite = obj.GetComponent<tk2dSprite>();
+                sprite.PlaceAtPositionByAnchor(actor.sprite.WorldTopCenter + offset, tk2dBaseSprite.Anchor.LowerCenter);
+                sprite.transform.SetParent(actor.transform);*/
             }
         }
         public override void OnEffectRemoved(GameActor actor, RuntimeGameActorEffectData effectData)
@@ -55,6 +62,10 @@ namespace ExampleMod
             if (actor.aiActor)
             {
                 actor.healthHaver.AllDamageMultiplier -= 0.75f;
+                var obj = GameObject.Instantiate(jarateVFXObject);
+                obj.SetActive(false);
+                var sprite = obj.GetComponent<tk2dSprite>();
+                GameObject.Destroy(sprite);
             }
         }
     }

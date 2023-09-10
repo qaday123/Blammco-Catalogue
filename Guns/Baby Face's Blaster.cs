@@ -153,10 +153,10 @@ namespace ExampleMod
         }
         protected override void OnPostDrop(GameActor owner)
         {
-            base.OnPostDrop(owner);
             ETGModConsole.Log("OnDrop Triggered");
             (owner as PlayerController).healthHaver.OnDamaged -= this.OnDamaged;
             (owner as PlayerController).OnPreDodgeRoll -= this.OnDodgeRoll;
+            base.OnPostDrop(owner);
             //ETGModConsole.Log("Action unsubcsription successful");
         }
         public override void OnDestroy()
@@ -197,7 +197,6 @@ namespace ExampleMod
                 AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
                 base.OnReloadPressed(player, gun, bSOMETHING);
                 AkSoundEngine.PostEvent("Play_scatter_gun_reload", base.gameObject);
-                //UnityEngine.GameObject.Destroy(this);
             }
         }
         //override
