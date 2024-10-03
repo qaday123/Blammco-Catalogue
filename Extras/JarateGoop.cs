@@ -1,6 +1,6 @@
 ﻿using Alexandria.ItemAPI;
 using Alexandria.Misc;
-using ExampleMod;
+using TF2Stuff;
 using UnityEngine;
 
 public class JarateGoop : SpecialGoopBehaviourDoer

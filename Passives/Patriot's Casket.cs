@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections;
 using UnityEngine;
 using Alexandria.ItemAPI;
-using System.Collections;
-using System.Threading;
-using System.Security.Policy;
-using HutongGames.PlayMaker.Actions;
 using Alexandria.Misc;
-using InControl.NativeProfile;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Patriots_Casket : PassiveItem
     {
@@ -19,7 +15,7 @@ namespace ExampleMod
         {
             string itemName = "Patriot's Casket";
             // TODO: Add sprite
-            string resourceName = "ExampleMod/Resources/passives/patriot's_casket_sprite";
+            string resourceName = "TF2Items/Resources/passives/patriot's_casket_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);
@@ -58,7 +54,7 @@ namespace ExampleMod
         private void EnableVFX(PlayerController user)
         {
             Material outlineMaterial = SpriteOutlineManager.GetOutlineMaterial(user.sprite);
-            outlineMaterial.SetColor("_OverrideColor", new Color(200f, 200f, 200f));
+            outlineMaterial.SetColor("_OverrideColor", new Color(60, 60, 60));
         }
 
         private void DisableVFX(PlayerController user)

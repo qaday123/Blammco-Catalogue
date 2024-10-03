@@ -14,7 +14,7 @@ using static UnityEngine.UI.CanvasScaler;
  * Find out how to make charged shot cost more ammo
  * Find out how to make charged shot make a different sound
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class ShortCircuit : AdvancedGunBehavior
     {
@@ -27,13 +27,17 @@ namespace ExampleMod
             
             //Gun descriptions
             gun.SetShortDescription("Discharge This!");
-            gun.SetLongDescription("something something big energy ball go brrr haha");
+            gun.SetLongDescription("Tap to fire a very short range, but very powerful homing projectile that locks on to enemies' natural conductivity. " +
+                "Charge up the gun to discharge a large ball of energy that destroys all incoming projectiles. Costs more ammo and doesn't do much damage.\n\n" +
+                "Little gadgets and trinkets like this were a favourite of Engie's toys. After a few touch-ups and it's own power source, the natural lead-based " +
+                "foes of the gungeon fear the power this hand has to shut down any of their offensive and defensive capabilities alike.");
             
             // Sprite setup
             gun.SetupSprite(null, "circuit_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 10);
             gun.SetAnimationFPS(gun.reloadAnimation, 1);
             gun.SetAnimationFPS(gun.chargeAnimation, 10);
+            gun.TrimGunSprites();
             //gun.SetAnimationFPS(gun.dischargeAnimation, 10);
 
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
@@ -49,13 +53,12 @@ namespace ExampleMod
             gun.DefaultModule.numberOfShotsInClip = 800;
             gun.SetBaseMaxAmmo(800);
             gun.gunClass = GunClass.CHARGE;
-            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD NOISE
+            gun.gunSwitchGroup = "Banana"; // GET RID OF THAT CURSED DEFAULT RELOAD NOISE
             gun.gunHandedness = GunHandedness.HiddenOneHanded;
             gun.carryPixelOffset += new IntVector2(5,0);
             gun.barrelOffset.transform.localPosition += new Vector3(1f, 1f / 16f);
 
             gun.quality = PickupObject.ItemQuality.A;
-            gun.encounterTrackable.EncounterGuid = "Short Circuit";
             gun.AddToSubShop(ItemBuilder.ShopType.Trorc);
 
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
@@ -77,7 +80,8 @@ namespace ExampleMod
             //projectile.SetProjectileSpriteRight("rocket_projectile", 22, 6, false, tk2dBaseSprite.Anchor.MiddleLeft, 28, 6);
 
             // CHARGE PROJECTILE
-            Projectile chargeprojectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(21) as Gun).DefaultModule.projectiles[0]);
+            //gun.DefaultModule.projectiles.Add(new Projectile());
+            Projectile chargeprojectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
             chargeprojectile.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(chargeprojectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(chargeprojectile);
@@ -96,6 +100,9 @@ namespace ExampleMod
             pierce.penetration += 10000;
             BlockEnemyProjectilesMod block = chargeprojectile.gameObject.GetOrAddComponent<BlockEnemyProjectilesMod>();
             block.projectileSurvives = true;
+            block.RangeExtension = new IntVector2(10,10);
+            HomingModifier homing2 = chargeprojectile.gameObject.GetOrAddComponent<HomingModifier>();
+            homing2.enabled = false;
 
             chargeprojectile.AnimateProjectile(new List<string> {
             "energy_ball_001",
@@ -124,13 +131,15 @@ namespace ExampleMod
                 Projectile = projectile,
                 ChargeTime = 0f,
                 VfxPool = null,
-                AmmoCost = 1, 
             };
             ProjectileModule.ChargeProjectile chargeProj2 = new ProjectileModule.ChargeProjectile
             {
                 Projectile = chargeprojectile,
                 ChargeTime = 1.5f,
                 AmmoCost = 25,
+                UsedProperties = (ProjectileModule.ChargeProjectileProperties.additionalWwiseEvent | ProjectileModule.ChargeProjectileProperties.ammo), 
+                AdditionalWwiseEvent = "Play_shortcircuit_chargeshoot"
+                
             };
             gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile> { chargeProj1, chargeProj2 };
 
@@ -141,24 +150,9 @@ namespace ExampleMod
 
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_shortcircuit_shoot";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
+            PixelCollider test = new PixelCollider();
         }
         public static int ID;
-        public override void PostProcessProjectile(Projectile projectile)
-        {
-            base.PostProcessProjectile(projectile); // this doesnt work
-            if (projectile == gun.DefaultModule.chargeProjectiles[1].Projectile as Projectile)
-            {
-                ETGModConsole.Log("charge projectile");
-            }
-            else if (projectile == gun.DefaultModule.chargeProjectiles[0].Projectile as Projectile)
-            {
-                ETGModConsole.Log("uncharged projectile");
-            }
-            else
-            {
-                ETGModConsole.Log("whoops");
-            }
-        }
         public override void OnPostFired(PlayerController player, Gun gun)
         {
             // Sound setup
@@ -170,7 +164,6 @@ namespace ExampleMod
         {
             if (gun.CurrentOwner)
             {
-
                 if (!gun.PreventNormalFireAudio)
                 {
                     this.gun.PreventNormalFireAudio = true;

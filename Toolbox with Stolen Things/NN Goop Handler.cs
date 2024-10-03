@@ -10,7 +10,7 @@ using Alexandria.ItemAPI;
 using MonoMod.RuntimeDetour;
 using System.Reflection;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class SpecialGoopBehaviours : MonoBehaviour
     {

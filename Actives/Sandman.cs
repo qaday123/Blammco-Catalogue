@@ -12,7 +12,7 @@ using Steamworks;
  * should this be cursed??
  * Casey syngergy - idk what it would do tho
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Sandman : PlayerItem
     {
@@ -23,7 +23,7 @@ namespace ExampleMod
             string itemName = "Sandman";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/actives/sandman_sprite";
+            string resourceName = "TF2Items/Resources/actives/sandman_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);
@@ -39,28 +39,29 @@ namespace ExampleMod
 
             //Ammonomicon entry variables
             string shortDesc = "I Love My Ball";
-            string longDesc = "Launch a ball that will stun your enemies in amazement! Nothin' beats your skills on the field.\n\n" +
-                "Normally, melee weapons would behold the weilder with a great curse, however this bat had found a certain " +
-                "loophole by 'shooting' a projectile as it's main function. The laws of the Gungeon really ought to be made " +
-                "clearer.";
+            string longDesc = "Launch a ball that will stun your enemies in amazement! Nothin' beats your skills on the field. Stun duration increases " +
+                "based on how long your shot was. If you miss - no worries! Pick that ball up and try again!\n\n" +
+                "HOME RUN! He heard them say. Round the bases faster than a speeding bullet. Good times, they were. Better times they are now.";
 
             //Adds the item to the gungeon item list, the ammonomicon, the loot table, etc.
             //Do this after ItemBuilder.AddSpriteToObject!
+            item.AddPassiveStatModifier(StatModifier.Create(PlayerStats.StatType.Curse, StatModifier.ModifyMethod.ADDITIVE, 1));
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
             item.consumable = false;
             item.quality = PickupObject.ItemQuality.D;
             ID = item.PickupObjectId;
 
-            /*Projectile ball = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
+            ball = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
             ball.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(ball.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(ball);
             ball.baseData.damage = 4f;
             ball.baseData.speed = 24f;
-            ball.AppliesStun = true;
-            ball.StunApplyChance = 100f;
-            ball.AppliedStunDuration = 14f;
-            ball.AnimateProjectile(new List<string>
+            ball.baseData.range = 2000f;
+            ball.collidesWithPlayer = true;
+            ball.allowSelfShooting = true;
+            ball.SetProjectileSpriteRight("baseball", 4, 4, lightened: false, anchor: tk2dBaseSprite.Anchor.MiddleCenter, 2, 2);
+            /*ball.AnimateProjectile(new List<string>
             {
                 "baseball_001",
                 "baseball_002",
@@ -74,77 +75,68 @@ namespace ExampleMod
             AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 4),  //Manual Offsets
             AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(4, 4), 4), //Collider Pixel Sizes?
             AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 4), //Override Collider Offsets
-            AnimateBullet.ConstructListOfSameValues<Projectile>(null, 4));
-            BounceProjModifier bounce = ball.gameObject.GetOrAddComponent<BounceProjModifier>();
-            bounce.numberOfBounces = +1;*/
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, 4));*/
+            
+
+            PickupableProjectile pickup = ball.gameObject.GetOrAddComponent<PickupableProjectile>();
+
+            BaseballProjectile baseball = ball.gameObject.GetOrAddComponent<BaseballProjectile>();
+            baseball.MaxStunDuration = 8f;
+            baseball.MaxTimeForStun = 1f;
+
+            
         }
         //private static Projectile ball; // this is causing the registered projectile to not work
         public static int ID;
+        public static Projectile ball;
         public override void DoEffect(PlayerController user)
         {
-            hitenemy = false;
-            elapsed = 0f;
-            //user.PostProcessProjectile += PostProcessProjectile;
+            bool hasBalls = user.PlayerHasActiveSynergy("I Love My Balls");
+
+            int BallsToSpawn = hasBalls ? 3 : 1;
+            float angleVariance = hasBalls ? 30f : 0;
+
             AkSoundEngine.PostEvent("Play_baseball_shoot", base.gameObject);
 
-            Projectile ball = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
-            ball.gameObject.SetActive(false);
-            FakePrefab.MarkAsFakePrefab(ball.gameObject);
-            UnityEngine.Object.DontDestroyOnLoad(ball);
-            ball.baseData.damage = 4f;
-            ball.baseData.speed = 28f;
-            ball.baseData.range = 10000f;
-            ball.AppliesStun = true;
-            ball.StunApplyChance = 100f;
-            ball.AppliedStunDuration = 6f;
-            ball.AnimateProjectile(new List<string>
+            for (int i = 0; i < BallsToSpawn; i++)
             {
-                "baseball_001",
-                "baseball_002",
-                "baseball_003",
-                "baseball_004",
-            }, 10, true, AnimateBullet.ConstructListOfSameValues(new IntVector2(6, 6), 4), // sprite size
-            AnimateBullet.ConstructListOfSameValues(true, 4), //Lightened??
-            AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 4), //Anchors
-            AnimateBullet.ConstructListOfSameValues(true, 4), //Anchors Change Colliders
-            AnimateBullet.ConstructListOfSameValues(false, 4), //Fixes Scales
-            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 4),  //Manual Offsets
-            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(4, 4), 4), //Collider Pixel Sizes?
-            AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 4), //Override Collider Offsets
-            AnimateBullet.ConstructListOfSameValues<Projectile>(null, 4));
-            BounceProjModifier bounce = ball.gameObject.GetOrAddComponent<BounceProjModifier>();
-            bounce.numberOfBounces = +1;
-            GameObject gameObject = SpawnManager.SpawnProjectile(ball.gameObject, user.sprite.WorldCenter, Quaternion.Euler(0f, 0f, (user.CurrentGun == null) ? 0f : user.CurrentGun.CurrentAngle), true);
-            Projectile component = gameObject.GetComponent<Projectile>();
-            if (component != null)
-            {
-                component.Owner = user;
-                component.Shooter = user.specRigidbody;
+                float variance = UnityEngine.Random.Range(-1f, 1f) * angleVariance;
+                float angle = (user.CurrentGun == null) ? 0f : user.CurrentGun.CurrentAngle;
+                Vector2 offset = Vector2.zero;//new(Mathf.Cos(angle * (Mathf.PI / 180)), Mathf.Sin(angle * (Mathf.PI / 180)));
+                GameObject gameObject = SpawnManager.SpawnProjectile(ball.gameObject, user.sprite.WorldCenter + offset, Quaternion.Euler(0f, 0f, angle + variance), true);
+                Projectile proj = gameObject.GetComponent<Projectile>();
+                PickupableProjectile component = gameObject.GetComponent<PickupableProjectile>();
+                BaseballProjectile baseball = gameObject.GetComponent<BaseballProjectile>();
+                if (proj != null)
+                {
+                    proj.Owner = user;
+                    proj.Shooter = user.specRigidbody;
+                    //proj.specRigidbody.RegisterTemporaryCollisionException(user.specRigidbody);
+                }
+                if (component != null && baseball != null)
+                {
+                    if (hasBalls)
+                    {
+                        baseball.MaxStunDuration /= 1.5f;
+                        component.DespawnTime /= 4;
+                    }
+                    if (user.PlayerHasActiveSynergy("Home Run All The Time"))
+                    {
+                        component.DespawnTime /= 2;
+                        baseball.MaxTimeForStun = 0f;
+                    }
+                    component.OnPickup += OnBallPickup;
+                }
             }
-            //ball.OnHitEnemy += this.OnHitEnemy;
         }
-        public float elapsed;
-        public bool hitenemy;
-
-        private void OnHitEnemy(Projectile proj, SpeculativeRigidbody enemy, bool fatal)
+        
+        public void OnBallPickup()
         {
-            ETGModConsole.Log($"hit");
-            //enemy.aiActor.behaviorSpeculator.Stun(elapsed + 4f, true);
+            if (this && this.gameObject)
+            {
+                AkSoundEngine.PostEvent("recharged", base.gameObject);
+                ClearCooldowns();
+            }
         }
-        public override void Pickup(PlayerController player)
-        {
-            base.Pickup(player);
-
-        }
-        /*public override bool CanBeUsed(PlayerController user)
-        {
-
-        }*/
-
-        /*public override DebrisObject Drop(PlayerController player)
-        {
-            Tools.Print($"Player dropped {this.DisplayName}");
-            return base.Drop(player);
-        }*/
     }
 }

@@ -5,12 +5,14 @@ using MonoMod;
 using UnityEngine;
 using Alexandria.ItemAPI;
 using BepInEx;
+using Alexandria.SoundAPI;
+using Alexandria.BreakableAPI;
 
 
 /*
  *  
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Nailgun : GunBehaviour
     {
@@ -27,8 +29,9 @@ namespace ExampleMod
             
             // Sprite setup
             gun.SetupSprite(null, "nail_idle_001", 20);
-            gun.SetAnimationFPS(gun.shootAnimation, 20);
+            gun.SetAnimationFPS(gun.shootAnimation, 32);
             gun.SetAnimationFPS(gun.reloadAnimation, 12);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(26) as Gun, true, false);
@@ -44,16 +47,14 @@ namespace ExampleMod
             gun.gunClass = GunClass.SHITTY;
             gun.barrelOffset.transform.localPosition += new Vector3(5f/16f, 9f/16f, 0);
             gun.carryPixelOffset = new IntVector2(3, 0);
-            gun.clipObject = (PickupObjectDatabase.GetById(86) as Gun).clipObject;
+            gun.clipObject = BreakableAPIToolbox.GenerateDebrisObject("TF2Items/Resources/Debris/nailgun_clip.png", true, 1, 5, 60, 20, null, 1, DebrisBounceCount: 1).gameObject;
             gun.clipsToLaunchOnReload = 1;
 
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.EXCLUDED;
-            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_nailgun_shot_01";
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_pistol_clipin";
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
+            SoundManager.AddCustomSwitchData("WPN_Guns", "qad_nailgun", "Play_WPN_Gun_Shot_01", "Play_WPN_nailgun_shot_01");
+            SoundManager.AddCustomSwitchData("WPN_Guns", "qad_nailgun", "Play_WPN_Gun_Reload_01", "Play_pistol_clipin");
+            gun.gunSwitchGroup = "qad_nailgun";
 
             //Cloning
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
@@ -73,38 +74,5 @@ namespace ExampleMod
             ID = gun.PickupObjectId;
         }
         public static int ID;
-        public override void OnPostFired(PlayerController player, Gun gun)
-        {
-            // Sound setup
-            gun.PreventNormalFireAudio = true;
-
-        }
-        /*
-        private bool HasReloaded;
-        public override void Update()
-        {
-            if (gun.CurrentOwner)
-            {
-
-                if (!gun.PreventNormalFireAudio)
-                {
-                    this.gun.PreventNormalFireAudio = true;
-                }
-                if (!gun.IsReloading && !HasReloaded)
-                {
-                    this.HasReloaded = true;
-                }
-            }
-        }
-
-        public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
-        {
-            if (gun.IsReloading && this.HasReloaded)
-            {
-                HasReloaded = false;
-                AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-                base.OnReloadPressed(player, gun, bSOMETHING);
-            }
-        }*/
     }
 }

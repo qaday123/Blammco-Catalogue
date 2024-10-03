@@ -12,7 +12,7 @@ using Alexandria.Misc;
 /* NOTES:
  * 
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Disciplinary_Action : PlayerItem
     {
@@ -23,7 +23,7 @@ namespace ExampleMod
             string itemName = "Disciplinary Action";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/actives/disciplinary_action_sprite";
+            string resourceName = "TF2Items/Resources/actives/disciplinary_action_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);
@@ -49,7 +49,7 @@ namespace ExampleMod
             item.quality = PickupObject.ItemQuality.C;
             ID = item.PickupObjectId;
 
-            //var speed_icon = SpriteBuilder.SpriteFromResource("ExampleMod/Resources/StatusEffectVFX/speed_effect/speed_effect_001", new GameObject("Speed Icon"));
+            //var speed_icon = SpriteBuilder.SpriteFromResource("TF2Items/Resources/StatusEffectVFX/speed_effect/speed_effect_001", new GameObject("Speed Icon"));
             //speed_icon.SetActive(false);
             //FakePrefab.MarkAsFakePrefab(speed_icon);
         }

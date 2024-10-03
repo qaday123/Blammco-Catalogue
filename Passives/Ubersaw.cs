@@ -15,7 +15,7 @@ using System.Security.Policy;
    use -> player.OnRolledIntoEnemy; // REWORKED
  * Add a stock slash vfx for when the effect takes place for more player feedback + it looks cool :)
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Ubersaw : PassiveItem
     {
@@ -23,7 +23,7 @@ namespace ExampleMod
         public static void Register()
         {
             string itemName = "Ubersaw";
-            string resourceName = "ExampleMod/Resources/passives/ubersaw_sprite";
+            string resourceName = "TF2Items/Resources/passives/ubersaw_sprite";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<Ubersaw>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);

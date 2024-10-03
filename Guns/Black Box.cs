@@ -17,7 +17,7 @@ using Brave.BulletScript;
    normal function requires.
  * HOW TO ADD EXPLOSION DAMAGE TO DAMAGE POOL
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class BlackBox : AdvancedGunBehavior
     {
@@ -32,7 +32,7 @@ namespace ExampleMod
             
             //Gun descriptions
             gun.SetShortDescription("Tryhard!");
-            gun.SetLongDescription("Dealing enough damage calls a random common item to be dropped.\n\n" +
+            gun.SetLongDescription("Dealing enough damage calls a random pickup item to be dropped.\n\n" +
                 "Notorious for being a \"crutch\" to it's wielders, being able to last a much longer time without actually investing " +
                 "time in actually improving their gunplay skills. Fortunately (or unfortunately, as some may see it), this function " +
                 "as mostly been removed and replaced with something much more insignificant.");
@@ -41,6 +41,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "blackbox_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 15);
             gun.SetAnimationFPS(gun.reloadAnimation, 1);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(39) as Gun, true, false);
@@ -81,8 +82,8 @@ namespace ExampleMod
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("stock_rocket",
-                "ExampleMod/Resources/CustomGunAmmoTypes/rocket/rocket_clipfull",
-                "ExampleMod/Resources/CustomGunAmmoTypes/rocket/rocket_clipempty");
+                "TF2Items/Resources/CustomGunAmmoTypes/rocket/rocket_clipfull",
+                "TF2Items/Resources/CustomGunAmmoTypes/rocket/rocket_clipempty");
             ExplosiveModifier explode = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
             explode.explosionData = rocketexplosion;
             ID = gun.PickupObjectId;

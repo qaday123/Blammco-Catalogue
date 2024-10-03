@@ -6,7 +6,7 @@ using UnityEngine;
 using Alexandria.ItemAPI;
 using BepInEx;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class InfantryHandgun : GunBehaviour
     {
@@ -28,6 +28,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "infantry_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 16);
             gun.SetAnimationFPS(gun.reloadAnimation, 18);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom("ak-47", true, false);
@@ -42,7 +43,7 @@ namespace ExampleMod
             gun.shellsToLaunchOnFire = 1;
             gun.clipObject = (PickupObjectDatabase.GetById(86) as Gun).clipObject;
             gun.clipsToLaunchOnReload = 1;
-
+            gun.gunScreenShake = new(0.4f, 9f, 0.09f, 0.009f);
             
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.SPECIAL;

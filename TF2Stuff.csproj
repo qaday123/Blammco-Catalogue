@@ -7,9 +7,10 @@
     <ProjectGuid>{D6D7A494-722E-4763-959B-C2D6B6A42B01}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExampleMod</RootNamespace>
-    <AssemblyName>ExampleMod</AssemblyName>
+    <RootNamespace>TF2Items</RootNamespace>
+    <AssemblyName>TF2Items</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -35,14 +36,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Actives\Dispenser.cs" />
     <Compile Include="Actives\Discliplinary Action.cs" />
     <Compile Include="Actives\Bonk Soda.cs" />
     <Compile Include="Actives\Buffalo Steak.cs" />
+    <Compile Include="Actives\Sandvich.cs" />
     <Compile Include="Characters\Characters.cs" />
+    <Compile Include="Components\AirstrikeProjectile.cs" />
+    <Compile Include="Components\GunRevDoer.cs" />
+    <Compile Include="Components\BaseballProjectile.cs" />
+    <Compile Include="Components\PickupableProjectile.cs" />
     <Compile Include="Components\RocketJumpDoer.cs" />
-    <Compile Include="FormeSynergies.cs" />
+    <Compile Include="GlobalUsings.cs" />
     <Compile Include="Guns\LibertyLauncher.cs" />
     <Compile Include="Guns\Airstrike.cs" />
+    <Compile Include="Guns\RocketJumper.cs" />
+    <Compile Include="Guns\CAPPER.cs" />
     <Compile Include="Passives\Gunboats.cs" />
     <Compile Include="SynergyInitialiser.cs" />
     <Compile Include="Extras\CustomGoops.cs" />
@@ -70,8 +79,11 @@
     <Compile Include="Actives\Medigun.cs" />
     <Compile Include="Actives\Quick Fix.cs" />
     <Compile Include="Passives\Patriot%27s Casket.cs" />
-    <Compile Include="Toolbox with Stolen Things\storage.cs" />
-    <Compile Include="Toolbox with Stolen Things\MoarColours.cs" />
+    <Compile Include="Toolbox Misc\CodeShortcuts.cs" />
+    <Compile Include="Toolbox Misc\GunGradualReload.cs" />
+    <Compile Include="Toolbox Misc\Patches.cs" />
+    <Compile Include="Toolbox Misc\storage.cs" />
+    <Compile Include="Toolbox Misc\MoarColours.cs" />
     <Compile Include="Toolbox with Stolen Things\NN Goop Handler.cs" />
     <Compile Include="Components\Misc Projectile Components.cs" />
     <Compile Include="Toolbox with Stolen Things\ToolsIStoleForVFX.cs" />
@@ -93,7 +105,6 @@
     <Compile Include="Toolbox with Stolen Things\resourceLoaderSoundbanks.cs" />
     <Compile Include="Toolbox with Stolen Things\AudioResourceLoader.cs" />
     <Compile Include="Passives\Recon Pouch.cs" />
-    <Compile Include="Toolbox with Stolen Things\GunTools.cs" />
     <Compile Include="Guns\Pipe Launcher.cs" />
     <Compile Include="Guns\Pretty Boy%27s Pocket Pistol.cs" />
     <Compile Include="Guns\Single Gun Test.cs" />
@@ -104,6 +115,69 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\OtherVFX\airstrike_target\airstrike_target_006.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\airstrike_target\airstrike_target_001.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\airstrike_target\airstrike_target_002.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\airstrike_target\airstrike_target_003.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\airstrike_target\airstrike_target_004.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\airstrike_target\airstrike_target_005.png" />
+    <EmbeddedResource Include="Resources\Debris\sandvich_debris\sandvich_debris_001.png" />
+    <EmbeddedResource Include="Resources\Debris\sandvich_debris\sandvich_debris_002.png" />
+    <EmbeddedResource Include="Resources\Debris\sandvich_debris\sandvich_debris_003.png" />
+    <EmbeddedResource Include="Resources\Debris\sandvich_debris\sandvich_debris_004.png" />
+    <EmbeddedResource Include="Resources\Debris\sandvich_debris\sandvich_debris_005.png" />
+    <EmbeddedResource Include="Resources\Debris\sandvich_debris\sandvich_debris_006.png" />
+    <EmbeddedResource Include="Resources\Debris\sandvich_debris\sandvich_debris_007.png" />
+    <EmbeddedResource Include="Resources\Debris\sandvich_debris\sandvich_debris_008.png" />
+    <EmbeddedResource Include="Resources\Debris\sandvich_debris\sandvich_debris_009.png" />
+    <EmbeddedResource Include="Resources\Debris\sandvich_debris\sandvich_debris_010.png" />
+    <EmbeddedResource Include="Resources\Debris\sandvich_debris\sandvich_debris_011.png" />
+    <EmbeddedResource Include="Resources\MuzzleflashVFX\capper_muzzleflash\capper_muzzleflash_001.png" />
+    <EmbeddedResource Include="Resources\MuzzleflashVFX\capper_muzzleflash\capper_muzzleflash_002.png" />
+    <EmbeddedResource Include="Resources\MuzzleflashVFX\capper_muzzleflash\capper_muzzleflash_003.png" />
+    <EmbeddedResource Include="Resources\MuzzleflashVFX\capper_muzzleflash\capper_muzzleflash_004.png" />
+    <EmbeddedResource Include="Resources\MuzzleflashVFX\capper_muzzleflash\capper_muzzleflash_005.png" />
+    <EmbeddedResource Include="Resources\HitEffects\cleaver_hit_debris.png" />
+    <EmbeddedResource Include="Resources\Debris\nailgun_clip.png" />
+    <EmbeddedResource Include="Resources\HitEffects\SyringeHitEffects\syringe_clip.png" />
+    <EmbeddedResource Include="Resources\HitEffects\SyringeHitEffects\syringe_tile_north_001.png" />
+    <EmbeddedResource Include="Resources\HitEffects\SyringeHitEffects\syringe_tile_north_002.png" />
+    <EmbeddedResource Include="Resources\HitEffects\SyringeHitEffects\syringe_tile_north_003.png" />
+    <EmbeddedResource Include="Resources\HitEffects\SyringeHitEffects\syringe_tile_north_004.png" />
+    <EmbeddedResource Include="Resources\HitEffects\SyringeHitEffects\syringe_tile_north_005.png" />
+    <EmbeddedResource Include="Resources\HitEffects\SyringeHitEffects\syringe_tile_west_001.png" />
+    <EmbeddedResource Include="Resources\HitEffects\SyringeHitEffects\syringe_tile_west_002.png" />
+    <EmbeddedResource Include="Resources\HitEffects\SyringeHitEffects\syringe_tile_west_003.png" />
+    <EmbeddedResource Include="Resources\HitEffects\SyringeHitEffects\syringe_tile_west_004.png" />
+    <EmbeddedResource Include="Resources\HitEffects\SyringeHitEffects\syringe_tile_west_005.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_001.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_002.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_003.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_004.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_005.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_006.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_007.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_008.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_009.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_010.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_011.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_012.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_013.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_014.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_015.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_016.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_017.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_018.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_019.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_020.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_021.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_022.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_023.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_024.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_025.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_026.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_027.png" />
+    <EmbeddedResource Include="Resources\OtherVFX\explosion_ring\explosion_ring_cloud_028.png" />
     <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_001.png" />
     <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_002.png" />
     <EmbeddedResource Include="Resources\StatusEffectVFX\speed_effect\speed_effect_003.png" />
@@ -129,7 +203,6 @@
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipfull.png" />
     <EmbeddedResource Include="Resources\actives\example_active_sprite.png" />
     <EmbeddedResource Include="Resources\actives\inviswatch_sprite.png" />
-    <EmbeddedResource Include="Resources\actives\sandman_sprite.png" />
     <EmbeddedResource Include="Resources\actives\kritzkrieg_sprite.png" />
     <EmbeddedResource Include="Resources\actives\medigun_sprite.png" />
     <EmbeddedResource Include="Resources\actives\quick-fix_sprite.png" />
@@ -233,40 +306,35 @@
     <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_crouch\rogue_select_crouch_002.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_crouch\rogue_select_crouch_003.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_crouch\rogue_select_crouch_004.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_crouch_draw\rogue_select_crouch_draw_001.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_crouch_draw\rogue_select_crouch_draw_002.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_crouch_draw\rogue_select_crouch_draw_003.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_crouch_draw\rogue_select_crouch_draw_004.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_crouch_idle\rogue_select_crouch_003.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_crouch_idle\rogue_select_crouch_004.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_crouch_out\rogue_select_crouch_001.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_crouch_out\rogue_select_crouch_002.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\crouch_draw\rogue_select_crouch_draw_001.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\crouch_draw\rogue_select_crouch_draw_002.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\crouch_draw\rogue_select_crouch_draw_003.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\crouch_draw\rogue_select_crouch_draw_004.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\crouch\rogue_select_crouch_003.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\crouch\rogue_select_crouch_004.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\crouch\rogue_select_crouch_001.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\crouch\rogue_select_crouch_002.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_idle\rogue_select_idle_001.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_idle\rogue_select_idle_002.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_idle\rogue_select_idle_003.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_idle\rogue_select_idle_004.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_idle\rogue_select_idle_005.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_pose\rogue_select_pose_001.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_pose\rogue_select_pose_002.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_pose\rogue_select_pose_003.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_pose\rogue_select_pose_004.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_pose\rogue_select_pose_005.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_pose_dance\rogue_select_pose_dance_001.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_pose_dance\rogue_select_pose_dance_002.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_pose_dance\rogue_select_pose_dance_003.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_pose_idle\rogue_select_pose_005.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup\rogue_select_thumbs_up_001.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup\rogue_select_thumbs_up_002.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup\rogue_select_thumbs_up_003.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup\rogue_select_thumbs_up_004.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup\rogue_select_thumbs_up_005.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup\rogue_select_thumbs_up_006.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup\rogue_select_thumbs_up_007.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup_out\rogue_select_thumbs_up_001.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup_out\rogue_select_thumbs_up_002.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup_out\rogue_select_thumbs_up_003.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup_out\rogue_select_thumbs_up_004.png" />
-    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\select_thumbsup_out\rogue_select_thumbs_up_005.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\pose\rogue_select_pose_001.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\pose\rogue_select_pose_002.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\pose\rogue_select_pose_003.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\pose\rogue_select_pose_004.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\pose\rogue_select_pose_005.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\pose_dance\rogue_select_pose_dance_001.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\pose_dance\rogue_select_pose_dance_002.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\pose_dance\rogue_select_pose_dance_003.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\pose_idle\rogue_select_pose_idle_001.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\thumbsup\rogue_select_thumbs_up_001.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\thumbsup\rogue_select_thumbs_up_002.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\thumbsup\rogue_select_thumbs_up_003.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\thumbsup\rogue_select_thumbs_up_004.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\thumbsup\rogue_select_thumbs_up_005.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\thumbsup\rogue_select_thumbs_up_006.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\thumbsup\rogue_select_thumbs_up_007.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\chest_open\rogue_chest_open_001.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\chest_open\rogue_chest_open_002.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\chest_open\rogue_chest_open_003.png" />
@@ -591,6 +659,7 @@
     <EmbeddedResource Include="Characters\Scout\newspritesetup\idle_hand\rogue_idle_hands_003.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\idle_hand\rogue_idle_hands_004.png" />
     <EmbeddedResource Include="Characters\Scout\newspritesetup\hand_001.png" />
+    <EmbeddedResource Include="Characters\Scout\newspritesetup\breach_idles\pose_idle\rogue_select_pose_idle_002.png" />
     <Content Include="Characters\Scout\punchout\sprites\scout_punch_idle_003.png" />
     <EmbeddedResource Include="Characters\Soldier\characterdata.txt" />
     <EmbeddedResource Include="Characters\Soldier\coop_page_death.png" />
@@ -1267,8 +1336,13 @@
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\caber\caber_clipfull.png" />
     <EmbeddedResource Include="Resources\actives\steak_sprite.png" />
     <EmbeddedResource Include="Resources\actives\bonk_can_sprite.png" />
-    <Content Include="icon.ico" />
     <EmbeddedResource Include="Resources\actives\disciplinary_action_sprite.png" />
+    <EmbeddedResource Include="Resources\actives\dispenser_001.png" />
+    <EmbeddedResource Include="Resources\actives\sandman_sprite.png" />
+    <EmbeddedResource Include="Resources\actives\sandvich_sprite.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\airstrike\airstrike_clipempty.png" />
+    <EmbeddedResource Include="Resources\CustomGunAmmoTypes\airstrike\airstrike_clipfull.png" />
+    <Content Include="icon.ico" />
     <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipempty_OLD.png" />
     <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipfull_OLD.png" />
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\syringegun\syringegun_clipempty.png" />
@@ -1300,7 +1374,7 @@
       <HintPath>packages\HarmonyX.2.7.0\lib\net35\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Alexandria, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\EtG.Alexandria.0.3.23\lib\net35\Alexandria.dll</HintPath>
+      <HintPath>packages\EtG.Alexandria.0.4.8\lib\net35\Alexandria.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\EtG.GameLibs.2.1.9.1\lib\net35\Assembly-CSharp.dll</HintPath>
@@ -1311,11 +1385,8 @@
     <Reference Include="BepInEx, Version=5.4.21.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\BepInEx.BaseLib.5.4.21\lib\net35\BepInEx.dll</HintPath>
     </Reference>
-    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
-      <HintPath>packages\Ionic.Zip.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
-    </Reference>
     <Reference Include="ModTheGungeonAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\EtG.ModTheGungeonAPI.1.6.0\lib\net35\ModTheGungeonAPI.dll</HintPath>
+      <HintPath>packages\EtG.ModTheGungeonAPI.1.8.2\lib\net35\ModTheGungeonAPI.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
@@ -1502,6 +1573,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <EmbeddedResource Include="Resources\soundtest.bnk" />
+    <EmbeddedResource Include="Resources\tf2_sounds.bnk" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIs\" />

@@ -7,6 +7,7 @@ using System.IO;
 using JetBrains.Annotations;
 using HutongGames.PlayMaker;
 using System.Diagnostics;
+using Alexandria.SoundAPI;
 
 /* NOTES: 
  * Better player feedback on what the boost meter is at (come back when learn how vfx work/repurposed active charge on guns)
@@ -14,7 +15,7 @@ using System.Diagnostics;
  * Balancing: My main concern is that by making you lose half your boost if you dodge roll means that it might force players into
               constantly holding the gun (and it's not an amazing gun, either), so keep an eye on that.
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class BabyFaceBlaster : AdvancedGunBehavior
     {
@@ -35,6 +36,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "babyface_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 14);
             gun.SetAnimationFPS(gun.reloadAnimation, 10);
+            gun.TrimGunSprites();
 
             // gun setup
             gun.reloadTime = 1.1f;
@@ -71,18 +73,21 @@ namespace ExampleMod
 
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.B;
-            gun.encounterTrackable.EncounterGuid = "thespeedgun";
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.SHOTGUN;
             gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
             gun.Volley.DecreaseFinalSpeedPercentMin = -25f;
             gun.Volley.IncreaseFinalSpeedPercentMax = 30f;
             gun.barrelOffset.transform.localPosition += new Vector3(8f/16f, 10f/16f);
-            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
+            SoundManager.AddCustomSwitchData("WPN_Guns", "qad_babyface", "Play_WPN_Gun_Shot_01", "babyface_shoot");
+            SoundManager.AddCustomSwitchData("WPN_Guns", "qad_babyface", "Play_WPN_Gun_Reload_01", "scatter_gun_reload");
+            gun.gunSwitchGroup = "qad_babyface";
             //gun.transform.position += new Vector3(3f/16f, 10f/16f);
             //gun.CanBeDropped = false; // gun breaks when dropped? make it undroppable
             gun.shellCasing = (PickupObjectDatabase.GetById(202) as Gun).shellCasing;
             gun.shellsToLaunchOnFire = 1;
             gun.shellsToLaunchOnReload = 0;
+            gun.doesScreenShake = true;
+            gun.gunScreenShake = new ScreenShakeSettings(0.6f, 10f, 0.1f, 0.02f);
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
@@ -110,29 +115,6 @@ namespace ExampleMod
             gun.RemoveStatFromGun(PlayerStats.StatType.MovementSpeed);
             gun.AddStatToGun(PlayerStats.StatType.MovementSpeed, 1f + (bullethits * 0.0125f), StatModifier.ModifyMethod.MULTIPLICATIVE);
             player.stats.RecalculateStats(player, true, false);
-        }
-        public override void OnPostFired(PlayerController player, Gun gun)
-        {
-            // Sound setup
-            gun.PreventNormalFireAudio = true;
-            AkSoundEngine.PostEvent("Play_babyface_shoot", gameObject);
-        }
-        private bool HasReloaded;
-        protected override void Update()
-        {
-            base.Update();
-            if (gun.CurrentOwner)
-            {
-
-                if (!gun.PreventNormalFireAudio)
-                {
-                    this.gun.PreventNormalFireAudio = true;
-                }
-                if (!gun.IsReloading && !HasReloaded)
-                {
-                    this.HasReloaded = true;
-                }
-            }
         }
         //override 
         protected override void OnPickup(GameActor owner)
@@ -189,19 +171,6 @@ namespace ExampleMod
             }
             StatChange(this.gun);
         }
-        public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
-        {
-            if (gun.IsReloading && this.HasReloaded)
-            {
-                HasReloaded = false;
-                AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-                base.OnReloadPressed(player, gun, bSOMETHING);
-                AkSoundEngine.PostEvent("Play_scatter_gun_reload", base.gameObject);
-            }
-        }
-        //override
-        //
-        
 
         /*public override void OnPlayerPickup(PlayerController player)
         {

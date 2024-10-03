@@ -5,17 +5,19 @@ using MonoMod;
 using UnityEngine;
 using Alexandria.ItemAPI;
 using BepInEx;
+using Alexandria.BreakableAPI;
 using System.Collections.Generic;
-using HutongGames.PlayMaker;
+using Alexandria.Misc;
+using Alexandria.VisualAPI;
 
 /* NOTES:
  * Bleed effect is broken   UPDATE: Bleed is VERY broken since its mostly unused ;-;
  * Extra damage on stun is broken
  * Charge animation is not working like i want it to find out how it works  UPDATE: Done :D
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
-    public class Cleaver : AdvancedGunBehavior
+    public class Cleaver : GunBehaviour
     {
         public static void Add()
         {
@@ -26,14 +28,15 @@ namespace ExampleMod
             
             //Gun descriptions
             gun.SetShortDescription("Cutting Edge");
-            gun.SetLongDescription("Why use a tiny throwing knife when you just have a massive cleaver instead?\n\n" +
-                "There are chinese symbols engraved on the side of the blade. They roughly translate to 'Dead Meat'.");
+            gun.SetLongDescription("Why use a tiny throwing knife when you just have a massive cleaver instead? Deals critical damage to enemies " +
+                "with one or more afflictions.\n\nThere are chinese symbols engraved on the side of the blade. They roughly translate to 'Dead Meat'.");
             
             // Sprite setup
             gun.SetupSprite(null, "cleaver_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 8);
             gun.SetAnimationFPS(gun.reloadAnimation, 4);
             gun.SetAnimationFPS(gun.chargeAnimation, 12);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(56) as Gun, true, false);
@@ -51,7 +54,6 @@ namespace ExampleMod
 
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.D;
-            gun.encounterTrackable.EncounterGuid = "Throwing Cleaver";
             gun.AddToSubShop(ItemBuilder.ShopType.Cursula);
 
             //Cloning
@@ -61,12 +63,27 @@ namespace ExampleMod
             UnityEngine.Object.DontDestroyOnLoad(projectile);
             gun.DefaultModule.projectiles[0] = projectile;
 
+            
+
             // More projectile setup
-            projectile.baseData.damage = 25f;
-            projectile.baseData.speed = 26f;
+            projectile.baseData.damage = 20f;
+            projectile.baseData.speed = 36f;
             projectile.baseData.range = 1000f;
             projectile.baseData.force = 10f;
             projectile.transform.parent = gun.barrelOffset;
+            
+
+            GameObject debris = BreakableAPIToolbox.GenerateDebrisObject("TF2Items/Resources/HitEffects/cleaver_hit_debris.png", true, AngularVelocity: 720).gameObject;
+            debris.GetComponent<tk2dBaseSprite>().CurrentSprite.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.MiddleCenter);
+            VFXPool debrisPool = VFXBuilder.CreateBlankVFXPool(debris);
+            debrisPool.type = VFXPoolType.All;
+
+            projectile.hitEffects.HasProjectileDeathVFX = true;
+            projectile.hitEffects.deathAny = debrisPool;
+            projectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(417) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
+            projectile.hitEffects.alwaysUseMidair = true;
+            projectile.hitEffects.midairInheritsFlip = true;
+
             /*projectile.bleedEffect = new GameActorBleedEffect
             {
                 AffectsEnemies = true,
@@ -94,7 +111,7 @@ namespace ExampleMod
             projectile.AppliesBleed = true;
             projectile.BleedApplyChance = 100f;*/
 
-            projectile.AnimateProjectile(new List<string> {
+            /*projectile.AnimateProjectile(new List<string> {
                 "cleaverproj_001",
                 "cleaverproj_002",
                 "cleaverproj_003",
@@ -115,12 +132,17 @@ namespace ExampleMod
                 new IntVector2(12, 12), //3
             },
             AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 4),
-            AnimateBullet.ConstructListOfSameValues<Projectile>(null, 4));
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, 4));*/
+            projectile.SetProjectileSpriteRight("cleaverproj_001", 14, 13, lightened: false, anchor: tk2dBaseSprite.Anchor.MiddleCenter);
+
+            ProjectileSpin spin = projectile.gameObject.GetOrAddComponent<ProjectileSpin>();
+            spin.degreesPerSecond = 1080f;
+            spin.directionOfSpinDependsOnVelocity = true;
 
             ProjectileModule.ChargeProjectile chargeProj = new ProjectileModule.ChargeProjectile
             {
                 Projectile = projectile,
-                ChargeTime = 1f,
+                ChargeTime = 0.8f,
                 VfxPool = null,
             };
             gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile> { chargeProj };
@@ -131,60 +153,52 @@ namespace ExampleMod
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 5;
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Cleaver",
-                "ExampleMod/Resources/CustomGunAmmoTypes/cleaver/cleaver_clipfull",
-                "ExampleMod/Resources/CustomGunAmmoTypes/cleaver/cleaver_clipempty");
+                "TF2Items/Resources/CustomGunAmmoTypes/cleaver/cleaver_clipfull",
+                "TF2Items/Resources/CustomGunAmmoTypes/cleaver/cleaver_clipempty");
 
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_cleaver_throw";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
         }
         public static int ID;
-        public override void OnPostFired(PlayerController player, Gun gun)
-        {
-            // Sound setup
-            gun.PreventNormalFireAudio = true;
-        }
-        private bool HasReloaded;
-        protected override void Update()
-        {
-            if (gun.CurrentOwner)
-            {
-
-                if (!gun.PreventNormalFireAudio)
-                {
-                    this.gun.PreventNormalFireAudio = true;
-                }
-                if (!gun.IsReloading && !HasReloaded)
-                {
-                    this.HasReloaded = true;
-                }
-            }
-        }
+        bool hasCrit = false;
         public override void PostProcessProjectile(Projectile projectile)
         {
             projectile.OnHitEnemy += this.OnHitEnemy;
+            projectile.specRigidbody.OnPreRigidbodyCollision += PreCollision;
+            projectile.specRigidbody.OnTileCollision += HitWorld;
             base.PostProcessProjectile(projectile);
+        }
+        public void HitWorld(CollisionData tileCollision)
+        {
+            AkSoundEngine.PostEvent("cleaver_hit_world", tileCollision.MyRigidbody.gameObject);
         }
         private void OnHitEnemy(Projectile proj, SpeculativeRigidbody enemy, bool fatal)
         {
             PlayerController player = gun.GunPlayerOwner();
-            AkSoundEngine.PostEvent("Play_cleaver_hit", base.gameObject);
+            string[] hitSounds = new[] { "cleaver_hit_01", "cleaver_hit_02", "cleaver_hit_03", "cleaver_hit_04", "cleaver_hit_05" };
 
-            if (enemy != null && enemy.aiActor != null && player != null && player.projectile && enemy.aiActor.healthHaver)
+            AkSoundEngine.PostEvent(hitSounds[Random.Range(0, hitSounds.Length)], proj.gameObject);
+
+            if (hasCrit)
             {
-                if (enemy.aiActor.GetEffect("stun") != null)
-                {
-                    player.projectile.baseData.damage *= 1.5f;
-                }
+                enemy.DoCritEffects(); // in CodeShortcuts.cs
+                UnityEngine.Object.Instantiate<GameObject>(EasyVFXDatabase.TeleporterPrototypeTelefragVFX, enemy.UnitCenter, Quaternion.identity);
+                if (PlayerOwner && PlayerOwner.GetExtComp() && PlayerOwner.PlayerHasActiveSynergy("The Forbidden Combo")) 
+                    PlayerOwner.GetExtComp().Enrage(3, true);
             }
         }
-        public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
+        private void PreCollision(SpeculativeRigidbody myBody, PixelCollider myCollider, SpeculativeRigidbody otherBody, PixelCollider otherCollider)
         {
-            if (gun.IsReloading && this.HasReloaded)
+            hasCrit = false;
+            if (myBody.projectile != null && otherBody.aiActor != null)
             {
-                HasReloaded = false;
-                AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-                base.OnReloadPressed(player, gun, bSOMETHING);
-                //AkSoundEngine.PostEvent("Play_pistol_clipin", base.gameObject);
+                //ETGModConsole.Log(PlayerOwner.PlayerHasActiveSynergy("The Forbidden Combo") + " " + otherBody.aiActor.behaviorSpeculator.IsStunned);
+                if (otherBody.aiActor.m_activeEffects.Count > 0 || otherBody.aiActor.behaviorSpeculator.IsStunned)
+                {
+                    myBody.projectile.baseData.force *= 2f;
+                    myBody.projectile.baseData.damage *= (PlayerOwner.PlayerHasActiveSynergy("The Forbidden Combo")) ? 4f : 3f;
+                    hasCrit = true;
+                }
             }
         }
     }

@@ -9,7 +9,7 @@ using System.Security.Policy;
 /* NOTES:
  * Synergise with any shield in order to gain a speed boost 
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Demoknight_Boots : PassiveItem
     {
@@ -17,7 +17,7 @@ namespace ExampleMod
         public static void Register()
         {
             string itemName = "Ali Baba's Wee Booties";
-            string resourceName = "ExampleMod/Resources/passives/ali_babas_booties_sprite";
+            string resourceName = "TF2Items/Resources/passives/ali_babas_booties_sprite";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<Demoknight_Boots>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);

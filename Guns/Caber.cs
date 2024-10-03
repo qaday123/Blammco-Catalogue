@@ -11,7 +11,7 @@ using HutongGames.PlayMaker;
 /* NOTES:
  * Explosion doesn't do self damage for some reason even when the variable contains a value other than 0.
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Caber : AdvancedGunBehavior
     {
@@ -33,6 +33,7 @@ namespace ExampleMod
             gun.SetAnimationFPS(gun.shootAnimation, 16);
             gun.SetAnimationFPS(gun.reloadAnimation, 1);
             gun.SetAnimationFPS(gun.chargeAnimation, 8);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(56) as Gun, true, false);
@@ -105,8 +106,8 @@ namespace ExampleMod
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 3;
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Caber",
-                "ExampleMod/Resources/CustomGunAmmoTypes/caber/caber_clipfull",
-                "ExampleMod/Resources/CustomGunAmmoTypes/caber/caber_clipempty");
+                "TF2Items/Resources/CustomGunAmmoTypes/caber/caber_clipfull",
+                "TF2Items/Resources/CustomGunAmmoTypes/caber/caber_clipempty");
 
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_OBJ_item_throw_01";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;

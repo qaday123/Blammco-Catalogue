@@ -11,7 +11,7 @@ using static ETGMod;
 /* NOTES:
  * Add hit count and speed debuff at end (4s)
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Bonk_Soda : PlayerItem
     {
@@ -22,7 +22,7 @@ namespace ExampleMod
             string itemName = "BONK! Atomic Punch";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/actives/bonk_can_sprite";
+            string resourceName = "TF2Items/Resources/actives/bonk_can_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);
@@ -52,7 +52,7 @@ namespace ExampleMod
             item.quality = PickupObject.ItemQuality.C;
             ID = item.PickupObjectId;
 
-            customVFXPrefab = VFXToolbox.CreateOverheadVFX(new List<string>() { "ExampleMod/Resources/StatusEffectVFX/slowed_effect_icon" }, "SlowedEffect", 1);
+            customVFXPrefab = VFXToolbox.CreateOverheadVFX(new List<string>() { "TF2Items/Resources/StatusEffectVFX/slowed_effect_icon" }, "SlowedEffect", 1);
             GameObject.DontDestroyOnLoad(customVFXPrefab);
             FakePrefab.MarkAsFakePrefab(customVFXPrefab);
             customVFXPrefab.SetActive(false);

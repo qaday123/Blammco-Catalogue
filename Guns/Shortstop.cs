@@ -2,12 +2,13 @@
 using MonoMod;
 using UnityEngine;
 using Alexandria.ItemAPI;
+using Alexandria.SoundAPI;
 using BepInEx;
 
 /* NOTES:
  * Synergy with something stupid (Klobbe?) to add the shove
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Shortstop : GunBehaviour
     {
@@ -21,13 +22,13 @@ namespace ExampleMod
             //Gun descriptions
             gun.SetShortDescription("Handheld Shotgun");
             gun.SetLongDescription("Nobody ever questioned the validity of making a handgun shoot like a shotgun.\n\nBut now, " +
-                "with a couple of shots to the back, you can get it over quick and easy. That is, as long as you like to be " +
-                "close to that back. Otherwise, it's just a worse pistol.");
+                "with a couple of shots to the back, you can get it over quick and easy. Just like the milkman said.");
             
             // Sprite setup
             gun.SetupSprite(null, "shortstop_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 16);
             gun.SetAnimationFPS(gun.reloadAnimation, 8);
+            gun.TrimGunSprites();
 
             // gun setup
             gun.reloadTime = 1.4f;
@@ -48,37 +49,27 @@ namespace ExampleMod
                 proj.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
                 proj.cooldownTime = 0.36f;
                 proj.numberOfShotsInClip = 4;
-                proj.angleVariance = 1f;
+                proj.angleVariance = 0f;
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(proj.projectiles[0]);
                 proj.projectiles[0] = projectile;
                 projectile.baseData.speed = 20f;
-                if (iterator == 1)
+                projectile.baseData.damage = 4f;
+                projectile.baseData.range = 30f;
+                projectile.baseData.force = 5f;
+                switch(iterator)
                 {
-                    proj.angleFromAim = 10f;
-                    projectile.baseData.damage = 5f;
-                    projectile.baseData.range = 30f;
-                    projectile.baseData.force = 5f;
-                }
-                if (iterator == 2)
-                {
-                    proj.angleFromAim = -10f;
-                    projectile.baseData.damage = 5f;
-                    projectile.baseData.range = 30f;
-                    projectile.baseData.force = 5f;
-                }
-                if (iterator == 3)
-                {
-                    proj.positionOffset += new Vector3(0f,0.25f,0f); 
-                    projectile.baseData.damage = 8f;
-                    projectile.baseData.range = 3.5f;
-                    projectile.baseData.force = 14f;
-                }
-                if (iterator == 4)
-                {
-                    proj.positionOffset += new Vector3(0f, -0.25f, 0f);
-                    projectile.baseData.damage = 8f;
-                    projectile.baseData.range = 3.5f;
-                    projectile.baseData.force = 14f;
+                    case 0:
+                        proj.positionOffset += new Vector3(0.2f, 0.2f, 0);
+                        break;
+                    case 1:
+                        proj.positionOffset += new Vector3(0.2f, -0.2f, 0);
+                        break;
+                    case 2:
+                        proj.positionOffset += new Vector3(-0.2f, 0.2f, 0);
+                        break;
+                    case 3:
+                        proj.positionOffset += new Vector3(-0.2f, -0.2f, 0);
+                        break;
                 }
                 iterator++;
                 projectile.transform.parent = gun.barrelOffset;
@@ -98,55 +89,26 @@ namespace ExampleMod
             gun.encounterTrackable.EncounterGuid = "shortstop";
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Inverse Shell",
-                "ExampleMod/Resources/CustomGunAmmoTypes/shortstop/inverseshell_clipfull",
-                "ExampleMod/Resources/CustomGunAmmoTypes/shortstop/inverseshell_clipempty");
+                "TF2Items/Resources/CustomGunAmmoTypes/shortstop/inverseshell_clipfull",
+                "TF2Items/Resources/CustomGunAmmoTypes/shortstop/inverseshell_clipempty");
             gun.Volley.UsesShotgunStyleVelocityRandomizer = false;
             gun.carryPixelOffset = new IntVector2(4, 1);
-            gun.barrelOffset.transform.localPosition += new Vector3(4f/16f, 7f/16f, 0);
-            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
+            gun.barrelOffset.transform.localPosition += new Vector3(4f/16f, 9f/16f, 0);
             gun.shellCasing = (PickupObjectDatabase.GetById(15) as Gun).shellCasing;
+            gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(53) as Gun).muzzleFlashEffects;
             gun.shellsToLaunchOnFire = 0;
             gun.shellsToLaunchOnReload = 4;
+            gun.reloadShellLaunchFrame = 3;
+            gun.gunScreenShake = new ScreenShakeSettings(0.5f, 8f, 0.06f, 0.006f);
+
+            SoundManager.AddCustomSwitchData("WPN_Guns", "qad_shortstop", "Play_WPN_Gun_Shot_01", "shortstop_shoot");
+            SoundManager.AddCustomSwitchData("WPN_Guns", "qad_shortstop", "Play_WPN_Gun_Reload_01", "shortstop_reload");
+            gun.gunSwitchGroup = "qad_shortstop";
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
         }
 
         public static int ID;
-        public override void OnPostFired(PlayerController player, Gun gun)
-        {
-            // Sound setup
-            gun.PreventNormalFireAudio = true;
-            AkSoundEngine.PostEvent("Play_shortstop_shoot", gameObject);
-        }
-        private bool HasReloaded;
-        public override void Update()
-        {
-            if (gun.CurrentOwner)
-            {
-
-                if (!gun.PreventNormalFireAudio)
-                {
-                    this.gun.PreventNormalFireAudio = true;
-                }
-                if (!gun.IsReloading && !HasReloaded)
-                {
-                    this.HasReloaded = true;
-                }
-            }
-        }
-
-        public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
-        {
-            if (gun.IsReloading && this.HasReloaded)
-            {
-                HasReloaded = false;
-                AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-                //AkSoundEngine.PostEvent("Stop_SDB_All", base.gameObject);
-                base.OnReloadPressed(player, gun, bSOMETHING);
-                AkSoundEngine.PostEvent("Play_shortstop_reload", base.gameObject);
-                //gun.SpawnShellCasingAtPosition(new Vector3(0f, 0f, 0f));
-            }
-        }
     }
 }

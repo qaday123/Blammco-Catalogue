@@ -11,7 +11,7 @@ using System.Security.Policy;
  * Game loads floor twice for some reason... hooray for gungeon spaghetti!
  * Synergises with any australium-themed item, supercharging it and doubling it's effects
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class LEM_MkGRAY : PassiveItem
     {
@@ -19,7 +19,7 @@ namespace ExampleMod
         public static void Register()
         {
             string itemName = "Life Extender Machine";
-            string resourceName = "ExampleMod/Resources/passives/LEM";
+            string resourceName = "TF2Items/Resources/passives/LEM";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<LEM_MkGRAY>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);

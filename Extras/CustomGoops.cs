@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Alexandria.Misc;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class CustomGoops
     {

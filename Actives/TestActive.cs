@@ -6,7 +6,7 @@ using UnityEngine;
 using Alexandria.ItemAPI;
 using Dungeonator;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class TestActive : PlayerItem
     {
@@ -17,7 +17,7 @@ namespace ExampleMod
             string itemName = "Free Heart";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/actives/example_active_sprite";
+            string resourceName = "TF2Items/Resources/actives/example_active_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);

@@ -6,20 +6,20 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class JarateEffectSetup
     {
         public static List<string> JarateFilePath = new List<string>()
         {
-            "ExampleMod/Resources/StatusEffectVFX/jarate_effect_icon",
+            "TF2Items/Resources/StatusEffectVFX/jarate_effect_icon",
         };
         public static GameObject jarateVFXObject;
         public static void Init()
         {
             JarateStatusEffect StandJarate = StatusEffectHelper.GenerateJarateEffect(100, 2, true, MoreColours.jarateyellow, true, MoreColours.jarateyellow);
             StaticStatusEffects.StandardJarateEffect = StandJarate;
-            jarateVFXObject = SpriteBuilder.SpriteFromResource("ExampleMod/Resources/StatusEffectVFX/jarate_effect_icon", new GameObject("JarateIcon"));
+            jarateVFXObject = SpriteBuilder.SpriteFromResource("TF2Items/Resources/StatusEffectVFX/jarate_effect_icon", new GameObject("JarateIcon"));
             jarateVFXObject.SetActive(false);
             tk2dBaseSprite vfxSprite = jarateVFXObject.GetComponent<tk2dBaseSprite>();
             vfxSprite.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, vfxSprite.GetCurrentSpriteDef().position3);
@@ -31,7 +31,7 @@ namespace ExampleMod
     {
         public static List<string> JarateFilePath = new List<string>()
         {
-            "ExampleMod/Resources/StatusEffectVFX/jarate_effect_icon",
+            "TF2Items/Resources/StatusEffectVFX/jarate_effect_icon",
         };
         public static GameObject jarateVFXObject;
         public JarateStatusEffect()

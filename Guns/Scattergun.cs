@@ -10,7 +10,7 @@ using HutongGames.PlayMaker;
 /* NOTES: 
  * Shooting anim looks weird. fix
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Scattergun : GunBehaviour
     {
@@ -31,6 +31,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "scatgun_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 18);
             gun.SetAnimationFPS(gun.reloadAnimation, 12);
+            gun.TrimGunSprites();
 
             // gun setup
             gun.reloadTime = 1.3f;
@@ -50,11 +51,11 @@ namespace ExampleMod
                 projectileModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
                 projectileModule.cooldownTime = 0.6f;
                 projectileModule.numberOfShotsInClip = 6;
-                projectileModule.angleVariance = 12f;
+                projectileModule.angleVariance = 15f;
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(projectileModule.projectiles[0]);
                 projectileModule.projectiles[0] = projectile;
                 projectile.baseData.damage = 3f;
-                projectile.baseData.speed *= 1f; //speed;
+                projectile.baseData.speed *= 1.1f; //speed;
                 projectile.baseData.range = 9f;
                 projectile.baseData.force = 8f;
                 projectile.transform.parent = gun.barrelOffset;
@@ -80,6 +81,7 @@ namespace ExampleMod
             gun.shellCasing = (PickupObjectDatabase.GetById(202) as Gun).shellCasing;
             gun.shellsToLaunchOnFire = 1;
             gun.shellsToLaunchOnReload = 0;
+            gun.gunScreenShake = new(0.4f, 14f, 0.12f, 0.012f);
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
@@ -121,7 +123,7 @@ namespace ExampleMod
         {
             // Sound setup
             gun.PreventNormalFireAudio = true;
-            AkSoundEngine.PostEvent("Play_scatter_gun_shoot", gameObject);
+            AkSoundEngine.PostEvent("scatter_gun_shoot", gameObject);
 
             /*foreach (ProjectileModule projectileModule in gun.Volley.projectiles)
             {

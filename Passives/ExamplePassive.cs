@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Alexandria.ItemAPI;
+using Alexandria.Misc;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class ExamplePassive : PassiveItem
     {
@@ -16,7 +17,7 @@ namespace ExampleMod
             string itemName = "Test";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/passives/example_item_sprite";
+            string resourceName = "TF2Items/Resources/passives/example_item_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);
@@ -42,12 +43,31 @@ namespace ExampleMod
 
             //Set the rarity of the item
             item.quality = PickupObject.ItemQuality.EXCLUDED;
-
+            ID = item.PickupObjectId;
         }
+        public static int ID;
+        public int _kills;
 
+        public void EnemyTookDamage(float damage, bool fatal, HealthHaver enemy)
+        {
+            if (fatal && enemy != null)
+            {
+                _kills++; 
+            }
+        }
+        public void SpawnMeal(PlayerController player)
+        {
+            if (_kills >= 10)
+            {
+                //I deleted this but spawn it here
+                _kills -= 10;
+            }
+        }
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);
+            player.OnAnyEnemyReceivedDamage += EnemyTookDamage;
+            player.OnRoomClearEvent += SpawnMeal;
         }
 
         public override DebrisObject Drop(PlayerController player)

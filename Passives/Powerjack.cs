@@ -10,7 +10,7 @@ using System.Security.Policy;
  * It may be perhaps a little unbalanced, but for now I just slapped it on S tier and called it a day
  * fix speedmodconst    DONE?
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Powerjack : PassiveItem
     {
@@ -21,7 +21,7 @@ namespace ExampleMod
             string itemName = "Powerjack";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/passives/powerjack_sprite";
+            string resourceName = "TF2Items/Resources/passives/powerjack_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);

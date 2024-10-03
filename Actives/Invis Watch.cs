@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using Alexandria.ItemAPI;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class InvisWatch : PlayerItem
     {
@@ -16,7 +16,7 @@ namespace ExampleMod
             string itemName = "Invis Watch";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/actives/inviswatch_sprite";
+            string resourceName = "TF2Items/Resources/actives/inviswatch_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);

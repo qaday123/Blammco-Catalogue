@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using Alexandria.ItemAPI;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Recon_Pouch : PassiveItem
     {
@@ -13,7 +13,7 @@ namespace ExampleMod
         {
             string itemName = "Recon Pouch";
             // TODO: Add sprite
-            string resourceName = "ExampleMod/Resources/passives/scout_bag_sprite";
+            string resourceName = "TF2Items/Resources/passives/scout_bag_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);

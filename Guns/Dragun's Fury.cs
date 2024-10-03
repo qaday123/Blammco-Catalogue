@@ -4,7 +4,10 @@ using UnityEngine;
 using Alexandria.ItemAPI;
 using BepInEx;
 using System.IO;
+using HarmonyLib;
 using static UnityEngine.UI.GridLayoutGroup;
+using System.Collections;
+using Alexandria.SoundAPI;
 
 /* NOTESSSS: 
  * Firing animation needs to feel more 'bouncy' (final frame a bit lower could do it) // DONE
@@ -13,16 +16,15 @@ using static UnityEngine.UI.GridLayoutGroup;
    I don't know an easy fix, since this is likely because of projectile travel speed messing with things
  * Idle animation should have some sort of 'flicker' on the lighter part
  * Bonus damage on fire works now! In exchange for breaking many other things...
-*/  
-namespace ExampleMod
+*/
+namespace TF2Stuff
 
 {
+    [HarmonyPatch]
     public class DragunsFury : GunBehaviour
     {
         public static void Add()
         {
-
-
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Dragun's Fury", "dragfury");
             Game.Items.Rename("outdated_gun_mods:dragun's_fury", "qad:dragun's_fury");
@@ -38,6 +40,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "dragfury_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 16);
             gun.SetAnimationFPS(gun.reloadAnimation, 3);
+            gun.TrimGunSprites();
 
             // gun setup
 
@@ -72,24 +75,41 @@ namespace ExampleMod
 
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.C;
-            gun.encounterTrackable.EncounterGuid = "draguns fury";
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = "burning hand";
             gun.barrelOffset.transform.localPosition += new Vector3(1f, 0.625f, 0);
             //gun.transform.position += new Vector3(2f, 0.5f, 0f);
-            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
+            SoundManager.AddCustomSwitchData("WPN_Guns", "qad_dragunsfury", "Play_WPN_Gun_Shot_01", "Play_dragons_fury_shoot");
+            SoundManager.AddCustomSwitchData("WPN_Guns", "qad_dragunsfury", "Play_WPN_Gun_Reload_01", "Play_dragons_fury_reload");
+            gun.gunSwitchGroup = "qad_dragunsfury";
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
         }
-        public void Pressurisation(Gun gun) // this absolutely does not do what its supposed to do
+        public bool hitenemy;
+        public bool cooldownApplied;
+        public static int ID;
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Gun), nameof(Gun.HandleModuleCooldown))]
+        public static IEnumerator HandleCooldownPostfix(IEnumerator enumerator, Gun __instance, ProjectileModule mod)
         {
-            //ETGModConsole.Log($"hitenemy:{hitenemy}");
-            if (hitenemy)
+            while (enumerator.MoveNext())
             {
-                gun.DefaultModule.cooldownTime /= 1.4f;
+                var currentElapsed = enumerator.EnumeratorGetField<float>("elapsed");
+                if (__instance && __instance.GetComponent<DragunsFury>() is DragunsFury component && component)
+                {
+                    if (component.hitenemy == true)
+                    {
+                        currentElapsed += 0.3f;
+                        component.hitenemy = false;
+                        component.cooldownApplied = true;
+                    }
+                }
+                enumerator.EnumeratorSetField("elapsed", currentElapsed);
+
+                yield return enumerator.Current;
             }
-            hitenemy = false;
         }
         public override void PostProcessProjectile(Projectile projectile)
         {
@@ -100,10 +120,10 @@ namespace ExampleMod
         }
         private void OnHitEnemy(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
         {
-            hitenemy = true;
-            Pressurisation(myRigidbody.projectile.PossibleSourceGun);
+            //Pressurisation(myRigidbody.projectile.PossibleSourceGun);
             if (otherRigidbody != null && otherRigidbody.aiActor != null && myRigidbody != null && myRigidbody.projectile && otherRigidbody.aiActor.healthHaver)
             {
+                if (!cooldownApplied) hitenemy = true;
                 if (otherRigidbody.aiActor.GetEffect("fire") != null)
                 {
                     myRigidbody.projectile.baseData.damage *= 3;
@@ -112,49 +132,16 @@ namespace ExampleMod
         }
         public override void OnPostFired(PlayerController player, Gun gun)
         {
-            // Sound setup
-            gun.PreventNormalFireAudio = true;
-            AkSoundEngine.PostEvent("Play_dragons_fury_shoot", gameObject);
-            gun.DefaultModule.cooldownTime = 0.9f;
-            //ETGModConsole.Log($"HitEnemy: {hitenemy}");
-            //ETGModConsole.Log($"cooldown:{gun.DefaultModule.cooldownTime}");
-
-            /*foreach (ProjectileModule projectileModule in gun.Volley.projectiles)
-            {
-                System.Random randspeed = new System.Random();
-                float speed = randspeed.Next(4, 28);
-                projectile.baseData.speed = speed;
-            }*/
+            cooldownApplied = false;
         }
-        private bool HasReloaded;
-        public override void Update()
+        /*public void Pressurisation(Gun gun) // this absolutely does not do what its supposed to do
         {
-            if (gun.CurrentOwner)
-            {
-
-                if (!gun.PreventNormalFireAudio)
-                {
-                    this.gun.PreventNormalFireAudio = true;
-                }
-                if (!gun.IsReloading && !HasReloaded)
-                {
-                    this.HasReloaded = true;
-                }
+            //ETGModConsole.Log($"hitenemy:{hitenemy}");
+            if (hitenemy)
+            { // the IEnumerator that handles cooldown time presets the time and loops after it has been set
+                gun.DefaultModule.cooldownTime /= 1.4f;
             }
-        }
-
-        public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
-        {
-            if (gun.IsReloading && this.HasReloaded)
-            {
-                HasReloaded = false;
-                AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-                base.OnReloadPressed(player, gun, bSOMETHING);
-                AkSoundEngine.PostEvent("Play_dragons_fury_reload", base.gameObject);
-                //gun.SpawnShellCasingAtPosition(new Vector3(0f, 0f, 0f));
-            }
-        }
-        public bool hitenemy;
-        public static int ID;
+            hitenemy = false;
+        }*/
     }
 }

@@ -16,7 +16,7 @@ using HutongGames.PlayMaker;
     UPDATE UPDATE: tis been fixed! It actually works!!
  * Debate on whether to make A tier (8 damage) or B tier (5 damage) for balancing purposes
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Widowmaker : GunBehaviour
     {
@@ -37,6 +37,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "widow_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 12);
             gun.SetAnimationFPS(gun.reloadAnimation, 1);
+            gun.TrimGunSprites();
 
             // gun setup
             gun.reloadTime = 0f;
@@ -71,7 +72,6 @@ namespace ExampleMod
 
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.B;
-            gun.encounterTrackable.EncounterGuid = "widowmaker";
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.SHOTGUN;
             gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
             gun.Volley.DecreaseFinalSpeedPercentMin = -25f;
@@ -79,6 +79,7 @@ namespace ExampleMod
             gun.barrelOffset.transform.localPosition += new Vector3(0, 0.375f, 0);
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             gun.carryPixelOffset += new IntVector2(4,-1);
+            gun.gunScreenShake = new(0.6f, 9f, 0.09f, 0.009f);
             //gun.transform.position += new Vector3(2f, 0.5f, 0f);
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
@@ -117,8 +118,7 @@ namespace ExampleMod
                 gun.ClipShotsRemaining = gun.CurrentAmmo / 4;
                 if (maxammo != old_maxammo)
                 {
-                    PlayerController player = gun.GunPlayerOwner();
-                    player.stats.RecalculateStats(player, true, false);
+                    PlayerOwner.stats.RecalculateStats(PlayerOwner, true, false);
                     old_maxammo = maxammo;
                 }
                 if (!gun.PreventNormalFireAudio)

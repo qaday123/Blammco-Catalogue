@@ -4,13 +4,16 @@ using Gungeon;
 using MonoMod;
 using UnityEngine;
 using Alexandria.ItemAPI;
+using Alexandria.VisualAPI;
 using BepInEx;
+using UnityEngine.Analytics;
+using Alexandria.BreakableAPI;
 
 
 // POTENTIAL SYNERGIES: Poison weapons: spawns blob of poison, Something that stuns: Apply stun, Charm weapons/drugs: Apply charm,
 // Syringe: Fire Syringes???
 // ISSUES TO SOLVE: Fix Syringe Sprite
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class SyringeGun : GunBehaviour
     {
@@ -32,6 +35,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "syringe_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 12);
             gun.SetAnimationFPS(gun.reloadAnimation, 12);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(56) as Gun, true, false);
@@ -43,7 +47,7 @@ namespace ExampleMod
             gun.DefaultModule.cooldownTime = 0.1f;
             gun.DefaultModule.numberOfShotsInClip = 25;
             gun.DefaultModule.angleVariance = 8f;
-            gun.SetBaseMaxAmmo(400);
+            gun.SetBaseMaxAmmo(600);
             gun.gunClass = GunClass.SILLY; //when as starting weapon reclass to 'SHITTY'
             gun.barrelOffset.transform.localPosition += new Vector3(0.625f, 0.5f, 0);
             gun.carryPixelOffset = new IntVector2(8, 0);
@@ -51,8 +55,8 @@ namespace ExampleMod
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             //gun.DefaultModule.customAmmoType = "ghost_small";
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Syringe",
-                "ExampleMod/Resources/CustomGunAmmoTypes/syringegun/syringegun_clipfull",
-                "ExampleMod/Resources/CustomGunAmmoTypes/syringegun/syringegun_clipempty");
+                "TF2Items/Resources/CustomGunAmmoTypes/syringegun/syringegun_clipfull",
+                "TF2Items/Resources/CustomGunAmmoTypes/syringegun/syringegun_clipempty");
 
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.D;
@@ -80,13 +84,28 @@ namespace ExampleMod
             poisoning.procChance = 0.2f;
             poisoning.useSpecialTint = false;
             //projectile.healthEffect = (PickupObjectDatabase.GetById(204) as BulletStatusEffectItem).HealthModifierEffect;
-            projectile.SetProjectileSpriteRight("syringe", 17, 3, false, null); // larger texture
+            projectile.SetProjectileSpriteRight("syringe", 17, 3, false, tk2dBaseSprite.Anchor.MiddleCenter); // larger texture
             //projectile.SetProjectileSpriteRight("syringe", 6, 1, false, null); // smaller texture
 
+            verticalSyringe = VFXBuilder.CreateVFXPool("syringe_vertical", 
+                CodeShortcuts.GenerateFilePaths("TF2Items/Resources/HitEffects/SyringeHitEffects/syringe_tile_north", 5), 
+                12, new IntVector2(12, 9), tk2dBaseSprite.Anchor.MiddleLeft, false, 0f, true, alignment: VFXAlignment.NormalAligned);
+            horizontalSyringe = VFXBuilder.CreateVFXPool("syringe_horizontal", 
+                CodeShortcuts.GenerateFilePaths("TF2Items/Resources/HitEffects/SyringeHitEffects/syringe_tile_west", 5), 
+                12, new IntVector2(12, 9), tk2dBaseSprite.Anchor.MiddleLeft, false, 0f, true);
+
+            projectile.hitEffects.tileMapHorizontal = horizontalSyringe;
+            projectile.hitEffects.tileMapVertical = verticalSyringe;
+            gun.clipObject = BreakableAPIToolbox.GenerateDebrisObject("TF2Items/Resources/HitEffects/SyringeHitEffects/syringe_clip.png", true, 1, 5, 240, 60, null, 1, null, null, 2).gameObject;
+            gun.clipsToLaunchOnReload = 1;
+            gun.reloadClipLaunchFrame = 5;
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
         }
         public static int ID;
+        static VFXPool verticalSyringe;
+        static VFXPool horizontalSyringe;
+        static GameObject clip;
 
         /*private void PostProcessProjectile(Projectile projectile)
         {

@@ -7,11 +7,12 @@ using Alexandria.ItemAPI;
 using BepInEx;
 using System.Collections.Generic;
 using HutongGames.PlayMaker;
+using Alexandria.Misc;
 
 /* NOTES:
  *
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class StockRocket : AdvancedGunBehavior
     {
@@ -34,6 +35,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "eagle_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 10);
             gun.SetAnimationFPS(gun.reloadAnimation, 1);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(39) as Gun, true, false);
@@ -41,7 +43,7 @@ namespace ExampleMod
             gun.DefaultModule.ammoCost = 1;
             gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
             gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-            gun.reloadTime = 1.8f;
+            gun.reloadTime = 2.2f;
             gun.DefaultModule.cooldownTime = 0.9f;
             gun.DefaultModule.numberOfShotsInClip = 4;
             gun.SetBaseMaxAmmo(120);
@@ -50,7 +52,6 @@ namespace ExampleMod
 
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.C;
-            gun.encounterTrackable.EncounterGuid = "Stock Rocket Launcher";
             gun.AddToSubShop(ItemBuilder.ShopType.Trorc);
 
             //Cloning
@@ -70,14 +71,21 @@ namespace ExampleMod
             projectile.baseData.UsesCustomAccelerationCurve = false;
             projectile.SetProjectileSpriteRight("rocket_projectile", 22, 6, false, tk2dBaseSprite.Anchor.MiddleLeft, 28, 6);
 
+            Projectile baseProjectile = (PickupObjectDatabase.GetById(39) as Gun).DefaultModule.projectiles[0];
+
+            projectile.ParticleTrail = baseProjectile.ParticleTrail;
+            projectile.TrailRenderer = baseProjectile.TrailRenderer;
+            projectile.CustomTrailRenderer = baseProjectile.CustomTrailRenderer;
+
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("stock_rocket",
-                "ExampleMod/Resources/CustomGunAmmoTypes/rocket/rocket_clipfull",
-                "ExampleMod/Resources/CustomGunAmmoTypes/rocket/rocket_clipempty");
+                "TF2Items/Resources/CustomGunAmmoTypes/rocket/rocket_clipfull",
+                "TF2Items/Resources/CustomGunAmmoTypes/rocket/rocket_clipempty");
             ExplosiveModifier explode = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
             explode.explosionData = rocketexplosion;
             ID = gun.PickupObjectId;
+
         }
         public static int ID;
         public override void OnPostFired(PlayerController player, Gun gun)
@@ -118,7 +126,7 @@ namespace ExampleMod
             doExplosionRing = true,
             damageRadius = 4f,
             pushRadius = 4.5f,
-            damage = 15f,
+            damage = 10f,
             doDamage = true,
             damageToPlayer = 0,
             secretWallsRadius = 6f,

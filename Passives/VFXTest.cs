@@ -6,7 +6,7 @@ using UnityEngine;
 using Alexandria.ItemAPI;
 using JetBrains.Annotations;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class VFXTest : PassiveItem
     {
@@ -17,7 +17,7 @@ namespace ExampleMod
             string itemName = "VFX";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/passives/example_item_sprite";
+            string resourceName = "TF2Items/Resources/passives/example_item_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);
@@ -37,7 +37,7 @@ namespace ExampleMod
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
 
             //Adds the actual passive effect to the item
-            GameObject plagueVFXObject = SpriteBuilder.SpriteFromResource("ExampleMod/Resources/OtherVFX/vfxtest1/vfxtest1_001", new GameObject("LeadSoulOverhead"));
+            GameObject plagueVFXObject = SpriteBuilder.SpriteFromResource("TF2Items/Resources/OtherVFX/vfxtest1/vfxtest1_001", new GameObject("LeadSoulOverhead"));
             plagueVFXObject.SetActive(false);
             tk2dBaseSprite plaguevfxSprite = plagueVFXObject.GetOrAddComponent<tk2dBaseSprite>();
             plaguevfxSprite.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, plaguevfxSprite.GetCurrentSpriteDef().position3);
@@ -70,11 +70,11 @@ namespace ExampleMod
         private GameObject extantOverhead;
         public static List<string> VFXPaths = new List<string>()
         {
-            "ExampleMod/Resources/OtherVFX/vfxtest1/vfxtest1_001",
-            "ExampleMod/Resources/OtherVFX/vfxtest1/vfxtest1_002",
-            "ExampleMod/Resources/OtherVFX/vfxtest1/vfxtest1_003",
-            "ExampleMod/Resources/OtherVFX/vfxtest1/vfxtest1_004",
-            "ExampleMod/Resources/OtherVFX/vfxtest1/vfxtest1_005"
+            "TF2Items/Resources/OtherVFX/vfxtest1/vfxtest1_001",
+            "TF2Items/Resources/OtherVFX/vfxtest1/vfxtest1_002",
+            "TF2Items/Resources/OtherVFX/vfxtest1/vfxtest1_003",
+            "TF2Items/Resources/OtherVFX/vfxtest1/vfxtest1_004",
+            "TF2Items/Resources/OtherVFX/vfxtest1/vfxtest1_005"
         };
 
         public override void Pickup(PlayerController player)

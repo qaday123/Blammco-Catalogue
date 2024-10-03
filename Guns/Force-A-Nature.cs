@@ -7,7 +7,7 @@ using BepInEx;
 
 // Done for now, but for future: Player Knockback?; Shoot enemies into each other, causing damage?
 // Frost and Gunfire has force-a-nature. question life choices.
-namespace ExampleMod
+namespace TF2Stuff
 
 {
     public class ForceANature : GunBehaviour
@@ -23,7 +23,7 @@ namespace ExampleMod
             
             //Gun descriptions
             gun.SetShortDescription("Pushover");
-            gun.SetLongDescription("Pushes enemies back. A lot.\n\n" +
+            gun.SetLongDescription("Pushes enemies back. A lot. Also pushes you back, a bit less.\n\n" +
                 "Being annoying is this gun's prime. Not to the weilder, of course, but to whoever is at the other end of the barrel. "+
                 "Renowned by many for high burst damage and funny ragdolls, and hated by others.");
             
@@ -31,6 +31,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "foanat_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 18);
             gun.SetAnimationFPS(gun.reloadAnimation, 8);
+            gun.TrimGunSprites();
 
             // gun setup
             gun.reloadTime = 1f;
@@ -59,6 +60,8 @@ namespace ExampleMod
                 projectile.baseData.force = 30f;
                 projectile.transform.parent = gun.barrelOffset;
                 projectile.gameObject.SetActive(false);
+                projectile.AppliesKnockbackToPlayer = true;
+                projectile.PlayerKnockbackForce = 15f;
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
                 gun.DefaultModule.projectiles[0] = projectile;
@@ -67,7 +70,6 @@ namespace ExampleMod
 
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.C;
-            gun.encounterTrackable.EncounterGuid = "FaN";
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.SHOTGUN;
             gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
             gun.Volley.IncreaseFinalSpeedPercentMax = 30f;
@@ -78,6 +80,8 @@ namespace ExampleMod
             gun.shellCasing = (PickupObjectDatabase.GetById(202) as Gun).shellCasing;
             gun.shellsToLaunchOnFire = 0;
             gun.shellsToLaunchOnReload = 2;
+            gun.reloadShellLaunchFrame = 2;
+            gun.gunScreenShake = new(0.6f, 12f, 0.09f, 0.009f);
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;

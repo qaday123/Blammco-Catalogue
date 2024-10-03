@@ -13,7 +13,7 @@ using System.Collections;
 /* NOTES: 
  * Something wrong with panic attack's passive benefit - make sequence a single coroutine instead of splitting it // after 6 hours finally fixed
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Panic_Attack : AdvancedGunBehavior
     {
@@ -36,6 +36,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "panic_attack_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 20);
             gun.SetAnimationFPS(gun.reloadAnimation, 16);
+            gun.TrimGunSprites();
 
             // gun setup
             gun.reloadTime = 1.5f;
@@ -83,6 +84,7 @@ namespace ExampleMod
             gun.shellCasing = (PickupObjectDatabase.GetById(202) as Gun).shellCasing;
             gun.shellsToLaunchOnFire = 1;
             gun.shellsToLaunchOnReload = 0;
+            gun.gunScreenShake = new(0.4f, 9f, 0.12f, 0.012f);
 
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_shotgun_shoot_full";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;

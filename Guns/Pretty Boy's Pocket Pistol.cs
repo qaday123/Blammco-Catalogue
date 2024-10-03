@@ -6,7 +6,7 @@ using UnityEngine;
 using Alexandria.ItemAPI;
 using BepInEx;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class PocketPistol : GunBehaviour
     {
@@ -28,6 +28,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "pocket_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 24);
             gun.SetAnimationFPS(gun.reloadAnimation, 18);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom("ak-47", true, false);
@@ -35,8 +36,9 @@ namespace ExampleMod
             gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
             gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
             gun.reloadTime = 0.7f;
-            gun.DefaultModule.cooldownTime = 0.12f;
+            gun.DefaultModule.cooldownTime = 0.14f;
             gun.DefaultModule.numberOfShotsInClip = 9;
+            gun.DefaultModule.angleVariance += 5f;
             gun.SetBaseMaxAmmo(300);
             gun.InfiniteAmmo = true;
             gun.gunClass = GunClass.SHITTY; //when as starting weapon reclass to 'SHITTY'
@@ -61,7 +63,7 @@ namespace ExampleMod
 
             // More projectile setup
             projectile.baseData.damage = 4f; //when as starting weapon remodify to 3-4 damage + others
-            projectile.baseData.speed = 26f;
+            projectile.baseData.speed = 28f;
             projectile.baseData.range = 10f;
             projectile.baseData.force = 10f;
             projectile.transform.parent = gun.barrelOffset;
@@ -76,7 +78,7 @@ namespace ExampleMod
         {
             // Sound setup
             gun.PreventNormalFireAudio = true;
-            AkSoundEngine.PostEvent("Play_pistol_shoot", gameObject);
+            AkSoundEngine.PostEvent("pistol_shoot", gameObject);
         }
         private bool HasReloaded;
         public override void Update()

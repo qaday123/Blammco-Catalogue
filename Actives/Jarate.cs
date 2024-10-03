@@ -8,7 +8,7 @@ using System.Collections;
 using Dungeonator;
 using Gungeon;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Jarate : SpawnObjectPlayerItem
     {
@@ -19,7 +19,7 @@ namespace ExampleMod
             string itemName = "Bootleg Jarate";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/ThrowableActives/jarate_icon"; // make sprite
+            string resourceName = "TF2Items/Resources/ThrowableActives/jarate_icon"; // make sprite
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);
@@ -65,14 +65,14 @@ namespace ExampleMod
 
         public static GameObject BuildPrefab()
         {
-            GameObject gameObject = SpriteBuilder.SpriteFromResource("ExampleMod/Resources/ThrowableActives/jarate_spin_001.png", new GameObject("Lvl2Molotov"));
+            GameObject gameObject = SpriteBuilder.SpriteFromResource("TF2Items/Resources/ThrowableActives/jarate_spin_001.png", new GameObject("Lvl2Molotov"));
             gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(gameObject);
             tk2dSpriteAnimator tk2dSpriteAnimator = gameObject.AddComponent<tk2dSpriteAnimator>();
             tk2dSpriteCollectionData spriteCollection = (PickupObjectDatabase.GetById(108) as SpawnObjectPlayerItem).objectToSpawn.GetComponent<tk2dSpriteAnimator>().Library.clips[0].frames[0].spriteCollection;
             tk2dSpriteAnimationClip tk2dSpriteAnimationClip = SpriteBuilder.AddAnimation(tk2dSpriteAnimator, spriteCollection, new List<int>
             {
-                SpriteBuilder.AddSpriteToCollection("ExampleMod/Resources/ThrowableActives/jarate_spin_004.png", spriteCollection)
+                SpriteBuilder.AddSpriteToCollection("TF2Items/Resources/ThrowableActives/jarate_spin_004.png", spriteCollection)
             }, "jarate_throw", tk2dSpriteAnimationClip.WrapMode.Once);
             tk2dSpriteAnimationClip.fps = 12f;
             foreach (tk2dSpriteAnimationFrame tk2dSpriteAnimationFrame in tk2dSpriteAnimationClip.frames)
@@ -82,10 +82,10 @@ namespace ExampleMod
             }
             tk2dSpriteAnimationClip tk2dSpriteAnimationClip2 = SpriteBuilder.AddAnimation(tk2dSpriteAnimator, spriteCollection, new List<int>
             {
-                SpriteBuilder.AddSpriteToCollection("ExampleMod/Resources/ThrowableActives/jarate_burst_001.png", spriteCollection),
-                SpriteBuilder.AddSpriteToCollection("ExampleMod/Resources/ThrowableActives/jarate_burst_002.png", spriteCollection),
-                SpriteBuilder.AddSpriteToCollection("ExampleMod/Resources/ThrowableActives/jarate_burst_003.png", spriteCollection),
-                SpriteBuilder.AddSpriteToCollection("ExampleMod/Resources/ThrowableActives/jarate_burst_004.png", spriteCollection)
+                SpriteBuilder.AddSpriteToCollection("TF2Items/Resources/ThrowableActives/jarate_burst_001.png", spriteCollection),
+                SpriteBuilder.AddSpriteToCollection("TF2Items/Resources/ThrowableActives/jarate_burst_002.png", spriteCollection),
+                SpriteBuilder.AddSpriteToCollection("TF2Items/Resources/ThrowableActives/jarate_burst_003.png", spriteCollection),
+                SpriteBuilder.AddSpriteToCollection("TF2Items/Resources/ThrowableActives/jarate_burst_004.png", spriteCollection)
             }, "jarate_burst", tk2dSpriteAnimationClip.WrapMode.Once);
             tk2dSpriteAnimationClip2.fps = 16f;
             foreach (tk2dSpriteAnimationFrame tk2dSpriteAnimationFrame2 in tk2dSpriteAnimationClip2.frames)
@@ -95,10 +95,10 @@ namespace ExampleMod
             }
             tk2dSpriteAnimationClip tk2dSpriteAnimationClip3 = SpriteBuilder.AddAnimation(tk2dSpriteAnimator, spriteCollection, new List<int>
             {
-                SpriteBuilder.AddSpriteToCollection("ExampleMod/Resources/ThrowableActives/jarate_spin_001.png", spriteCollection),
-                SpriteBuilder.AddSpriteToCollection("ExampleMod/Resources/ThrowableActives/jarate_spin_002.png", spriteCollection),
-                SpriteBuilder.AddSpriteToCollection("ExampleMod/Resources/ThrowableActives/jarate_spin_003.png", spriteCollection),
-                SpriteBuilder.AddSpriteToCollection("ExampleMod/Resources/ThrowableActives/jarate_spin_004.png", spriteCollection)
+                SpriteBuilder.AddSpriteToCollection("TF2Items/Resources/ThrowableActives/jarate_spin_001.png", spriteCollection),
+                SpriteBuilder.AddSpriteToCollection("TF2Items/Resources/ThrowableActives/jarate_spin_002.png", spriteCollection),
+                SpriteBuilder.AddSpriteToCollection("TF2Items/Resources/ThrowableActives/jarate_spin_003.png", spriteCollection),
+                SpriteBuilder.AddSpriteToCollection("TF2Items/Resources/ThrowableActives/jarate_spin_004.png", spriteCollection)
             }, "jarate", tk2dSpriteAnimationClip.WrapMode.LoopSection);
             tk2dSpriteAnimationClip3.fps = 10f;
             tk2dSpriteAnimationClip3.loopStart = 0;

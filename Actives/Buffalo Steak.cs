@@ -10,7 +10,7 @@ using System.Collections;
 /* NOTES:
  * Obvi add corresponding shaders and vfx - if you can find out how maybe do the convict photo rage vfx as well
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Buffalo_Steak : PlayerItem
     {
@@ -21,7 +21,7 @@ namespace ExampleMod
             string itemName = "Buffalo Steak Sandvich";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/actives/steak_sprite";
+            string resourceName = "TF2Items/Resources/actives/steak_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);

@@ -12,7 +12,7 @@ using System.Security.Policy;
  * Should I decrease movement speed instead? How much would it kill the fun?
  * Synergise with eyepatch - double the effect of both items :)
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Bootlegger : PassiveItem
     {
@@ -20,7 +20,7 @@ namespace ExampleMod
         public static void Register()
         {
             string itemName = "Bootlegger";
-            string resourceName = "ExampleMod/Resources/passives/bootlegger_sprite";
+            string resourceName = "TF2Items/Resources/passives/bootlegger_sprite";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<Bootlegger>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);

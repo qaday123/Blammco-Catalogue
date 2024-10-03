@@ -11,7 +11,7 @@ using Alexandria.Misc;
  * Synergy with blast helmet
  * Maybe do its effect while rocket jumping
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Gunboats : PassiveItem
     {
@@ -19,7 +19,7 @@ namespace ExampleMod
         public static void Register()
         {
             string itemName = "Gunboats";
-            string resourceName = "ExampleMod/Resources/passives/gunboats_sprite";
+            string resourceName = "TF2Items/Resources/passives/gunboats_sprite";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<Gunboats>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
@@ -29,8 +29,7 @@ namespace ExampleMod
                 "How to these marvels of technology function? Nobody knows. Most people suspect magic is involved. Others say the " +
                 "metal was sourced from great depths.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
-            RocketJumpDoer jump = obj.AddComponent<RocketJumpDoer>();
-
+            
             ID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.B;
         }
@@ -40,14 +39,14 @@ namespace ExampleMod
         }
         public override void Pickup(PlayerController player)
         {
-            base.Pickup(player);
-            RocketJumpDoer jump = this.gameObject.GetOrAddComponent<RocketJumpDoer>();
+            RocketJumpDoer jump = player.gameObject.GetOrAddComponent<RocketJumpDoer>();
             jump.SetPlayer(player);
+            base.Pickup(player);
             //jump.OnRocketJump += OnRocketJump;
         }
         public override void DisableEffect(PlayerController player)
         {
-            RocketJumpDoer jump = this.gameObject.GetComponent<RocketJumpDoer>();
+            RocketJumpDoer jump = player.gameObject.GetComponent<RocketJumpDoer>();
             jump.SetPlayer(null);
             base.DisableEffect(player);
         }

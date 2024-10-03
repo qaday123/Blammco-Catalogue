@@ -10,7 +10,7 @@ using System.Collections;
 /* NOTES:
  * 
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Medigun : PlayerItem
     {
@@ -21,7 +21,7 @@ namespace ExampleMod
             string itemName = "Medigun";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/actives/medigun_sprite";
+            string resourceName = "TF2Items/Resources/actives/medigun_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);

@@ -9,7 +9,7 @@ using Dungeonator;
 using System.Collections;
 using System.Diagnostics;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public static class CoolGunStuff // nevernamed sanctioned
     {

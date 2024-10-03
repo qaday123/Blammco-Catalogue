@@ -10,7 +10,7 @@ using System.Security.Policy;
  * Would be cool if the casing vfx showed up above the player when collecting a heart - player.BloopItemAboveHead(); 
  * just need to find casing sprite
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Candy_Cane : PassiveItem
     {
@@ -18,7 +18,7 @@ namespace ExampleMod
         public static void Register()
         {
             string itemName = "Candy Cane";
-            string resourceName = "ExampleMod/Resources/passives/candy_cane_sprite";
+            string resourceName = "TF2Items/Resources/passives/candy_cane_sprite";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<Candy_Cane>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);

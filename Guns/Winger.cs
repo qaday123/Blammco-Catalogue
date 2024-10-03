@@ -14,7 +14,7 @@ using HutongGames.PlayMaker;
  * Balloon gun synergy - winger fires balloon gun projectiles, and balloon gun has the dodge roll boosts
  * OnPickedUpByPlayer currently doesn't work. UPDATE: turns out i dont need that method to achieve what i wanted to do
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Winger : AdvancedGunBehavior
     {
@@ -37,6 +37,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "winger_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 24);
             gun.SetAnimationFPS(gun.reloadAnimation, 16);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom("ak-47", true, false);
@@ -55,6 +56,7 @@ namespace ExampleMod
             gun.shellsToLaunchOnFire = 1;
             gun.clipObject = (PickupObjectDatabase.GetById(30) as Gun).clipObject;
             gun.clipsToLaunchOnReload = 1;
+            gun.gunScreenShake = new(0.4f, 10f, 0.09f, 0.009f);
 
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.C;

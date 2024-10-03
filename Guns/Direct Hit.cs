@@ -17,7 +17,7 @@ using Brave.BulletScript;
    bouncing and piercing rockets to fire everywhere
  * 
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class DirectHit : AdvancedGunBehavior
     {
@@ -29,7 +29,7 @@ namespace ExampleMod
             Gun gun = ETGMod.Databases.Items.NewGun("Direct Hit", "directhit");
             Game.Items.Rename("outdated_gun_mods:direct_hit", "qad:direct_hit");
             gun.gameObject.AddComponent<DirectHit>();
-            
+
             //Gun descriptions
             gun.SetShortDescription("The Best Melee Weapon");
             gun.SetLongDescription("Diabolical Instant Rocket Ejector Conquers Temples by Hunting Incompetent Targets.\n\n" +
@@ -37,11 +37,12 @@ namespace ExampleMod
                 "A powerful weapon praised by the most skilled of gunslingers from where it came, though sheer incompetency led to " +
                 "it developing many nicknames such as \"The Direct Miss\" or \"The Best Melee Weapon Ever\". Fortunately, in " +
                 "a Gungeon setting, the users are actually good at aiming their guns, making it a formidable force to many.");
-            
+
             // Sprite setup
             gun.SetupSprite(null, "directhit_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 14);
             gun.SetAnimationFPS(gun.reloadAnimation, 1);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(39) as Gun, true, false);
@@ -74,7 +75,7 @@ namespace ExampleMod
             projectile.baseData.range = 50f;
             projectile.baseData.force = 18f;
             projectile.ignoreDamageCaps = true;
-            gun.barrelOffset.transform.localPosition += new Vector3(12f/16f,14f/16f);
+            gun.barrelOffset.transform.localPosition += new Vector3(12f / 16f, 14f / 16f);
             gun.carryPixelOffset += new IntVector2(0, 2);
             projectile.transform.parent = gun.barrelOffset;
             projectile.baseData.UsesCustomAccelerationCurve = false;
@@ -83,8 +84,8 @@ namespace ExampleMod
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("stock_rocket",
-                "ExampleMod/Resources/CustomGunAmmoTypes/rocket/rocket_clipfull",
-                "ExampleMod/Resources/CustomGunAmmoTypes/rocket/rocket_clipempty");
+                "TF2Items/Resources/CustomGunAmmoTypes/rocket/rocket_clipfull",
+                "TF2Items/Resources/CustomGunAmmoTypes/rocket/rocket_clipempty");
             ExplosiveModifier explode = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
             explode.explosionData = rocketexplosion;
             ID = gun.PickupObjectId;
@@ -97,7 +98,7 @@ namespace ExampleMod
             AkSoundEngine.PostEvent("Play_directhit_shoot", gameObject);
         }
         private bool HasReloaded;
-        
+
         public override void PostProcessProjectile(Projectile projectile)
         {
             projectile.OnHitEnemy += OnHitEnemy;

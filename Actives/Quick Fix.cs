@@ -9,7 +9,7 @@ using Steamworks;
 /* NOTES:
  * 
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class Quick_Fix : PlayerItem
     {
@@ -20,7 +20,7 @@ namespace ExampleMod
             string itemName = "Quick Fix";
 
             //Refers to an embedded png in the project. Make sure to embed your resources! Google it
-            string resourceName = "ExampleMod/Resources/actives/quick-fix_sprite";
+            string resourceName = "TF2Items/Resources/actives/quick-fix_sprite";
 
             //Create new GameObject
             GameObject obj = new GameObject(itemName);
@@ -47,12 +47,9 @@ namespace ExampleMod
             ID = item.PickupObjectId;
         }
         public static int ID;
-        public float healthtoheal;
         public override void DoEffect(PlayerController user)
         {
-            healthtoheal = (float)(Math.Round(user.healthHaver.GetMaxHealth() / 2, MidpointRounding.AwayFromZero) / 2);
-            // heals roughly a quarter of max health
-            //ETGModConsole.Log($"healthtoheal:{healthtoheal}");
+            float healthtoheal = (float)(Math.Round(user.healthHaver.GetMaxHealth() / 2, MidpointRounding.AwayFromZero) / 2);
             AkSoundEngine.PostEvent("Play_OBJ_heart_heal_01", base.gameObject);
             user.healthHaver.ApplyHealing(healthtoheal);
         }
@@ -60,17 +57,10 @@ namespace ExampleMod
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);
-
         }
         public override bool CanBeUsed(PlayerController user)
         {
             return user.healthHaver.GetCurrentHealth() != user.healthHaver.GetMaxHealth();
         }
-
-        /*public override DebrisObject Drop(PlayerController player)
-        {
-            Tools.Print($"Player dropped {this.DisplayName}");
-            return base.Drop(player);
-        }*/
     }
 }

@@ -6,7 +6,7 @@ using System.IO;
 using UnityEngine;
 using System.Reflection;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class AudioResourceLoader
     {
@@ -14,7 +14,7 @@ namespace ExampleMod
         public static void LoadFromFolder(string modName)
         {
             ResourceLoaderSoundbanks LoaderSoundbanks = new ResourceLoaderSoundbanks();
-            LoaderSoundbanks.AutoloadFromPath(ExampleMod.Module.instance.FolderPath(), modName);
+            LoaderSoundbanks.AutoloadFromPath(TF2Stuff.Module.instance.FolderPath(), modName);
         }
         public static void LoadFromAssembly(string bankName, string modName)
         {

@@ -11,7 +11,7 @@ using HutongGames.PlayMaker;
 /* NOTES:
  *
 */
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class LibertyLauncher : AdvancedGunBehavior
     {
@@ -33,6 +33,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "liberty_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 10);
             gun.SetAnimationFPS(gun.reloadAnimation, 1);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(39) as Gun, true, false);
@@ -72,8 +73,8 @@ namespace ExampleMod
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("stock_rocket",
-                "ExampleMod/Resources/CustomGunAmmoTypes/rocket/rocket_clipfull",
-                "ExampleMod/Resources/CustomGunAmmoTypes/rocket/rocket_clipempty");
+                "TF2Items/Resources/CustomGunAmmoTypes/rocket/rocket_clipfull",
+                "TF2Items/Resources/CustomGunAmmoTypes/rocket/rocket_clipempty");
             ExplosiveModifier explode = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
             explode.explosionData = rocketexplosion;
             ID = gun.PickupObjectId;

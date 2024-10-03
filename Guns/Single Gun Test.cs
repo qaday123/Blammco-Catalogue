@@ -6,7 +6,7 @@ using UnityEngine;
 using Alexandria.ItemAPI;
 using BepInEx;
 
-namespace ExampleMod
+namespace TF2Stuff
 
 {
     public class SingleGun : GunBehaviour
@@ -28,6 +28,7 @@ namespace ExampleMod
             // Sprite setup
             gun.SetupSprite(null, "single_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 24);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom("ak-47", true, false);

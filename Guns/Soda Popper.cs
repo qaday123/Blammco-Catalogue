@@ -8,7 +8,7 @@ using BepInEx;
 /* NOTES:
  * how tf do you do the active charge thingy
 */
-namespace ExampleMod
+namespace TF2Stuff
 
 {
     public class SodaPopper : GunBehaviour
@@ -32,6 +32,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "sodapop_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 20);
             gun.SetAnimationFPS(gun.reloadAnimation, 14);
+            gun.TrimGunSprites();
 
             // gun setup
             gun.reloadTime = 0.8f;
@@ -70,7 +71,6 @@ namespace ExampleMod
             
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.B;
-            gun.encounterTrackable.EncounterGuid = "sodapopper";
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.SHOTGUN;
             gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
             gun.Volley.IncreaseFinalSpeedPercentMax = 30f;
@@ -81,12 +81,15 @@ namespace ExampleMod
             gun.shellCasing = (PickupObjectDatabase.GetById(202) as Gun).shellCasing;
             gun.shellsToLaunchOnFire = 0;
             gun.shellsToLaunchOnReload = 2;
+            gun.reloadShellLaunchFrame = 3;
+            gun.gunScreenShake = new(0.4f, 14f, 0.09f, 0.009f);
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
         }
         public static int ID;
-
+        public float _hype = 0;
+        public const float MAX_HYPE = 350; 
         public override void OnPostFired(PlayerController player, Gun gun)
         {
             // Sound setup
@@ -124,6 +127,17 @@ namespace ExampleMod
                 //gun.SpawnShellCasingAtPosition(new Vector3(0f, 0f, 0f));
             }
         }
-        public float currentcharge;
+        public override void OnPlayerPickup(PlayerController playerOwner)
+        {
+            base.OnPlayerPickup(playerOwner);
+        }
+        public override void OnDropped()
+        {
+            base.OnDropped();
+        }
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+        }
     }
 }

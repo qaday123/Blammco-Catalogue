@@ -2,7 +2,7 @@
 using Alexandria.ItemAPI;
 using UnityEngine;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class PipeLauncher : GunBehaviour
     {
@@ -24,6 +24,7 @@ namespace ExampleMod
             // Sprite setup
             gun.SetupSprite(null, "pipe_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 12);
+            gun.TrimGunSprites();
 
             // Gun setup
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(56) as Gun, true, false);
@@ -57,15 +58,15 @@ namespace ExampleMod
             projectile.baseData.range = 12f;
             projectile.transform.parent = gun.barrelOffset;
             gun.barrelOffset.transform.localPosition += new Vector3(0.5f, 0, 0);
-            projectile.SetProjectileSpriteRight("pipeprojectile", 14, 8, false, null);
+            projectile.SetProjectileSpriteRight("pipeprojectile", 14, 8, false, tk2dBaseSprite.Anchor.MiddleCenter);
             ETGMod.Databases.Items.Add(gun, false, "ANY");
 
             // Projectile Modifiers
             //gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.GRENADE;
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Pipe Launcher", 
-                "ExampleMod/Resources/CustomGunAmmoTypes/pipelauncher/pipelauncher_clipfull", 
-                "ExampleMod/Resources/CustomGunAmmoTypes/pipelauncher/pipelauncher_clipempty");
+                "TF2Items/Resources/CustomGunAmmoTypes/pipelauncher/pipelauncher_clipfull", 
+                "TF2Items/Resources/CustomGunAmmoTypes/pipelauncher/pipelauncher_clipempty");
             BounceProjModifier bounce = projectile.gameObject.GetOrAddComponent<BounceProjModifier>();
             bounce.enabled = true;
             bounce.ExplodeOnEnemyBounce = true;

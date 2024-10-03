@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 using UnityEngine;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class ResourceLoaderSoundbanks
     {

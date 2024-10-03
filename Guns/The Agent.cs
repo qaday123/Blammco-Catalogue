@@ -5,8 +5,9 @@ using MonoMod;
 using UnityEngine;
 using Alexandria.ItemAPI;
 using BepInEx;
+using Alexandria.SoundAPI;
 
-namespace ExampleMod
+namespace TF2Stuff
 {
     public class TheAgent : GunBehaviour
     {
@@ -27,6 +28,7 @@ namespace ExampleMod
             gun.SetupSprite(null, "agent_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 12);
             gun.SetAnimationFPS(gun.reloadAnimation, 6);
+            gun.TrimGunSprites();
 
             // Projectile setup
             gun.AddProjectileModuleFrom("ak-47", true, false);
@@ -43,7 +45,6 @@ namespace ExampleMod
             
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.D;
-            gun.encounterTrackable.EncounterGuid = "spy revolver";
 
             //Cloning
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
@@ -53,55 +54,29 @@ namespace ExampleMod
             gun.DefaultModule.projectiles[0] = projectile;
 
             // More projectile setup
-            projectile.baseData.damage = 10f; //when as starting weapon remodify to 3-4 damage + others
+            projectile.baseData.damage = 12f; //when as starting weapon remodify to 3-4 damage + others
             projectile.baseData.speed = 22f;
             projectile.baseData.range = 30f;
             projectile.baseData.force = 10f;
             projectile.AdditionalScaleMultiplier = 1.25f;
             projectile.transform.parent = gun.barrelOffset;
-            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.MEDIUM_BULLET;
             gun.barrelOffset.transform.localPosition += new Vector3(0.5f, 0.75f, 0);
             gun.shellCasing = (PickupObjectDatabase.GetById(15) as Gun).shellCasing;
             gun.shellsToLaunchOnFire = 0;
             gun.shellsToLaunchOnReload = 6;
+            gun.reloadShellLaunchFrame = 1;
+            gun.doesScreenShake = true;
+            gun.gunScreenShake = new(0.5f, 12f, 0.09f, 0.009f);
+            gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(38) as Gun).muzzleFlashEffects;
+
+            SoundManager.AddCustomSwitchData("WPN_Guns", "qad_agent", "Play_WPN_Gun_Shot_01", "revolver_shoot");
+            SoundManager.AddCustomSwitchData("WPN_Guns", "qad_agent", "Play_WPN_Gun_Reload_01", "revolver_reload");
+            gun.gunSwitchGroup = "qad_agent";
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
         }
         public static int ID;
-        public override void OnPostFired(PlayerController player, Gun gun)
-        {
-            // Sound setup
-            gun.PreventNormalFireAudio = true;
-            AkSoundEngine.PostEvent("Play_revolver_shoot", gameObject);
-        }
-        private bool HasReloaded;
-        public override void Update()
-        {
-            if (gun.CurrentOwner)
-            {
-
-                if (!gun.PreventNormalFireAudio)
-                {
-                    this.gun.PreventNormalFireAudio = true;
-                }
-                if (!gun.IsReloading && !HasReloaded)
-                {
-                    this.HasReloaded = true;
-                }
-            }
-        }
-
-        public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
-        {
-            if (gun.IsReloading && this.HasReloaded)
-            {
-                HasReloaded = false;
-                AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-                base.OnReloadPressed(player, gun, bSOMETHING);
-                AkSoundEngine.PostEvent("Play_revolver_reload", base.gameObject);
-            }
-        }
     }
 }
