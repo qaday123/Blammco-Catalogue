@@ -21,6 +21,8 @@ namespace TF2Stuff
         public const string GUID = "qaday.etg.blammcocatalogue";
         public static readonly string TEXT_COLOR = "#FFFF10";
 
+        public const string MODPREFIX = "qad";
+
         public static List<string> NameShortsRemoved = new List<string>();
 
         public static Module instance;

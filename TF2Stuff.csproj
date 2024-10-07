@@ -79,6 +79,12 @@
     <Compile Include="Actives\Medigun.cs" />
     <Compile Include="Actives\Quick Fix.cs" />
     <Compile Include="Passives\Patriot%27s Casket.cs" />
+    <Compile Include="Templates\BasicChargeGun.cs" />
+    <Compile Include="Templates\BasicGun.cs" />
+    <Compile Include="Templates\TemplateGun.cs" />
+    <Compile Include="Templates\PassiveTemplate.cs" />
+    <Compile Include="Templates\ActiveTemplate.cs" />
+    <Compile Include="Templates\TemplateGunExpanded.cs" />
     <Compile Include="Toolbox Misc\CodeShortcuts.cs" />
     <Compile Include="Toolbox Misc\GunGradualReload.cs" />
     <Compile Include="Toolbox Misc\Patches.cs" />
@@ -1343,6 +1349,7 @@
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\airstrike\airstrike_clipempty.png" />
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\airstrike\airstrike_clipfull.png" />
     <Content Include="icon.ico" />
+    <EmbeddedResource Include="Resources\actives\buff_banner_sprite.png" />
     <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipempty_OLD.png" />
     <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipfull_OLD.png" />
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\syringegun\syringegun_clipempty.png" />

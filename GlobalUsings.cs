@@ -14,11 +14,3 @@ global using UnityEngine;
 global using System.Collections;
 global using Gungeon;
 global using Random = UnityEngine.Random;
-
-namespace TF2Items
-{
-    public class GlobalUsings
-    {
-
-    }
-}

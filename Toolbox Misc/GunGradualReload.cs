@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Dungeonator;
 
-namespace TF2Items
+namespace TF2Stuff
 {
 	public class GunGradualReload : MonoBehaviour
 	{
