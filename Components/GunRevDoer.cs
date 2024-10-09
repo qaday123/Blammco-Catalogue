@@ -24,10 +24,8 @@ namespace TF2Stuff
         public string RevLoopAudio = "";
         public string ShootLoopAudio = "";
     }
-    public class GunRevDoer : MonoBehaviour
+    public class GunRevDoer : GunBehaviour
     {
-        public Gun self;
-        PlayerController gunOwner;
         float _currentSpin = 0f;
         VFXPool _muzzleFlashHolder;
         int _shellsHolder;
@@ -47,29 +45,26 @@ namespace TF2Stuff
         public Action OnEndedRev;
         public void Start()
         {
-            self = base.GetComponent<Gun>();
-            currentAmmo = self.ammo;
-            gunOwner = self.GunPlayerOwner();
-            _muzzleFlashHolder = self.muzzleFlashEffects;
-            _shellsHolder = self.shellsToLaunchOnFire;
-            doesScreenshake = self.doesScreenShake;
-            self.doesScreenShake = false;
-            self.muzzleFlashEffects = CodeShortcuts.Empty;
-            self.shellsToLaunchOnFire = 0;
-            self.PostProcessProjectile += OnFire;
-            if (gunOwner)
+            currentAmmo = base.gun.ammo;
+            _muzzleFlashHolder = base.gun.muzzleFlashEffects;
+            _shellsHolder = base.gun.shellsToLaunchOnFire;
+            doesScreenshake = base.gun.doesScreenShake;
+            gun.doesScreenShake = false;
+            gun.muzzleFlashEffects = CodeShortcuts.Empty;
+            gun.shellsToLaunchOnFire = 0;
+            if (PlayerOwner)
             {
-                gunOwner.GunChanged += OnGunChanged;
+                PlayerOwner.GunChanged += OnGunChanged;
             }
             OnEndedRev += ResetRev;
             OnStartedRev += StartRev;
         }
-        
+
         public void Update()
         {
-            if (self && gunOwner)
+            if (base.gun && PlayerOwner)
             {
-                if (self.IsFiring && !gunOwner.IsDodgeRolling)
+                if (base.gun.IsFiring && !PlayerOwner.IsDodgeRolling)
                 {
                     if (!isRevving && !isPostRev)
                     {
@@ -77,7 +72,7 @@ namespace TF2Stuff
                     }
                     else if (_currentSpin < RevTime)
                     {
-                        if (currentAmmo != self.ammo) self.ammo = currentAmmo;
+                        if (currentAmmo != gun.ammo) gun.ammo = currentAmmo;
                         _currentSpin += BraveTime.DeltaTime;
                     }
                     else if (_currentSpin >= RevTime)
@@ -86,10 +81,10 @@ namespace TF2Stuff
                         {
                             AkSoundEngine.PostEvent(RevLoopAudio + "_stop", gameObject); // only works for pretzy soundbanks
                             AkSoundEngine.PostEvent(ShootLoopAudio, gameObject);
-                            self.muzzleFlashEffects = _muzzleFlashHolder;
-                            self.shellsToLaunchOnFire = _shellsHolder;
-                            self.doesScreenShake = doesScreenshake;
-                            self.spriteAnimator.PlayFromFrame(FireLoopStartIndex);
+                            gun.muzzleFlashEffects = _muzzleFlashHolder;
+                            gun.shellsToLaunchOnFire = _shellsHolder;
+                            gun.doesScreenShake = doesScreenshake;
+                            gun.spriteAnimator.PlayFromFrame(FireLoopStartIndex);
                             isPostRev = true;
                             isRevving = false;
                         }
@@ -101,7 +96,7 @@ namespace TF2Stuff
                 }
                 else
                 {
-                    currentAmmo = self.ammo;
+                    currentAmmo = gun.ammo;
                     _currentSpin = Mathf.Max(_currentSpin - BraveTime.DeltaTime, 0f);
                 }
             }
@@ -120,20 +115,24 @@ namespace TF2Stuff
             AkSoundEngine.PostEvent(EndAudioMessage, gameObject);
             isRevving = false;
             isPostRev = false;
-            self.doesScreenShake = false;
-            self.muzzleFlashEffects = CodeShortcuts.Empty;
-            self.shellsToLaunchOnFire = 0;
+            gun.doesScreenShake = false;
+            gun.muzzleFlashEffects = CodeShortcuts.Empty;
+            gun.shellsToLaunchOnFire = 0;
         }
-        public void OnFire(Projectile projectile)
+        public override void PostProcessProjectile(Projectile projectile)
         {
             if (_currentSpin < RevTime)
             {
                 projectile.DieInAir(suppressInAirEffects: true);
             }
+            else
+            {
+                base.PostProcessProjectile(projectile);
+            }
         }
         private void OnGunChanged(Gun previous, Gun current, bool changed)
         {
-            if (current != self && (isPostRev || isRevving))
+            if (current != gun && (isPostRev || isRevving))
             {
                 OnEndedRev();
             }
