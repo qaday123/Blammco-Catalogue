@@ -22,7 +22,7 @@ namespace TF2Stuff
             
             //Gun descriptions
             gun.SetShortDescription("Don't Touch My Gun");
-            gun.SetLongDescription("Takes time to rev up and slows you down while firing.\n\n " +
+            gun.SetLongDescription("Powerful for its type and rarity. Takes time to rev up and slows you down while firing.\n\n " +
                 "Being the first minigun to ever mow down hordes of people in Heavy's hands, it continues to be " +
                 "used to this day, exactly how it was before, nothing changed at all.\n\nFamously known to weigh one-fifty kilograms and " +
                 "cost 400,000 dollars to fire for twelve seconds. Fortunately, as most of the Gungeon's ammo is made of magic, most " +
@@ -70,10 +70,7 @@ namespace TF2Stuff
             rev = gun.gameObject.GetOrAddComponent<GunRevDoer>(); // custom :D
             rev.RevTime = 0.75f;
             rev.FireLoopStartIndex = 9;
-            rev.StartAudioMessage = "minigun_wind_up";
-            rev.EndAudioMessage = "minigun_wind_down";
-            rev.RevLoopAudio = "minigun_spin";
-            rev.ShootLoopAudio = "minigun_shoot";
+            rev.SetAudioMessages(start: "minigun_wind_up", end: "minigun_wind_down", revLoop: "minigun_spin", shootLoop: "minigun_shoot");
 
             // More projectile setup
             projectile.baseData.damage = 5f;

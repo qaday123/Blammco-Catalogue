@@ -130,6 +130,13 @@ namespace TF2Stuff
                 base.PostProcessProjectile(projectile);
             }
         }
+        public void SetAudioMessages(string start, string end, string revLoop, string shootLoop)
+        {
+            StartAudioMessage = start;
+            EndAudioMessage = end;
+            RevLoopAudio = revLoop;
+            ShootLoopAudio= shootLoop;
+        }
         private void OnGunChanged(Gun previous, Gun current, bool changed)
         {
             if (current != gun && (isPostRev || isRevving))
