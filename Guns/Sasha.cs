@@ -71,6 +71,7 @@ namespace TF2Stuff
             rev.RevTime = 0.75f;
             rev.FireLoopStartIndex = 9;
             rev.SetAudioMessages(start: "minigun_wind_up", end: "minigun_wind_down", revLoop: "minigun_spin", shootLoop: "minigun_shoot");
+            rev.SlowDownMultiplier = 0.6f;
 
             // More projectile setup
             projectile.baseData.damage = 5f;
@@ -90,38 +91,5 @@ namespace TF2Stuff
         public static int ID;
         private bool HasReloaded;
         public static GunRevDoer rev;
-
-        public void StartedRev() => SlowDown("add");
-        public void EndedRev() => SlowDown("remove");
-        public void SlowDown(string mode)
-        {
-            mode = mode.ToLower();
-            if (mode == "add")
-            {
-                gun.AddStatToGun(PlayerStats.StatType.MovementSpeed, 0.6f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                PlayerOwner.stats.RecalculateStats(PlayerOwner);
-                PlayerOwner.spriteAnimator.clipFps -= 4f;
-            }
-            else if (mode == "remove")
-            {
-                gun.RemoveStatFromGun(PlayerStats.StatType.MovementSpeed);
-                PlayerOwner.stats.RecalculateStats(PlayerOwner);
-                PlayerOwner.spriteAnimator.clipFps += 4f;
-            }
-        }
-        public override void OnPlayerPickup(PlayerController playerOwner)
-        {
-            base.OnPlayerPickup(playerOwner);
-            GunRevDoer thisRev = gun.GetComponent<GunRevDoer>();
-            thisRev.OnStartedRev += StartedRev;
-            thisRev.OnEndedRev += EndedRev;
-        }
-        public override void DisableEffect(GameActor owner)
-        {
-            GunRevDoer thisRev = gun.GetComponent<GunRevDoer>();
-            thisRev.OnStartedRev -= StartedRev;
-            thisRev.OnEndedRev -= EndedRev;
-            base.DisableEffect(owner);
-        }
     }
 }

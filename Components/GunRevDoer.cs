@@ -41,6 +41,8 @@ namespace TF2Stuff
         public string ShootLoopAudio = "";
         public int FireLoopStartIndex = 0;
 
+        public float SlowDownMultiplier = 1f;
+
         public Action OnStartedRev;
         public Action OnEndedRev;
         public void Start()
@@ -106,6 +108,7 @@ namespace TF2Stuff
             AkSoundEngine.PostEvent(StartAudioMessage, gameObject);
             AkSoundEngine.PostEvent(RevLoopAudio, gameObject);
             isRevving = true;
+            if (SlowDownMultiplier != 1f) SlowDown("add");
         }
         public void ResetRev()
         {
@@ -118,7 +121,9 @@ namespace TF2Stuff
             gun.doesScreenShake = false;
             gun.muzzleFlashEffects = CodeShortcuts.Empty;
             gun.shellsToLaunchOnFire = 0;
+            if (SlowDownMultiplier != 1f) SlowDown("remove");
         }
+
         public override void PostProcessProjectile(Projectile projectile)
         {
             if (_currentSpin < RevTime)
@@ -144,6 +149,21 @@ namespace TF2Stuff
                 OnEndedRev();
             }
         }
-
+        public void SlowDown(string mode)
+        {
+            mode = mode.ToLower();
+            if (mode == "add")
+            {
+                gun.AddStatToGun(PlayerStats.StatType.MovementSpeed, SlowDownMultiplier, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                PlayerOwner.stats.RecalculateStats(PlayerOwner);
+                PlayerOwner.spriteAnimator.clipFps -= 4f;
+            }
+            else if (mode == "remove")
+            {
+                gun.RemoveStatFromGun(PlayerStats.StatType.MovementSpeed);
+                PlayerOwner.stats.RecalculateStats(PlayerOwner);
+                PlayerOwner.spriteAnimator.clipFps += 4f;
+            }
+        }
     }
 }
