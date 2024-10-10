@@ -72,6 +72,7 @@ namespace TF2Stuff
             rev.FireLoopStartIndex = 9;
             rev.SetAudioMessages(start: "minigun_wind_up", end: "minigun_wind_down", revLoop: "minigun_spin", shootLoop: "minigun_shoot");
             rev.SlowDownMultiplier = 0.6f;
+            rev.minusAnimationFPS = 4f;
 
             // More projectile setup
             projectile.baseData.damage = 5f;

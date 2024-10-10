@@ -42,15 +42,16 @@ namespace TF2Stuff
         public int FireLoopStartIndex = 0;
 
         public float SlowDownMultiplier = 1f;
+        public float minusAnimationFPS = 0f;
 
         public Action OnStartedRev;
         public Action OnEndedRev;
         public void Start()
         {
-            currentAmmo = base.gun.ammo;
-            _muzzleFlashHolder = base.gun.muzzleFlashEffects;
-            _shellsHolder = base.gun.shellsToLaunchOnFire;
-            doesScreenshake = base.gun.doesScreenShake;
+            currentAmmo = gun.ammo;
+            _muzzleFlashHolder = gun.muzzleFlashEffects;
+            _shellsHolder = gun.shellsToLaunchOnFire;
+            doesScreenshake = gun.doesScreenShake;
             gun.doesScreenShake = false;
             gun.muzzleFlashEffects = CodeShortcuts.Empty;
             gun.shellsToLaunchOnFire = 0;
@@ -64,9 +65,9 @@ namespace TF2Stuff
 
         public void Update()
         {
-            if (base.gun && PlayerOwner)
+            if (gun && PlayerOwner)
             {
-                if (base.gun.IsFiring && !PlayerOwner.IsDodgeRolling)
+                if (gun.IsFiring && !PlayerOwner.IsDodgeRolling)
                 {
                     if (!isRevving && !isPostRev)
                     {
@@ -156,13 +157,13 @@ namespace TF2Stuff
             {
                 gun.AddStatToGun(PlayerStats.StatType.MovementSpeed, SlowDownMultiplier, StatModifier.ModifyMethod.MULTIPLICATIVE);
                 PlayerOwner.stats.RecalculateStats(PlayerOwner);
-                PlayerOwner.spriteAnimator.clipFps -= 4f;
+                PlayerOwner.spriteAnimator.clipFps -= minusAnimationFPS;
             }
             else if (mode == "remove")
             {
                 gun.RemoveStatFromGun(PlayerStats.StatType.MovementSpeed);
                 PlayerOwner.stats.RecalculateStats(PlayerOwner);
-                PlayerOwner.spriteAnimator.clipFps += 4f;
+                PlayerOwner.spriteAnimator.clipFps += minusAnimationFPS;
             }
         }
     }

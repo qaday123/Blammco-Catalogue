@@ -42,6 +42,7 @@ namespace TF2Stuff
         public void GMStart(GameManager obj)
         {
             new Harmony(GUID).PatchAll();
+
             // BOTH SOUNDBANKS ARE USED (first one used wwise, 2nd used Pretzel's tool), i haven't overwritten because audio editing was done.
             AudioResourceLoader.LoadFromAssembly("soundtest.bnk", "BlammCo Catalogue");
             AudioResourceLoader.LoadFromAssembly("tf2_sounds.bnk", "BlammCo Catalogue");
