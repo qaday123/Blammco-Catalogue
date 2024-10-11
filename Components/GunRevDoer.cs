@@ -124,7 +124,14 @@ namespace TF2Stuff
             gun.shellsToLaunchOnFire = 0;
             if (SlowDownMultiplier != 1f) SlowDown("remove");
         }
-
+        public override void OnPostFired(PlayerController player, Gun gun)
+        {
+            if (_currentSpin < RevTime)
+            {
+                gun.GainAmmo(1);
+            }
+            base.OnPostFired(player, gun);
+        }
         public override void PostProcessProjectile(Projectile projectile)
         {
             if (_currentSpin < RevTime)

@@ -1348,8 +1348,8 @@
     <EmbeddedResource Include="Resources\actives\sandvich_sprite.png" />
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\airstrike\airstrike_clipempty.png" />
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\airstrike\airstrike_clipfull.png" />
-    <Content Include="icon.ico" />
     <EmbeddedResource Include="Resources\actives\buff_banner_sprite.png" />
+    <Content Include="icon.ico" />
     <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipempty_OLD.png" />
     <Content Include="Resources\CustomGunAmmoTypes\pipelauncher\pipelauncher_clipfull_OLD.png" />
     <EmbeddedResource Include="Resources\CustomGunAmmoTypes\syringegun\syringegun_clipempty.png" />
@@ -1381,7 +1381,7 @@
       <HintPath>packages\HarmonyX.2.7.0\lib\net35\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Alexandria, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\EtG.Alexandria.0.4.8\lib\net35\Alexandria.dll</HintPath>
+      <HintPath>packages\EtG.Alexandria.0.4.12\lib\net35\Alexandria.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\EtG.GameLibs.2.1.9.1\lib\net35\Assembly-CSharp.dll</HintPath>
@@ -1393,7 +1393,7 @@
       <HintPath>packages\BepInEx.BaseLib.5.4.21\lib\net35\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="ModTheGungeonAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\EtG.ModTheGungeonAPI.1.8.2\lib\net35\ModTheGungeonAPI.dll</HintPath>
+      <HintPath>packages\EtG.ModTheGungeonAPI.1.8.7\lib\net35\ModTheGungeonAPI.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
