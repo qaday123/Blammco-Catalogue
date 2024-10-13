@@ -5,6 +5,7 @@ using System.Media;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using static StatModifier;
 
 namespace TF2Stuff
 {
@@ -107,5 +108,11 @@ namespace TF2Stuff
             }
             return -1; // too far from a wall to care
         }
+        #region Stats
+        // Thank pretzel :D
+        public static StatModifier NewMult(this StatType s, float a) => new() { statToBoost = s, modifyType = ModifyMethod.MULTIPLICATIVE, amount = a };
+        public static StatModifier NewAdd(this StatType s, float a) => new() { statToBoost = s, modifyType = ModifyMethod.ADDITIVE, amount = a };
+
+        #endregion
     }
 }

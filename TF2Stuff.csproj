@@ -90,6 +90,7 @@
     <Compile Include="Toolbox Misc\Patches.cs" />
     <Compile Include="Toolbox Misc\storage.cs" />
     <Compile Include="Toolbox Misc\MoarColours.cs" />
+    <Compile Include="Toolbox Misc\TempForAmmoDisplay.cs" />
     <Compile Include="Toolbox with Stolen Things\NN Goop Handler.cs" />
     <Compile Include="Components\Misc Projectile Components.cs" />
     <Compile Include="Toolbox with Stolen Things\ToolsIStoleForVFX.cs" />

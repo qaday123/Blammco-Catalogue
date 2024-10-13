@@ -14,3 +14,4 @@ global using UnityEngine;
 global using System.Collections;
 global using Gungeon;
 global using Random = UnityEngine.Random;
+global using static PlayerStats;
