@@ -114,5 +114,29 @@ namespace TF2Stuff
         public static StatModifier NewAdd(this StatType s, float a) => new() { statToBoost = s, modifyType = ModifyMethod.ADDITIVE, amount = a };
 
         #endregion
+        #region Guns
+        public static void SetGunCooldownBar(this GameUIAmmoController uic, float fillPercentage, bool flipToLeftSide) => uic.SetGunCooldownBar(fillPercentage, flipToLeftSide, new(255, 255, 255, 255));
+        public static void SetGunCooldownBar(this GameUIAmmoController uic, float fillPercentage, bool flipToLeftSide, Color32 fillColour)
+        {
+            if (flipToLeftSide)
+                uic.SetGunCooldownBar(fillPercentage, new Vector3(0, -3f), new Vector3(2.75f, 3f), dfSpriteFlip.FlipVertical | dfSpriteFlip.FlipHorizontal, fillColour);
+            else
+                uic.SetGunCooldownBar(fillPercentage);
+        }
+        public static void SetGunCooldownBar(this GameUIAmmoController uic, float fillPercentage) => uic.SetGunCooldownBar(fillPercentage, Vector3.zero, new(123f, 3f, 0), dfSpriteFlip.None, new(255, 255, 255, 255));
+        public static void SetGunCooldownBar(this GameUIAmmoController uic, float fillPercentage, Vector3 ForegroundOffset, Vector3 FillOffset, dfSpriteFlip ForegroundSpriteFlip, Color32 fillColour)
+        {
+            uic.GunCooldownForegroundSprite.RelativePosition = uic.GunBoxSprite.RelativePosition + ForegroundOffset; // + babyface.offset1;
+            uic.GunCooldownForegroundSprite.flip = ForegroundSpriteFlip;
+            uic.GunCooldownFillSprite.RelativePosition = uic.GunBoxSprite.RelativePosition + FillOffset;//+ new Vector3(123f, 3f, 0f);
+            uic.GunCooldownFillSprite.Color = fillColour;
+            uic.GunCooldownFillSprite.ZOrder = uic.GunBoxSprite.ZOrder + 1;
+            uic.GunCooldownForegroundSprite.ZOrder = uic.GunCooldownFillSprite.ZOrder + 1;
+            uic.GunCooldownFillSprite.IsVisible = true;
+            uic.GunCooldownForegroundSprite.IsVisible = true;
+            uic.GunCooldownFillSprite.FillAmount = fillPercentage;
+        }
+
+        #endregion
     }
 }

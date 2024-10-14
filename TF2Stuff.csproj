@@ -122,6 +122,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\UI\ui_boost_down_arrow.png" />
     <EmbeddedResource Include="Resources\OtherVFX\airstrike_target\airstrike_target_006.png" />
     <EmbeddedResource Include="Resources\OtherVFX\airstrike_target\airstrike_target_001.png" />
     <EmbeddedResource Include="Resources\OtherVFX\airstrike_target\airstrike_target_002.png" />

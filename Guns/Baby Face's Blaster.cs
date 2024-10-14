@@ -9,6 +9,7 @@ using HutongGames.PlayMaker;
 using System.Diagnostics;
 using Alexandria.SoundAPI;
 using static UnityEngine.UI.GridLayoutGroup;
+using Alexandria.CharacterAPI;
 
 /* NOTES: 
 * Better player feedback on what the boost meter is at (come back when learn how vfx work/repurposed active charge on guns)
@@ -59,7 +60,7 @@ namespace TF2Stuff
                 projectileModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
                 projectileModule.cooldownTime = 0.6f;
                 projectileModule.numberOfShotsInClip = 4;
-                projectileModule.angleVariance = 14f;
+                projectileModule.angleVariance = 18f;
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(projectileModule.projectiles[0]);
                 projectileModule.projectiles[0] = projectile;
                 projectile.baseData.damage = 5f;
@@ -93,6 +94,8 @@ namespace TF2Stuff
             gun.gunScreenShake = new ScreenShakeSettings(0.6f, 10f, 0.1f, 0.02f);
 
             gun.gameObject.AddComponent<BabyFaceDisplay>();
+            Texture2D spriteTex = ResourceExtractor.GetTextureFromResource("TF2Items/Resources/UI/ui_boost_down_arrow.png");
+            GameUIRoot.Instance.ConversationBar.portraitSprite.Atlas.AddNewItemToAtlas(spriteTex, "ui_down_arrow");
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
@@ -170,7 +173,6 @@ namespace TF2Stuff
             private Gun _gun;
             private BabyFaceBlaster babyface;
             private PlayerController _owner;
-            private bool changed_gun = false;
 
             public Vector3 cooldown_foreground_offset = new Vector3(0, -3f);
             public Vector3 cooldown_fill_offset = new Vector3(2.75f, 3f);
@@ -179,43 +181,28 @@ namespace TF2Stuff
                 this._gun = base.GetComponent<Gun>();
                 this.babyface = this._gun.GetComponent<BabyFaceBlaster>();
                 this._owner = this._gun.CurrentOwner as PlayerController;
-                _owner.GunChanged += ChangedGun;
             }
 
             public override bool DoCustomAmmoDisplay(GameUIAmmoController uic)
             {
                 if (!this._owner)
                 {
-                    ETGModConsole.Log("byebye");
-                    ResetDisplay(uic);
                     return false;
                 }
                 //ETGModConsole.Log("running");
-                uic.GunCooldownForegroundSprite.RelativePosition = uic.GunBoxSprite.RelativePosition + cooldown_foreground_offset; // + babyface.offset1;
+                /*uic.GunCooldownForegroundSprite.RelativePosition = uic.GunBoxSprite.RelativePosition + cooldown_foreground_offset; // + babyface.offset1;
                 uic.GunCooldownForegroundSprite.flip = dfSpriteFlip.FlipVertical | dfSpriteFlip.FlipHorizontal;
                 uic.GunCooldownFillSprite.RelativePosition = uic.GunBoxSprite.RelativePosition + cooldown_fill_offset;//+ new Vector3(123f, 3f, 0f);
                 uic.GunCooldownFillSprite.ZOrder = uic.GunBoxSprite.ZOrder + 1;
                 uic.GunCooldownForegroundSprite.ZOrder = uic.GunCooldownFillSprite.ZOrder + 1;
                 uic.GunCooldownFillSprite.IsVisible = true;
                 uic.GunCooldownForegroundSprite.IsVisible = true;
-                uic.GunCooldownFillSprite.FillAmount = babyface.curdamage / babyface.maxdamage;
-                uic.GunAmmoCountLabel.Text = $"[color #ff8811] Boost:  [/color]{this._owner.VanillaAmmoDisplay()}";
+                uic.GunCooldownFillSprite.FillAmount = babyface.curdamage / babyface.maxdamage;*/
+
+                uic.SetGunCooldownBar(babyface.curdamage / babyface.maxdamage, flipToLeftSide: true);//, cooldown_foreground_offset, cooldown_fill_offset, dfSpriteFlip.FlipHorizontal | dfSpriteFlip.FlipVertical);
+                uic.GunAmmoCountLabel.Text = $"[color #ff8811] Boost [sprite \"ui_down_arrow\"] [/color]{this._owner.VanillaAmmoDisplay()}";
                 //ResetDisplay(uic);
                 return true;
-            }
-
-            public void ResetDisplay(GameUIAmmoController uic)
-            {
-                uic.GunCooldownForegroundSprite.RelativePosition = uic.GunBoxSprite.RelativePosition;
-                uic.GunCooldownForegroundSprite.flip = dfSpriteFlip.None;
-                uic.GunCooldownFillSprite.RelativePosition = uic.GunBoxSprite.RelativePosition + new Vector3(123f, 3f, 0f);
-                uic.GunCooldownFillSprite.IsVisible = false;
-                uic.GunCooldownForegroundSprite.IsVisible = false;
-            }
-            public void ChangedGun(Gun gun, Gun gun2, bool newgun)
-            {
-                ETGModConsole.Log("changed");
-                changed_gun = gun2.GetComponent<BabyFaceBlaster>() == null;
             }
         }
     } 

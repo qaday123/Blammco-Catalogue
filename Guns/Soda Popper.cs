@@ -9,7 +9,6 @@ using BepInEx;
  * how tf do you do the active charge thingy
 */
 namespace TF2Stuff
-
 {
     public class SodaPopper : GunBehaviour
     {
