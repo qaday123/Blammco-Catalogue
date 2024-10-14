@@ -15,6 +15,8 @@ namespace TF2Stuff
 {
     public class Bonk_Soda : PlayerItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -47,9 +49,10 @@ namespace TF2Stuff
 
             //Adds the item to the gungeon item list, the ammonomicon, the loot table, etc.
             //Do this after ItemBuilder.AddSpriteToObject!
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
             item.consumable = false;
             item.quality = PickupObject.ItemQuality.C;
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
 
             customVFXPrefab = VFXToolbox.CreateOverheadVFX(new List<string>() { "TF2Items/Resources/StatusEffectVFX/slowed_effect_icon" }, "SlowedEffect", 1);
@@ -57,7 +60,6 @@ namespace TF2Stuff
             FakePrefab.MarkAsFakePrefab(customVFXPrefab);
             customVFXPrefab.SetActive(false);
         }
-        public static int ID;
         public static float timer = 10f;
         public static GameObject customVFXPrefab;
         StatModifier rollDamage = StatModifier.Create(PlayerStats.StatType.DodgeRollDamage, StatModifier.ModifyMethod.ADDITIVE, 50f);

@@ -13,11 +13,13 @@ namespace TF2Stuff
 {
     public class Sasha : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:sasha";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Sasha", "sasha");
-            Game.Items.Rename("outdated_gun_mods:sasha", "qad:sasha");
+            Game.Items.Rename("outdated_gun_mods:sasha", consoleID);
             gun.gameObject.AddComponent<Sasha>();
             
             //Gun descriptions

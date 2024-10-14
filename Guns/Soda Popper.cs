@@ -13,13 +13,14 @@ namespace TF2Stuff
 {
     public class SodaPopper : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
-
+            consoleID = $"{MODPREFIX}:soda_popper";
 
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Soda Popper", "sodapop");
-            Game.Items.Rename("outdated_gun_mods:soda_popper", "qad:soda_popper");
+            Game.Items.Rename("outdated_gun_mods:soda_popper", consoleID);
             gun.gameObject.AddComponent<SodaPopper>();
             
             //Gun descriptions

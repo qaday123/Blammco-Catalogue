@@ -10,11 +10,13 @@ namespace TF2Stuff
 {
     public class PocketPistol : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:pbpp";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Pretty Boy's Pocket Pistol", "pocket");
-            Game.Items.Rename("outdated_gun_mods:pretty_boy's_pocket_pistol", "qad:pbpp");
+            Game.Items.Rename("outdated_gun_mods:pretty_boy's_pocket_pistol", consoleID);
             gun.gameObject.AddComponent<PocketPistol>();
             
             //Gun descriptions

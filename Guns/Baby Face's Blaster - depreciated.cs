@@ -14,7 +14,7 @@ using System.Diagnostics;
  * Balancing: My main concern is that by making you lose half your boost if you dodge roll means that it might force players into
               constantly holding the gun (and it's not an amazing gun, either), so keep an eye on that.
 */
-namespace ExampleM
+/*namespace ExampleM
 {
     public class BabyFaceBlaster : AdvancedGunBehavior
     {
@@ -182,4 +182,4 @@ namespace ExampleM
         public float curdamage;
         public static int ID;
     }
-}
+}*/

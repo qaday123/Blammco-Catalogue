@@ -20,11 +20,13 @@ namespace TF2Stuff
 {
     public class Widowmaker : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:widowmaker";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Widowmaker", "widow");
-            Game.Items.Rename("outdated_gun_mods:widowmaker", "qad:widowmaker");
+            Game.Items.Rename("outdated_gun_mods:widowmaker", consoleID);
             gun.gameObject.AddComponent<Widowmaker>();
             
             //Gun descriptions

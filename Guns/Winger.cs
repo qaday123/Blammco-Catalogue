@@ -18,13 +18,13 @@ namespace TF2Stuff
 {
     public class Winger : AdvancedGunBehavior
     {
+        public static string consoleID;
         public static void Add()
         {
-
-
+            consoleID = $"{MODPREFIX}:winger";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Winger", "winger");
-            Game.Items.Rename("outdated_gun_mods:winger", "qad:winger");
+            Game.Items.Rename("outdated_gun_mods:winger", consoleID);
             gun.gameObject.AddComponent<Winger>();
             
             //Gun descriptions

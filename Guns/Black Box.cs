@@ -25,9 +25,11 @@ namespace TF2Stuff
         public static ExplosionData genericLargeExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:black_box";
+
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Black Box", "blackbox");
-            Game.Items.Rename("outdated_gun_mods:black_box", "qad:black_box");
+            Game.Items.Rename("outdated_gun_mods:black_box", consoleID);
             gun.gameObject.AddComponent<BlackBox>();
             
             //Gun descriptions
@@ -89,6 +91,7 @@ namespace TF2Stuff
             ID = gun.PickupObjectId;
         }
         public static int ID;
+        public static string consoleID;
         public override void OnPostFired(PlayerController player, Gun gun)
         {
             // Sound setup

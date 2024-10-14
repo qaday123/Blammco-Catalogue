@@ -15,6 +15,8 @@ namespace TF2Stuff
 {
     public class Gunboats : PassiveItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -28,8 +30,9 @@ namespace TF2Stuff
                 "blast radius of an explosion to do so, and dodge roll mid-air to cancel the jump prematurey.\n\n" +
                 "How to these marvels of technology function? Nobody knows. Most people suspect magic is involved. Others say the " +
                 "metal was sourced from great depths.";
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
-            
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
+
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.B;
         }
@@ -50,6 +53,5 @@ namespace TF2Stuff
             jump.SetPlayer(null);
             base.DisableEffect(player);
         }
-        public static int ID;
     }
 }

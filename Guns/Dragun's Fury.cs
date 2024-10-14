@@ -23,11 +23,13 @@ namespace TF2Stuff
     [HarmonyPatch]
     public class DragunsFury : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:dragun's_fury";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Dragun's Fury", "dragfury");
-            Game.Items.Rename("outdated_gun_mods:dragun's_fury", "qad:dragun's_fury");
+            Game.Items.Rename("outdated_gun_mods:dragun's_fury", consoleID);
             gun.gameObject.AddComponent<DragunsFury>();
             
             //Gun descriptions

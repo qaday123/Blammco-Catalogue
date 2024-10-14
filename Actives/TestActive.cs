@@ -37,7 +37,7 @@ namespace TF2Stuff
 
             //Adds the item to the gungeon item list, the ammonomicon, the loot table, etc.
             //Do this after ItemBuilder.AddSpriteToObject!
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
 
             //item.consumable = true;
             item.quality = PickupObject.ItemQuality.EXCLUDED;

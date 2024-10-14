@@ -16,6 +16,8 @@ namespace TF2Stuff
 {
     public class Disciplinary_Action : PlayerItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -44,16 +46,16 @@ namespace TF2Stuff
 
             //Adds the item to the gungeon item list, the ammonomicon, the loot table, etc.
             //Do this after ItemBuilder.AddSpriteToObject!
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
             item.consumable = false;
             item.quality = PickupObject.ItemQuality.C;
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
 
             //var speed_icon = SpriteBuilder.SpriteFromResource("TF2Items/Resources/StatusEffectVFX/speed_effect/speed_effect_001", new GameObject("Speed Icon"));
             //speed_icon.SetActive(false);
             //FakePrefab.MarkAsFakePrefab(speed_icon);
         }
-        public static int ID;
         private bool applied = false;
         private bool applied_p2 = false;
         private bool hitObject;

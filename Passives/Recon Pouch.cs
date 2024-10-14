@@ -9,6 +9,8 @@ namespace TF2Stuff
 {
     public class Recon_Pouch : PassiveItem
     {
+        public static int ID;
+        public static string consoleID;
         public static void Register()
         {
             string itemName = "Recon Pouch";
@@ -30,13 +32,14 @@ namespace TF2Stuff
                               "Scout never really used this pouch very much. Nevertheless, he always brought it with him during his mercenary days. "+
                               "Too bad it can't hold much, though. A memento of his childhood, perhaps?";
 
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
 
             //Adds the actual passive effect to the item
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.MovementSpeed, 2, StatModifier.ModifyMethod.ADDITIVE);
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RateOfFire, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
             //Rarity of the item
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             item.quality = PickupObject.ItemQuality.SPECIAL;
             ID = item.PickupObjectId;
         }
@@ -51,6 +54,5 @@ namespace TF2Stuff
         {
             base.DisableEffect(player);
         }
-        public static int ID;
     }
 }

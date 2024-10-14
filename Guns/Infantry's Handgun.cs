@@ -10,11 +10,13 @@ namespace TF2Stuff
 {
     public class InfantryHandgun : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:infantry's_handgun";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Infantry's Handgun", "infantry");
-            Game.Items.Rename("outdated_gun_mods:infantry's_handgun", "qad:infantry's_handgun");
+            Game.Items.Rename("outdated_gun_mods:infantry's_handgun", consoleID);
             gun.gameObject.AddComponent<InfantryHandgun>();
             
             //Gun descriptions

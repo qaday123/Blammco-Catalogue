@@ -8,6 +8,8 @@ namespace TF2Stuff
 {
     public class Sandvich : PlayerItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -36,9 +38,10 @@ namespace TF2Stuff
 
             //Adds the item to the gungeon item list, the ammonomicon, the loot table, etc.
             //Do this after ItemBuilder.AddSpriteToObject!
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
             item.consumable = false;
             item.quality = PickupObject.ItemQuality.B;
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
 
             sandwich = (PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0].InstantiateAndFakeprefab();
@@ -106,7 +109,6 @@ namespace TF2Stuff
             bounce.numberOfBounces += 4;
         }
         //private static Projectile ball; // this is causing the registered projectile to not work
-        public static int ID;
         public static Projectile sandwich;
         public override void DoEffect(PlayerController user)
         {

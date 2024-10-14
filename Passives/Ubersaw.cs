@@ -19,6 +19,8 @@ namespace TF2Stuff
 {
     public class Ubersaw : PassiveItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -31,8 +33,9 @@ namespace TF2Stuff
             string longDesc = "Roll into an enemy to stab them with the Ubersaw and recharge your currently held item if they die.\n\n " +
                 "This thing swiftly fell out of common use when guns proved to be a much more efficient way of charging things. " +
                 "Now viewed more as a tool than a weapon, it still retains some of its siphoning ability.";
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
 
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.D;
 
@@ -62,6 +65,5 @@ namespace TF2Stuff
             player.OnRolledIntoEnemy -= OnRollHit;
             base.DisableEffect(player);
         }
-        public static int ID;
     }
 }

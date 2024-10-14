@@ -12,11 +12,13 @@ namespace TF2Stuff
 {
     public class Shortstop : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:shortstop";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Shortstop", "shortstop");
-            Game.Items.Rename("outdated_gun_mods:shortstop", "qad:shortstop");
+            Game.Items.Rename("outdated_gun_mods:shortstop", consoleID);
             gun.gameObject.AddComponent<Shortstop>();
             
             //Gun descriptions

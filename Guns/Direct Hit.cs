@@ -23,11 +23,13 @@ namespace TF2Stuff
     {
         public static ExplosionData genericSmallExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultSmallExplosionData;
         public static ExplosionData genericLargeExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:direct_hit";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Direct Hit", "directhit");
-            Game.Items.Rename("outdated_gun_mods:direct_hit", "qad:direct_hit");
+            Game.Items.Rename("outdated_gun_mods:direct_hit", consoleID);
             gun.gameObject.AddComponent<DirectHit>();
 
             //Gun descriptions

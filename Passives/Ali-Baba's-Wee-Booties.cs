@@ -13,6 +13,8 @@ namespace TF2Stuff
 {
     public class Demoknight_Boots : PassiveItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -24,7 +26,8 @@ namespace TF2Stuff
             string shortDesc = "Steel Toe-d";
             string longDesc = "Makes your toes much more fortified.\n\nA prized possession in the hands of madmen who charge " +
                 "with no fear at their enemies. If only you had some sort of shield...";
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
+            consoleID = MODPREFIX + ":" + item.name.ToID();
 
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Health, 1, StatModifier.ModifyMethod.ADDITIVE);
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Coolness, 2, StatModifier.ModifyMethod.ADDITIVE);
@@ -42,6 +45,5 @@ namespace TF2Stuff
         {
             base.DisableEffect(player);
         }
-        public static int ID;
     }
 }

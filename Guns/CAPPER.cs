@@ -9,9 +9,11 @@ namespace TF2Stuff
     {
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:capper";
+
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("C.A.P.P.E.R", "capper");
-            Game.Items.Rename("outdated_gun_mods:capper", "qad:capper");
+            Game.Items.Rename("outdated_gun_mods:capper", consoleID);
             gun.gameObject.AddComponent<CAPPER>();
             
             //Gun descriptions
@@ -86,6 +88,7 @@ namespace TF2Stuff
             ID = gun.PickupObjectId;
         }
         public static int ID;
+        public static string consoleID;
         public float regenTimePerBullet = 1;
         float currentTime = 0f;
         public static int baseMaxAmmo = 72;

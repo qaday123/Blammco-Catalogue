@@ -12,13 +12,14 @@ namespace TF2Stuff
 {
     public class ForceANature : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
-
+            consoleID = $"{MODPREFIX}:force_a_nature";
 
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Force A Nature", "foanat");
-            Game.Items.Rename("outdated_gun_mods:force_a_nature", "qad:force_a_nature");
+            Game.Items.Rename("outdated_gun_mods:force_a_nature", consoleID);
             gun.gameObject.AddComponent<ForceANature>();
             
             //Gun descriptions

@@ -17,11 +17,13 @@ namespace TF2Stuff
 {
     public class SyringeGun : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:syringe_gun";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Syringe Gun", "syringe");
-            Game.Items.Rename("outdated_gun_mods:syringe_gun", "qad:syringe_gun");
+            Game.Items.Rename("outdated_gun_mods:syringe_gun", consoleID);
             gun.gameObject.AddComponent<SyringeGun>();
             
             //Gun descriptions

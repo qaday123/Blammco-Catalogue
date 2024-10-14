@@ -19,11 +19,13 @@ namespace TF2Stuff
     {
         public static ExplosionData genericSmallExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultSmallExplosionData;
         public static ExplosionData genericLargeExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:rocket_jumper";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Rocket Jumper", "jumper");
-            Game.Items.Rename("outdated_gun_mods:rocket_jumper", "qad:rocket_jumper");
+            Game.Items.Rename("outdated_gun_mods:rocket_jumper", consoleID);
             gun.gameObject.AddComponent<RocketJumper>();
             
             //Gun descriptions

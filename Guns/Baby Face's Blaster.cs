@@ -23,9 +23,10 @@ namespace TF2Stuff
     {
         public static void Add()
         {
+            consoleID = MODPREFIX + ":baby_faces_blaster";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Baby Face's Blaster", "babyface");
-            Game.Items.Rename("outdated_gun_mods:baby_face's_blaster", "qad:baby_faces_blaster");
+            Game.Items.Rename("outdated_gun_mods:baby_face's_blaster", consoleID);
             gun.gameObject.AddComponent<BabyFaceBlaster>();
 
             //Gun descriptions
@@ -161,6 +162,7 @@ namespace TF2Stuff
         public float curdamage = 0;
         public float maxdamage = 400;
         public static int ID;
+        public static string consoleID;
         
 
         private class BabyFaceDisplay : CustomAmmoDisplay

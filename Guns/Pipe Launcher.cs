@@ -8,11 +8,13 @@ namespace TF2Stuff
     {
         public static ExplosionData genericSmallExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultSmallExplosionData;
         public static ExplosionData genericLargeExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:pipe_launcher";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Pipe Launcher", "pipe");
-            Game.Items.Rename("outdated_gun_mods:pipe_launcher", "qad:pipe_launcher");
+            Game.Items.Rename("outdated_gun_mods:pipe_launcher", consoleID);
             gun.gameObject.AddComponent<PipeLauncher>();
 
             //Gun descriptions

@@ -16,6 +16,8 @@ namespace TF2Stuff
 {
     public class Dispenser : PlayerItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -43,9 +45,10 @@ namespace TF2Stuff
 
             //Adds the item to the gungeon item list, the ammonomicon, the loot table, etc.
             //Do this after ItemBuilder.AddSpriteToObject!
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
             item.consumable = false;
             item.quality = PickupObject.ItemQuality.B;
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
 
             DispenserObject = SpriteBuilder.SpriteFromResource("TF2Items/Resources/actives/dispenser_001", new GameObject("Spawned_Dispenser"));
@@ -64,7 +67,6 @@ namespace TF2Stuff
             DispenserHealth.IsVulnerable = true;*/
         }
         public static GameObject DispenserObject;
-        public static int ID;
         public override void DoEffect(PlayerController user)
         {
             Instantiate(DispenserObject, LastOwner.transform.position + LastOwner.m_cachedAimDirection.normalized * 20f/16, Quaternion.identity);

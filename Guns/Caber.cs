@@ -19,9 +19,11 @@ namespace TF2Stuff
         public static ExplosionData genericLargeExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:caber";
+
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Ullapool Caber", "caber");
-            Game.Items.Rename("outdated_gun_mods:ullapool_caber", "qad:caber");
+            Game.Items.Rename("outdated_gun_mods:ullapool_caber", consoleID);
             gun.gameObject.AddComponent<Caber>();
             
             //Gun descriptions
@@ -118,6 +120,7 @@ namespace TF2Stuff
             explode.explosionData.damageToPlayer = 0.5f;
         }
         public static int ID;
+        public static string consoleID;
         public override void OnPostFired(PlayerController player, Gun gun)
         {
             // Sound setup

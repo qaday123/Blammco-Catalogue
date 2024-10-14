@@ -18,8 +18,10 @@ namespace TF2Stuff
 {
     public class ShortCircuit : AdvancedGunBehavior
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:short_circuit";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Short Circuit", "circuit");
             Game.Items.Rename("outdated_gun_mods:short_circuit", "qad:short_circuit");

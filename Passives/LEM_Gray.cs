@@ -15,6 +15,8 @@ namespace TF2Stuff
 {
     public class LEM_MkGRAY : PassiveItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -27,8 +29,8 @@ namespace TF2Stuff
             string longDesc = "Powered by what seems to be a mysterious gold-like metal, meant to be attached through the spine, " +
                 "this contraption will imbue more life force into you.\n\nIt's running low on fuel, though, but perhaps it's just " +
                 "enough to last one... more... run...\nInscribed on the side is 'PROPERTY OF GRAY MANN, DO NOT TOUCH OR I WILL KILL YOU.";
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
-
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.B;
         }
@@ -76,7 +78,6 @@ namespace TF2Stuff
             player.OnNewFloorLoaded -= OnNewFloor;
             base.DisableEffect(player);
         }
-        public static int ID;
         public GlobalDungeonData.ValidTilesets oldfloor;
         //public GlobalDungeonData.ValidTilesets currentfloor = GlobalDungeonData.ValidTilesets.CASTLEGEON;
     }

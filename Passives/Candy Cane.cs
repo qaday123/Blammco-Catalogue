@@ -14,6 +14,9 @@ namespace TF2Stuff
 {
     public class Candy_Cane : PassiveItem
     {
+        public static int ID;
+        public static string consoleID;
+
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -26,8 +29,9 @@ namespace TF2Stuff
             string longDesc = "An oversized candy cane with a trigger and chocolate silencer attached to it. It is advertised " +
                 "to bring the wielder great fortune when tending to wounds.\n\nWhen arriving to the hollow, make sure to not lick " +
                 "it. Please don't. Just don't.";
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
 
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.B;
         }
@@ -59,6 +63,5 @@ namespace TF2Stuff
             player.healthHaver.OnHealthChanged -= OnHealthChanged;
             base.DisableEffect(player);
         }
-        public static int ID;
     }
 }

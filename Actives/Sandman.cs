@@ -16,6 +16,8 @@ namespace TF2Stuff
 {
     public class Sandman : PlayerItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -46,9 +48,10 @@ namespace TF2Stuff
             //Adds the item to the gungeon item list, the ammonomicon, the loot table, etc.
             //Do this after ItemBuilder.AddSpriteToObject!
             item.AddPassiveStatModifier(StatModifier.Create(PlayerStats.StatType.Curse, StatModifier.ModifyMethod.ADDITIVE, 1));
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
             item.consumable = false;
             item.quality = PickupObject.ItemQuality.D;
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
 
             ball = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
@@ -87,7 +90,6 @@ namespace TF2Stuff
             
         }
         //private static Projectile ball; // this is causing the registered projectile to not work
-        public static int ID;
         public static Projectile ball;
         public override void DoEffect(PlayerController user)
         {

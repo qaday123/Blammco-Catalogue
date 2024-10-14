@@ -19,8 +19,10 @@ namespace TF2Stuff
 {
     public class Cleaver : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:flying_guillotine";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Flying Guillotine", "cleaver");
             Game.Items.Rename("outdated_gun_mods:flying_guillotine", "qad:flying_guillotine");

@@ -17,11 +17,13 @@ namespace TF2Stuff
 {
     public class Panic_Attack : AdvancedGunBehavior
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:panic_attack";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Panic Attack", "panic_attack");
-            Game.Items.Rename("outdated_gun_mods:panic_attack", "qad:panic_attack");
+            Game.Items.Rename("outdated_gun_mods:panic_attack", consoleID);
             gun.gameObject.AddComponent<Panic_Attack>();
 
             //Gun descriptions

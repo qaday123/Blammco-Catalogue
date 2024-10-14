@@ -14,6 +14,8 @@ namespace TF2Stuff
 {
     public class Powerjack : PassiveItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -40,12 +42,13 @@ namespace TF2Stuff
 
             //Adds the item to the gungeon item list, the ammonomicon, the loot table, etc.
             //Do this after ItemBuilder.AddSpriteToObject!
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
 
             //Adds the actual passive effect to the item
 
 
             //Set the rarity of the item
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.S;
         }
@@ -144,7 +147,6 @@ namespace TF2Stuff
             //Owner.OnNewFloorLoaded -= OnNewFloor;
             base.OnDestroy();
         }
-        public static int ID;
         public float killedenemies;
         public float speedmodconst;
     }

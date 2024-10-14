@@ -16,6 +16,8 @@ namespace TF2Stuff
 {
     public class Bootlegger : PassiveItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -28,7 +30,8 @@ namespace TF2Stuff
             string longDesc = "Makes you hit harder, but shoot less often.\n\nThe pirates that lose a leg are often the scariest " +
                 "ones because they have the most experience and have seen the most things. What's even scarier is seeing a one-legged " +
                 "pirate move around at normal speed.";
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
+            consoleID = MODPREFIX + ":" + item.name.ToID();
 
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RateOfFire, 0.6f, StatModifier.ModifyMethod.MULTIPLICATIVE);
@@ -46,6 +49,5 @@ namespace TF2Stuff
         {
             base.DisableEffect(player);
         }
-        public static int ID;
     }
 }

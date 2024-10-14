@@ -16,11 +16,13 @@ namespace TF2Stuff
 {
     public class Nailgun : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:nailgun";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Nail Gun", "nail");
-            Game.Items.Rename("outdated_gun_mods:nail_gun", "qad:nailgun");
+            Game.Items.Rename("outdated_gun_mods:nail_gun", consoleID);
             gun.gameObject.AddComponent<Nailgun>();
             
             //Gun descriptions

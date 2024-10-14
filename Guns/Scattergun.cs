@@ -14,11 +14,13 @@ namespace TF2Stuff
 {
     public class Scattergun : GunBehaviour
     {
+        public static string consoleID;
         public static void Add()
         {
+            consoleID = $"{MODPREFIX}:scattergun";
             // New gun base
             Gun gun = ETGMod.Databases.Items.NewGun("Scattergun", "scatgun");
-            Game.Items.Rename("outdated_gun_mods:scattergun", "qad:scattergun");
+            Game.Items.Rename("outdated_gun_mods:scattergun", consoleID);
             gun.gameObject.AddComponent<Scattergun>();
             
             //Gun descriptions

@@ -12,17 +12,17 @@ namespace TF2Stuff
         public static void Initialise()
         {
             // same as CustomSynergies.Add()
-            Add("I Love My Balls", new() { "qad:sandman" }, new() { "scattershot", "helix_bullets", "flak_bullets", }); //"nn:splattershot" }); // need to check if mod enabled
-            Add("Home Run All The Time", new() { "qad:sandman" }, new() { "orbital_bullets", "mr_accretion_jr" });
-            Add("The Forbidden Combo", new() { "qad:sandman", "qad:flying_guillotine" });
-            Add("Additional Charging Capabilities", new() { "qad:capper" }, new() { "shock_rounds", "shock_rifle" });
-            Add("Monkey Mode", new() { "qad:baby_faces_blaster", "banana" });
+            Add("I Love My Balls", new() { Sandman.consoleID }, new() { "scattershot", "helix_bullets", "flak_bullets", }); //"nn:splattershot" }); // need to check if mod enabled
+            Add("Home Run All The Time", new() { Sandman.consoleID }, new() { "orbital_bullets", "mr_accretion_jr" });
+            Add("The Forbidden Combo", new() { Sandman.consoleID, Cleaver.consoleID });
+            Add("Additional Charging Capabilities", new() { CAPPER.consoleID }, new() { "shock_rounds", "shock_rifle" });
+            Add("Monkey Mode", new() { BabyFaceBlaster.consoleID, "banana" });
 
 
-            AddSynergyForm(26, Nailgun.ID, new() { "nail_gun" }, new() { "qad:recon_pouch" }, "What Could Have Been", isSelectable: false);
+            AddSynergyForm(26, Nailgun.ID, new() { "nail_gun" }, new() { Recon_Pouch.consoleID }, "What Could Have Been", isSelectable: false);
 
-            AddDualWield(ForceANature.ID, "qad:force_a_nature", SodaPopper.ID, "qad:soda_popper", "Double-Barrelled Twins");
-            AddDualWield(CAPPER.ID, "qad:capper", 57, "alien_sidearm", "Sidearms Of The Future");
+            AddDualWield(ForceANature.ID, ForceANature.consoleID, SodaPopper.ID, SodaPopper.consoleID, "Double-Barrelled Twins");
+            AddDualWield(CAPPER.ID, CAPPER.consoleID, 57, "alien_sidearm", "Sidearms Of The Future");
         }
         public static void AddSynergyForm(int baseGun, int newGun, List<string> mandatoryConsoleIDs, List<string> optionalConsoleIDs, string synergy, bool isSelectable)
         {

@@ -12,6 +12,8 @@ namespace TF2Stuff
 {
     public class Jarate : SpawnObjectPlayerItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -46,7 +48,7 @@ namespace TF2Stuff
 
             //Adds the item to the gungeon item list, the ammonomicon, the loot table, etc.
             //Do this after ItemBuilder.AddSpriteToObject!
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
 
             item.consumable = false;
             item.objectToSpawn = Jarate.BuildPrefab();
@@ -59,10 +61,9 @@ namespace TF2Stuff
             item.AudioEvent = null;
             item.IsKageBunshinItem = false;
             item.quality = PickupObject.ItemQuality.D;
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
-        }
-        public static int ID;        
-
+        }     
         public static GameObject BuildPrefab()
         {
             GameObject gameObject = SpriteBuilder.SpriteFromResource("TF2Items/Resources/ThrowableActives/jarate_spin_001.png", new GameObject("Lvl2Molotov"));

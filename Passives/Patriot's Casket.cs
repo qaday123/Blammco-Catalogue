@@ -11,6 +11,8 @@ namespace TF2Stuff
 {
     public class Patriots_Casket : PassiveItem
     {
+        public static int ID;
+        public static string consoleID;
         public static void Register()
         {
             string itemName = "Patriot's Casket";
@@ -34,9 +36,10 @@ namespace TF2Stuff
                 "but ultimately was deemed too crazy to be accepted, so his companions say. Still, he jumps into battle bravely and swiftly, " +
                 "getting the jump on many enemies who don't expect his unconventional tactics.";
 
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
 
             //Rarity of the item
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             item.quality = PickupObject.ItemQuality.SPECIAL;
             ID = item.PickupObjectId;
         }
@@ -164,7 +167,6 @@ namespace TF2Stuff
             player.stats.RecalculateStats(player, true, false);
             return base.Drop(player);
         }
-        public static int ID;
         public int[] american_ids = new int[]
         {
             25, // M1

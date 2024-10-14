@@ -9,6 +9,8 @@ namespace TF2Stuff
 {
     public class Equalizer : PassiveItem
     {
+        public static int ID;
+        public static string consoleID;
         //Call this method from the Start() method of your ETGModule extension
         public static void Register()
         {
@@ -36,12 +38,13 @@ namespace TF2Stuff
 
             //Adds the item to the gungeon item list, the ammonomicon, the loot table, etc.
             //Do this after ItemBuilder.AddSpriteToObject!
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "qad");
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, MODPREFIX);
 
             //Adds the actual passive effect to the item
 
 
             //Set the rarity of the item
+            consoleID = MODPREFIX + ":" + item.name.ToID();
             ID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.A;
         }
@@ -143,7 +146,6 @@ namespace TF2Stuff
 
         public override void Pickup(PlayerController player)
         {
-            ETGModConsole.Log("OnPickup triggered");
             base.Pickup(player);
             ChangeStats();
             player.healthHaver.OnHealthChanged += OnHealthChanged;
@@ -151,7 +153,6 @@ namespace TF2Stuff
 
         public override DebrisObject Drop(PlayerController player)
         {
-            ETGModConsole.Log("OnDrop triggered");
             ChangeStats();
             player.healthHaver.OnHealthChanged -= OnHealthChanged;
             return base.Drop(player);
@@ -174,6 +175,5 @@ namespace TF2Stuff
         public float reloadspeedmod = 0.75f; // except for reload speed
         public float reloadspeedconst = 0.5f;
         private float armor;
-        public static int ID;
     }
 }

@@ -22,8 +22,10 @@ namespace TF2Stuff
         public static void Add()
         {
             // New gun base
+            consoleID = MODPREFIX + ":air_strike";
+
             Gun gun = ETGMod.Databases.Items.NewGun("The Air Strike", "airstrike");
-            Game.Items.Rename("outdated_gun_mods:the_air_strike", "qad:air_strike");
+            Game.Items.Rename("outdated_gun_mods:the_air_strike", consoleID);
             gun.gameObject.AddComponent<Airstrike>();
             
             //Gun descriptions
@@ -133,6 +135,7 @@ namespace TF2Stuff
             ID = gun.PickupObjectId;
         }
         public static int ID;
+        public static string consoleID;
         public bool boostedFirerate = false;
         float time_boosted = 0f;
         float BoostTimePerBulletInClip = 0.5f;
