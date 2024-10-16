@@ -115,7 +115,7 @@ namespace TF2Stuff
 
         #endregion
         #region Guns
-        public static void SetGunCooldownBar(this GameUIAmmoController uic, float fillPercentage, bool flipToLeftSide) => uic.SetGunCooldownBar(fillPercentage, flipToLeftSide, new(255, 255, 255, 255));
+        public static void SetGunCooldownBar(this GameUIAmmoController uic, float fillPercentage, bool flipToLeftSide) => uic.SetGunCooldownBar(fillPercentage, flipToLeftSide, Color.white);
         public static void SetGunCooldownBar(this GameUIAmmoController uic, float fillPercentage, bool flipToLeftSide, Color32 fillColour)
         {
             if (flipToLeftSide)
@@ -123,7 +123,7 @@ namespace TF2Stuff
             else
                 uic.SetGunCooldownBar(fillPercentage);
         }
-        public static void SetGunCooldownBar(this GameUIAmmoController uic, float fillPercentage) => uic.SetGunCooldownBar(fillPercentage, Vector3.zero, new(123f, 3f, 0), dfSpriteFlip.None, new(255, 255, 255, 255));
+        public static void SetGunCooldownBar(this GameUIAmmoController uic, float fillPercentage) => uic.SetGunCooldownBar(fillPercentage, Vector3.zero, new(123f, 3f, 0), dfSpriteFlip.None, Color.white);
         public static void SetGunCooldownBar(this GameUIAmmoController uic, float fillPercentage, Vector3 ForegroundOffset, Vector3 FillOffset, dfSpriteFlip ForegroundSpriteFlip, Color32 fillColour)
         {
             uic.GunCooldownForegroundSprite.RelativePosition = uic.GunBoxSprite.RelativePosition + ForegroundOffset; // + babyface.offset1;

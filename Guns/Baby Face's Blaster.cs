@@ -33,7 +33,7 @@ namespace TF2Stuff
             //Gun descriptions
             gun.SetShortDescription("BAM! YOU'RE DEAD PAL!");
             gun.SetLongDescription("Hitting an enemy grants you a speed boost (Visible on the side). This speed boost is carried across guns but is fully lost when you " +
-                "take damage, and slightly lost when dodgerolling in combat.\n\nThis gun makes its wielder more and more overconfident with every hit, " +
+                "take damage, and slightly lost when dodge rolling in combat.\n\nThis gun makes its wielder more and more overconfident with every hit, " +
                 "making them think they don't need a dodge roll to dodge things, hence, why all is lost when they're proved wrong.");
 
             // Sprite setup
@@ -81,7 +81,7 @@ namespace TF2Stuff
             gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
             gun.Volley.DecreaseFinalSpeedPercentMin = -25f;
             gun.Volley.IncreaseFinalSpeedPercentMax = 30f;
-            gun.barrelOffset.transform.localPosition += new Vector3(8f / 16f, 10f / 16f);
+            gun.barrelOffset.transform.localPosition = new Vector3(24f / 16f, 8f/ 16f);
             SoundManager.AddCustomSwitchData("WPN_Guns", "qad_babyface", "Play_WPN_Gun_Shot_01", "babyface_shoot");
             SoundManager.AddCustomSwitchData("WPN_Guns", "qad_babyface", "Play_WPN_Gun_Reload_01", "scatter_gun_reload");
             gun.gunSwitchGroup = "qad_babyface";
@@ -92,13 +92,13 @@ namespace TF2Stuff
             gun.shellsToLaunchOnReload = 0;
             gun.doesScreenShake = true;
             gun.gunScreenShake = new ScreenShakeSettings(0.6f, 10f, 0.1f, 0.02f);
-
+            gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(51) as Gun).muzzleFlashEffects;
             gun.gameObject.AddComponent<BabyFaceDisplay>();
-            Texture2D spriteTex = ResourceExtractor.GetTextureFromResource("TF2Items/Resources/UI/ui_boost_down_arrow.png");
-            GameUIRoot.Instance.ConversationBar.portraitSprite.Atlas.AddNewItemToAtlas(spriteTex, "ui_down_arrow");
+            ToolsCharApi.AddUISprite("TF2Items/Resources/UI/ui_boost_down_arrow.png", "ui_down_arrow");
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
+
         }
         //if (GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON)
         public override void PostProcessProjectile(Projectile projectile)
@@ -200,7 +200,7 @@ namespace TF2Stuff
                 uic.GunCooldownFillSprite.FillAmount = babyface.curdamage / babyface.maxdamage;*/
 
                 uic.SetGunCooldownBar(babyface.curdamage / babyface.maxdamage, flipToLeftSide: true);//, cooldown_foreground_offset, cooldown_fill_offset, dfSpriteFlip.FlipHorizontal | dfSpriteFlip.FlipVertical);
-                uic.GunAmmoCountLabel.Text = $"[color #ff8811] Boost [sprite \"ui_down_arrow\"] [/color]{this._owner.VanillaAmmoDisplay()}";
+                uic.GunAmmoCountLabel.Text = $"[color #ff8811] Boost[sprite \"ui_down_arrow\"] [/color]{this._owner.VanillaAmmoDisplay()}";
                 //ResetDisplay(uic);
                 return true;
             }
