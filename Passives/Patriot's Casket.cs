@@ -158,14 +158,17 @@ namespace TF2Stuff
             OnGunChanged(player.CurrentGun, player.CurrentGun, false);
         }
 
-        public override DebrisObject Drop(PlayerController player)
+        public override void DisableEffect(PlayerController player)
         {
-            RocketJumpDoer jump = player.gameObject.GetOrAddComponent<RocketJumpDoer>();
-            player.GunChanged -= this.OnGunChanged;
-            player.healthHaver.OnDamaged -= PlayerTookDamage;
-            jump.OnRocketJump -= OnRocketJump;
-            player.stats.RecalculateStats(player, true, false);
-            return base.Drop(player);
+            if (player)
+            {
+                RocketJumpDoer jump = player.gameObject.GetOrAddComponent<RocketJumpDoer>();
+                player.GunChanged -= this.OnGunChanged;
+                player.healthHaver.OnDamaged -= PlayerTookDamage;
+                jump.OnRocketJump -= OnRocketJump;
+                player.stats.RecalculateStats(player, true, false);
+            }
+            base.DisableEffect(player);
         }
         public int[] american_ids = new int[]
         {

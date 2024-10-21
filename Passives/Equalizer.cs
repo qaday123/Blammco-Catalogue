@@ -150,18 +150,14 @@ namespace TF2Stuff
             ChangeStats();
             player.healthHaver.OnHealthChanged += OnHealthChanged;
         }
-
-        public override DebrisObject Drop(PlayerController player)
+        public override void DisableEffect(PlayerController player)
         {
-            ChangeStats();
-            player.healthHaver.OnHealthChanged -= OnHealthChanged;
-            return base.Drop(player);
-        }
-        public override void OnDestroy()
-        {
-            ChangeStats();
-            Owner.healthHaver.OnHealthChanged -= OnHealthChanged;
-            base.OnDestroy();
+            if (Owner)
+            {
+                ChangeStats();
+                Owner.healthHaver.OnHealthChanged -= OnHealthChanged;
+            }
+            base.DisableEffect(player);
         }
         // max for multiplicative stats is 1 + variable
         public float speedmod = 0.4f;

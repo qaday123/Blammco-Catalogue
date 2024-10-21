@@ -132,20 +132,14 @@ namespace TF2Stuff
             //player.OnNewFloorLoaded += OnNewFloor;
             CalculateConst(player);
         }
-
-        public override DebrisObject Drop(PlayerController player)
+        public override void DisableEffect(PlayerController player)
         {
-            ChangeStats();
-            player.OnAnyEnemyReceivedDamage -= OnEnemyDamaged;
-            //player.OnNewFloorLoaded -= OnNewFloor;
-            return base.Drop(player);
-        }
-        public override void OnDestroy()
-        {
-            ChangeStats();
-            Owner.OnAnyEnemyReceivedDamage -= OnEnemyDamaged;
-            //Owner.OnNewFloorLoaded -= OnNewFloor;
-            base.OnDestroy();
+            if (Owner)
+            {
+                ChangeStats();
+                player.OnAnyEnemyReceivedDamage -= OnEnemyDamaged;
+            }
+            base.DisableEffect(player);
         }
         public float killedenemies;
         public float speedmodconst;
