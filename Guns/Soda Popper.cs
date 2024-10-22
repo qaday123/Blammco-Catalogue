@@ -155,6 +155,7 @@ namespace TF2Stuff
             Shader old = gun.sprite.renderer.material.shader;
             EnableDisableEffect(true);
             Gun currentGun = gun;
+            Gun dualWieldGun = null;
             while (_hype > 0 && (PlayerOwner.IsInCombat || _hype == MAX_HYPE))
             {
                 if (PlayerOwner.IsInCombat)
@@ -164,12 +165,24 @@ namespace TF2Stuff
                 {
                     EnableDisableVFX(false, currentGun);
                     EnableDisableVFX(true, PlayerOwner.CurrentGun);
+
                     currentGun = PlayerOwner.CurrentGun;
+                }
+                if (PlayerOwner.inventory.DualWielding)
+                {
+                    EnableDisableVFX(true, PlayerOwner.CurrentSecondaryGun);
+                    dualWieldGun = PlayerOwner.CurrentSecondaryGun;
+                }
+                else if (!PlayerOwner.inventory.DualWielding && dualWieldGun != null)
+                {
+                    EnableDisableVFX(false, dualWieldGun);
+                    dualWieldGun = null;
                 }
                 yield return null;
             }
             EnableDisableEffect(false);
             EnableDisableVFX(false, currentGun);
+            if (dualWieldGun) EnableDisableVFX(false, dualWieldGun);
             if (_hype < 0) _hype = 0;
             gun.sprite.renderer.material.shader = old;
            
