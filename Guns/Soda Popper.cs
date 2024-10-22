@@ -189,6 +189,7 @@ namespace TF2Stuff
             yield break;
         }
         public void ChangeJumps(ref int jumps) => jumps += 7;
+        public void CanAttack(ref bool canAttack) => canAttack |= effectActive;
         public void EnableDisableEffect(bool enable)
         {
             EnableDisableVFX(enable, gun);
@@ -196,6 +197,7 @@ namespace TF2Stuff
             {
                 PlayerOwner.OnPreDodgeRoll += OnDodgeRoll;
                 PlayerOwner.TF2PlayerExtension().ModifyMaxRollDepth += ChangeJumps;
+                PlayerOwner.TF2PlayerExtension().ModifyCanAttack += CanAttack;
                 PlayerOwner.ownerlessStatModifiers.AddRange(statModifiers);
                 PlayerOwner.stats.RecalculateStats(PlayerOwner);
                 AkSoundEngine.PostEvent("Play_whip_power_up", gameObject);
@@ -205,6 +207,7 @@ namespace TF2Stuff
             {
                 PlayerOwner.OnPreDodgeRoll -= OnDodgeRoll;
                 PlayerOwner.TF2PlayerExtension().ModifyMaxRollDepth -= ChangeJumps;
+                PlayerOwner.TF2PlayerExtension().ModifyCanAttack -= CanAttack;
                 foreach (StatModifier modifier in statModifiers) 
                     PlayerOwner.ownerlessStatModifiers.Remove(modifier);
                 PlayerOwner.stats.RecalculateStats(PlayerOwner);
@@ -287,6 +290,15 @@ namespace TF2Stuff
                     cursor.Emit(OpCodes.Call, typeof(DodgeRollDepthPatch).GetMethod(
                       nameof(DodgeRollDepthPatch.ModifyDepthValue), BindingFlags.Static | BindingFlags.Public)); // mmm
                 }
+            }
+        }
+        [HarmonyPatch(typeof(PlayerController), nameof(PlayerController.m_CanAttack), MethodType.Getter)]
+        private static class PlayerCanAttackPatch
+        {
+            [HarmonyPostfix]
+            static void ModifyResult(PlayerController __instance, ref bool __result)
+            {
+                __instance.TF2PlayerExtension().ModifyCanAttack?.Invoke(ref __result);
             }
         }
     }
