@@ -77,7 +77,7 @@ namespace TF2Stuff
             gun.Volley.DecreaseFinalSpeedPercentMin = -30f;
             gun.barrelOffset.transform.localPosition += new Vector3(4f/16f, 6f/16f, 0);
             gun.carryPixelOffset = new IntVector2(4, 1);
-            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
+            gun.gunSwitchGroup = "qad_doublebarrel"; //(PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
             gun.shellCasing = (PickupObjectDatabase.GetById(202) as Gun).shellCasing;
             gun.shellsToLaunchOnFire = 0;
             gun.shellsToLaunchOnReload = 2;
@@ -88,39 +88,37 @@ namespace TF2Stuff
             ID = gun.PickupObjectId;
         }
         public static int ID;
-
-        public override void OnPostFired(PlayerController player, Gun gun)
-        {
-            // Sound setup
-            gun.PreventNormalFireAudio = true;
-            AkSoundEngine.PostEvent("Play_scatter_gun_double_shoot", gameObject);
-        }
-        private bool HasReloaded;
+        SodaPopper dualWield;
         public override void Update()
         {
-            if (gun.CurrentOwner)
+            if (gun && PlayerOwner)
             {
-
-                if (!gun.PreventNormalFireAudio)
+                if (PlayerOwner.PlayerHasActiveSynergy("Double-Barrelled Twins") && PlayerOwner.CurrentSecondaryGun)
                 {
-                    this.gun.PreventNormalFireAudio = true;
+                    if (PlayerOwner.CurrentGun == gun)
+                    {
+                        if (dualWield == null)
+                            dualWield = PlayerOwner.CurrentSecondaryGun.GetComponent<SodaPopper>();
+                        PlayerOwner.inventory.SwapDualGuns();
+                    }
                 }
-                if (!gun.IsReloading && !HasReloaded)
+                else if (!PlayerOwner.PlayerHasActiveSynergy("Double-Barrelled Twins") && dualWield != null)
                 {
-                    this.HasReloaded = true;
+                    dualWield = null;
                 }
             }
+            base.Update();
         }
-
-        public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
+        public override void PostProcessProjectile(Projectile projectile)
         {
-            if (gun.IsReloading && this.HasReloaded)
+            projectile.OnHitEnemy += OnHitEnemy;
+            base.PostProcessProjectile(projectile);
+        }
+        public void OnHitEnemy(Projectile proj, SpeculativeRigidbody enemy, bool fatal)
+        {
+            if (PlayerOwner.PlayerHasActiveSynergy("Double-Barrelled Twins") && dualWield != null)
             {
-                HasReloaded = false;
-                AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-                base.OnReloadPressed(player, gun, bSOMETHING);
-                AkSoundEngine.PostEvent("Play_scatter_gun_double_tube_close", base.gameObject);
-                //gun.SpawnShellCasingAtPosition(new Vector3(0f, 0f, 0f));
+                dualWield.AddHype(proj.baseData.damage);
             }
         }
     }

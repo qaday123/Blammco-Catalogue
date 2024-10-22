@@ -3,6 +3,11 @@ using MonoMod;
 using UnityEngine;
 using Alexandria.ItemAPI;
 using BepInEx;
+using System.Runtime.CompilerServices;
+using HutongGames.PlayMaker.Actions;
+using MonoMod.Cil;
+using System.Reflection;
+using Mono.Cecil.Cil;
 
 
 /* NOTES:
@@ -13,6 +18,7 @@ namespace TF2Stuff
     public class SodaPopper : GunBehaviour
     {
         public static string consoleID;
+        public static int ID;
         public static void Add()
         {
             consoleID = $"{MODPREFIX}:soda_popper";
@@ -23,10 +29,11 @@ namespace TF2Stuff
             gun.gameObject.AddComponent<SodaPopper>();
             
             //Gun descriptions
-            gun.SetShortDescription("Hype Hype Hype");
-            gun.SetLongDescription("Like the Force-A-Nature's less arrogant, more competent sibling.\n\n" +
-                "More consistent, less shove-y and reloads faster. It also stores some mysterious energy that can get " +
-                "released once reloading at full... (heads up: this doesn't work yet, so don't try it)\n\nI'm not even winded!");
+            gun.SetShortDescription("I'm Not Even Winded!");
+            gun.SetLongDescription("Builds hype by dealing damage. Hype is activated when reloading on a full clip, allowing you to dodge roll midair up to 7 times. " +
+                "Hype can be activated at any charge level while in combat, or only while full out of combat. Hype does not drain out of combat. " +
+                "\n\nIt's Like the Force-A-Nature's less arrogant, more competent sibling. More consistent, less shove-y and reloads faster." +
+                "\n\nI wonder if there's still liquid from the can taped to the grip...");
             
             // Sprite setup
             gun.SetupSprite(null, "sodapop_idle_001", 8);
@@ -57,7 +64,7 @@ namespace TF2Stuff
                 projectileModule.angleVariance = 15f;
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(projectileModule.projectiles[0]);
                 projectileModule.projectiles[0] = projectile;
-                projectile.baseData.damage = 5.5f;
+                projectile.baseData.damage = 5f;
                 projectile.baseData.speed = 26f;
                 projectile.baseData.range = 9f;
                 projectile.baseData.force = 4f;
@@ -75,69 +82,199 @@ namespace TF2Stuff
             gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
             gun.Volley.IncreaseFinalSpeedPercentMax = 30f;
             gun.Volley.DecreaseFinalSpeedPercentMin = -30f;
-            gun.barrelOffset.transform.localPosition += new Vector3(5f/16f, 5f/16f, 0);
-            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
+            gun.barrelOffset.transform.localPosition = new Vector3(22f/16f, 6f/16f, 0);
+            gun.gunSwitchGroup = "qad_doublebarrel"; //(PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
+            SoundManager.AddCustomSwitchData("WPN_Guns", gun.gunSwitchGroup, "Play_WPN_Gun_Shot_01", "Play_scatter_gun_double_shoot");
+            SoundManager.AddCustomSwitchData("WPN_Guns", gun.gunSwitchGroup, "Play_WPN_Gun_Reload_01", "Play_scatter_gun_double_tube_close");
             gun.carryPixelOffset += new IntVector2(4,1);
             gun.shellCasing = (PickupObjectDatabase.GetById(202) as Gun).shellCasing;
             gun.shellsToLaunchOnFire = 0;
             gun.shellsToLaunchOnReload = 2;
             gun.reloadShellLaunchFrame = 3;
             gun.gunScreenShake = new(0.4f, 14f, 0.09f, 0.009f);
+            gun.gameObject.AddComponent<SodaPopperDisplay>();
+            gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(1) as Gun).muzzleFlashEffects;
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             ID = gun.PickupObjectId;
         }
-        public static int ID;
-        public float _hype = 0;
-        public const float MAX_HYPE = 350; 
-        public override void OnPostFired(PlayerController player, Gun gun)
+        public float _hype = MAX_HYPE / 2;
+        public const float MAX_HYPE = 100;
+        public float rateOfDecay = 15f;
+        public bool effectActive = false;
+        public float hypeGainMult = 1f;
+
+        List<StatModifier> statModifiers = new()
         {
-            // Sound setup
-            gun.PreventNormalFireAudio = true;
-            //currentcharge = gun.RemainingActiveCooldownAmount;
-            //gun.ClearCooldowns();
-            AkSoundEngine.PostEvent("Play_scatter_gun_double_shoot", gameObject);
-            //gun.RemainingActiveCooldownAmount = currentcharge;
+            StatType.DodgeRollDamage.NewMult(3f),
+        };
+        public override void OnReloadPressed(PlayerController player, Gun gun, bool manual)
+        {
+            base.OnReloadPressed(player, gun, manual);
+            if (!gun.IsReloading && !effectActive && ((PlayerOwner.IsInCombat && _hype != 0) || (_hype == MAX_HYPE)))
+            {
+                PlayerOwner.StartCoroutine(DoHypeEffect());
+            }
         }
-        private bool HasReloaded;
+        public override void PostProcessProjectile(Projectile projectile)
+        {
+            projectile.OnHitEnemy += OnEnemyHit;
+            base.PostProcessProjectile(projectile);
+        }
         public override void Update()
         {
-            if (gun.CurrentOwner)
+            if (gun && PlayerOwner)
             {
-
-                if (!gun.PreventNormalFireAudio)
+                if (PlayerOwner.PlayerHasActiveSynergy("Kinetic Energy") && !effectActive)
                 {
-                    this.gun.PreventNormalFireAudio = true;
+                    AddHype(PlayerOwner.Velocity.magnitude * BraveTime.DeltaTime);
                 }
-                if (!gun.IsReloading && !HasReloaded)
+            }
+            base.Update();
+        }
+        public void OnEnemyHit(Projectile projectile, SpeculativeRigidbody enemy, bool fatal) => AddHype(projectile.baseData.damage);
+        public void AddHype(float amount)
+        {
+            if (_hype < MAX_HYPE)
+            {
+                _hype += amount * hypeGainMult;
+                if (_hype >= MAX_HYPE && !effectActive)
                 {
-                    this.HasReloaded = true;
+                    AkSoundEngine.PostEvent("recharged", base.gameObject);
+                    _hype = MAX_HYPE;
                 }
             }
         }
-
-        public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
+        public void OnDodgeRoll(PlayerController player)
         {
-            if (gun.IsReloading && this.HasReloaded)
+            if (PlayerOwner.IsDodgeRolling)
+                AkSoundEngine.PostEvent("triple_jump", gameObject);
+        }
+        public IEnumerator DoHypeEffect()
+        {
+            Shader old = gun.sprite.renderer.material.shader;
+            EnableDisableEffect(true);
+            Gun currentGun = gun;
+            while (_hype > 0 && (PlayerOwner.IsInCombat || _hype == MAX_HYPE))
             {
-                HasReloaded = false;
-                AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-                base.OnReloadPressed(player, gun, bSOMETHING);
-                AkSoundEngine.PostEvent("Play_scatter_gun_double_tube_close", base.gameObject);
-                //gun.SpawnShellCasingAtPosition(new Vector3(0f, 0f, 0f));
+                if (PlayerOwner.IsInCombat)
+                    _hype -= BraveTime.DeltaTime * rateOfDecay;
+
+                if (PlayerOwner.CurrentGun != currentGun)
+                {
+                    EnableDisableVFX(false, currentGun);
+                    EnableDisableVFX(true, PlayerOwner.CurrentGun);
+                    currentGun = PlayerOwner.CurrentGun;
+                }
+                yield return null;
+            }
+            EnableDisableEffect(false);
+            EnableDisableVFX(false, currentGun);
+            if (_hype < 0) _hype = 0;
+            gun.sprite.renderer.material.shader = old;
+           
+            yield break;
+        }
+        public void ChangeJumps(ref int jumps) => jumps += 7;
+        public void EnableDisableEffect(bool enable)
+        {
+            EnableDisableVFX(enable, gun);
+            if (enable)
+            {
+                PlayerOwner.OnPreDodgeRoll += OnDodgeRoll;
+                PlayerOwner.TF2PlayerExtension().ModifyMaxRollDepth += ChangeJumps;
+                PlayerOwner.ownerlessStatModifiers.AddRange(statModifiers);
+                PlayerOwner.stats.RecalculateStats(PlayerOwner);
+                AkSoundEngine.PostEvent("Play_whip_power_up", gameObject);
+                hypeGainMult /= 2f;
+            }
+            else
+            {
+                PlayerOwner.OnPreDodgeRoll -= OnDodgeRoll;
+                PlayerOwner.TF2PlayerExtension().ModifyMaxRollDepth -= ChangeJumps;
+                foreach (StatModifier modifier in statModifiers) 
+                    PlayerOwner.ownerlessStatModifiers.Remove(modifier);
+                PlayerOwner.stats.RecalculateStats(PlayerOwner);
+                if (effectActive) AkSoundEngine.PostEvent("Play_whip_power_down", gameObject);
+                hypeGainMult *= 2f;
+            }
+            effectActive = enable;
+        }
+        public void EnableDisableVFX(bool enable, Gun gunForVFX)
+        {
+            float[] glowPower = { 0, 75 };
+            Color[] glowColours = { Color.clear, Color.magenta };
+            float[] emissiveColorPowers = { 0, 1.55f };
+            int Index = Convert.ToInt32(enable);
+
+            gunForVFX.sprite.usesOverrideMaterial = enable;
+            gunForVFX.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+            gunForVFX.sprite.renderer.material.SetColor("_OverrideColor", glowColours[Index]);//new Color32(255, 25, 232, 255));
+            gunForVFX.sprite.renderer.material.SetFloat("_EmissivePower", glowPower[Index]);
+            gunForVFX.sprite.renderer.material.SetFloat("_EmissiveColorPower", emissiveColorPowers[Index]);//new Color(255, 25, 232));//255 / 256f, 25 / 256f, 232 / 256f));
+
+        }
+        public override void DisableEffectPlayer(PlayerController player)
+        {
+            EnableDisableEffect(false);
+            base.DisableEffectPlayer(player);
+        }
+        private class SodaPopperDisplay : CustomAmmoDisplay
+        {
+            Gun _gun;
+            SodaPopper _soda;
+            PlayerController _owner;
+            float half_cycle = 1.2f;
+            float _cyclePos = 0f;
+            public void Start()
+            {
+                _gun = base.GetComponent<Gun>();
+                _soda = _gun.GetComponent<SodaPopper>();
+                _owner = _gun.GunPlayerOwner();
+            }
+            public override bool DoCustomAmmoDisplay(GameUIAmmoController uic)
+            {
+                if (!_owner || !_soda || !_gun) return false;
+
+                Color32 FillColour = Color.white;
+                float fillPercent = _soda._hype / SodaPopper.MAX_HYPE;
+                if (fillPercent == 1)
+                {
+                    if (_cyclePos < half_cycle) _cyclePos += BraveTime.DeltaTime;
+                    if (_cyclePos >= half_cycle) _cyclePos -= 2 * half_cycle; // make it negative so its magnitude decreases :)
+                    
+                    FillColour = Color32.Lerp(Color.red, new Color32(160, 0, 0, 255), Mathf.Abs(_cyclePos) / half_cycle);
+                }
+                uic.SetGunCooldownBar(fillPercent, true, FillColour);
+                uic.GunAmmoCountLabel.Text = $"[color #ff19e8] Hype[sprite \"ui_down_arrow\"] [/color]{this._owner.VanillaAmmoDisplay()}";
+                return true;
             }
         }
-        public override void OnPlayerPickup(PlayerController playerOwner)
+        [HarmonyPatch(typeof(PlayerController), nameof(PlayerController.CheckDodgeRollDepth))]
+        private static class DodgeRollDepthPatch
         {
-            base.OnPlayerPickup(playerOwner);
-        }
-        public override void OnDropped()
-        {
-            base.OnDropped();
-        }
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
+            public static void ModifyDepthValue(ref int current, PlayerController player)
+            {
+                //if (PassiveItem.IsFlagSetForCharacter(player, typeof(YourItemFlag)))
+                //    current++;
+                //ETGModConsole.Log("Before: " + current);
+                player.TF2PlayerExtension().ModifyMaxRollDepth?.Invoke(ref current);
+                //ETGModConsole.Log($"After: {current}");
+            }
+            [HarmonyILManipulator]
+            private static void DodgeRollDepthIL(ILContext IL)
+            {
+                var cursor = new ILCursor(IL);
+
+                if (cursor.TryGotoNext(MoveType.After,
+                      instr => instr.MatchStloc(1)))
+                {
+                    cursor.Emit(OpCodes.Ldloca_S, (byte)1);
+                    cursor.Emit(OpCodes.Ldarg_0); // 1st parameter is player
+                    cursor.Emit(OpCodes.Call, typeof(DodgeRollDepthPatch).GetMethod(
+                      nameof(DodgeRollDepthPatch.ModifyDepthValue), BindingFlags.Static | BindingFlags.Public)); // mmm
+                }
+            }
         }
     }
 }

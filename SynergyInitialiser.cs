@@ -12,11 +12,14 @@ namespace TF2Stuff
         public static void Initialise()
         {
             // same as CustomSynergies.Add()
+            Add("Monkey Mode", new() { BabyFaceBlaster.consoleID, "banana" });
+            Add("Additional Charging Capabilities", new() { CAPPER.consoleID }, new() { "shock_rounds", "shock_rifle" });
             Add("I Love My Balls", new() { Sandman.consoleID }, new() { "scattershot", "helix_bullets", "flak_bullets", }); //"nn:splattershot" }); // need to check if mod enabled
             Add("Home Run All The Time", new() { Sandman.consoleID }, new() { "orbital_bullets", "mr_accretion_jr" });
             Add("The Forbidden Combo", new() { Sandman.consoleID, Cleaver.consoleID });
-            Add("Additional Charging Capabilities", new() { CAPPER.consoleID }, new() { "shock_rounds", "shock_rifle" });
-            Add("Monkey Mode", new() { BabyFaceBlaster.consoleID, "banana" });
+            Add("Kinetic Energy", new() { SodaPopper.consoleID }, new() { "shotga_cola" });
+
+
 
 
             AddSynergyForm(26, Nailgun.ID, new() { "nail_gun" }, new() { Recon_Pouch.consoleID }, "What Could Have Been", isSelectable: false);

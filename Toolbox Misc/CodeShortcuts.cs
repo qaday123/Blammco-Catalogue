@@ -5,6 +5,7 @@ using System.Media;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using TF2Items;
 using static StatModifier;
 
 namespace TF2Stuff
@@ -136,7 +137,16 @@ namespace TF2Stuff
             uic.GunCooldownForegroundSprite.IsVisible = true;
             uic.GunCooldownFillSprite.FillAmount = fillPercentage;
         }
+        public static ExplosionData genericSmallExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultSmallExplosionData;
+        public static ExplosionData genericLargeExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
+        #endregion
+        #region PlayerExtensions
+        public static TF2PlayerExtension TF2PlayerExtension(this PlayerController player)
+        {
+            if (player == null) return null;
 
+            return player.gameObject.GetOrAddComponent<TF2PlayerExtension>();
+        }
         #endregion
     }
 }
