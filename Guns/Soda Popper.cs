@@ -30,7 +30,7 @@ namespace TF2Stuff
             
             //Gun descriptions
             gun.SetShortDescription("I'm Not Even Winded!");
-            gun.SetLongDescription("Builds hype by dealing damage. Hype is activated when reloading on a full clip, allowing you to dodge roll midair up to 7 times. " +
+            gun.SetLongDescription("Builds hype by dealing damage. Hype is activated when reloading on a full clip, allowing you to dodge roll midair up to 7 times and attack while dodge rolling. " +
                 "Hype can be activated at any charge level while in combat, or only while full out of combat. Hype does not drain out of combat. " +
                 "\n\nIt's Like the Force-A-Nature's less arrogant, more competent sibling. More consistent, less shove-y and reloads faster." +
                 "\n\nI wonder if there's still liquid from the can taped to the grip...");

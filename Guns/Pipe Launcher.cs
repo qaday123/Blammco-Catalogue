@@ -1,13 +1,12 @@
 ﻿using Gungeon;
 using Alexandria.ItemAPI;
 using UnityEngine;
+using TF2Items;
 
 namespace TF2Stuff
 {
     public class PipeLauncher : GunBehaviour
     {
-        public static ExplosionData genericSmallExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultSmallExplosionData;
-        public static ExplosionData genericLargeExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
         public static string consoleID;
         public static void Add()
         {
@@ -38,13 +37,15 @@ namespace TF2Stuff
             gun.DefaultModule.numberOfShotsInClip = 4;
             gun.DefaultModule.angleVariance = 4f;
             gun.barrelOffset.transform.localPosition += new Vector3(0, -0.125f, 0);
+            gun.gunSwitchGroup = "qad_pipelauncher";
+            SoundManager.AddCustomSwitchData("WPN_Guns", gun.gunSwitchGroup, "Play_WPN_Gun_Shot_01", "Play_Grenade_launcher_shoot");
+            SoundManager.AddCustomSwitchData("WPN_Guns", gun.gunSwitchGroup, "Play_WPN_Gun_Reload_01", "Play_Grenade_launcher_drum_close");
             gun.gunClass = GunClass.EXPLOSIVE;
-            gun.SetBaseMaxAmmo(40);
+            gun.SetBaseMaxAmmo(60);
             gun.AddToSubShop(ItemBuilder.ShopType.Trorc);
 
             // Gun tuning
             gun.quality = PickupObject.ItemQuality.B;
-            gun.encounterTrackable.EncounterGuid = "pipelauncher";
 
             //Cloning
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
@@ -57,10 +58,10 @@ namespace TF2Stuff
             projectile.baseData.damage = 15f;
             projectile.baseData.speed = 20f;
             projectile.baseData.force = 5f;
-            projectile.baseData.range = 12f;
+            projectile.baseData.range = 24f; //1112f;
             projectile.transform.parent = gun.barrelOffset;
             gun.barrelOffset.transform.localPosition += new Vector3(0.5f, 0, 0);
-            projectile.SetProjectileSpriteRight("pipeprojectile", 14, 8, false, tk2dBaseSprite.Anchor.MiddleCenter);
+            projectile.SetProjectileSpriteRight("pipeprojectile", 8, 4, false, tk2dBaseSprite.Anchor.MiddleCenter);
             ETGMod.Databases.Items.Add(gun, false, "ANY");
 
             // Projectile Modifiers
@@ -70,49 +71,19 @@ namespace TF2Stuff
                 "TF2Items/Resources/CustomGunAmmoTypes/pipelauncher/pipelauncher_clipfull", 
                 "TF2Items/Resources/CustomGunAmmoTypes/pipelauncher/pipelauncher_clipempty");
             BounceProjModifier bounce = projectile.gameObject.GetOrAddComponent<BounceProjModifier>();
-            bounce.enabled = true;
-            bounce.ExplodeOnEnemyBounce = true;
-            bounce.numberOfBounces += 1;
+            bounce.numberOfBounces = 1;
             ID = gun.PickupObjectId;
-            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(541) as Gun).gunSwitchGroup; // GET RID OF THAT CURSED DEFAULT RELOAD
+
+            ProjectileSpin spin = projectile.gameObject.GetOrAddComponent<ProjectileSpin>();
+            spin.directionOfSpinDependsOnVelocity = true;
+            spin.degreesPerSecond = 1080;
+
+            /*TF2GrenadeProjectile pipe = projectile.gameObject.GetOrAddComponent<TF2GrenadeProjectile>();
+            pipe.expsionData = pipeexplosion;*/ // TO FINISH
 
             // IT WORKS :DDDDDDDDDDDDDDDDDDDDDDDDDDD
             ExplosiveModifier explode = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
             explode.explosionData = pipeexplosion;
-        }
-
-        public override void OnPostFired(PlayerController player, Gun gun)
-        {
-            // Sound setup
-            gun.PreventNormalFireAudio = true;
-            AkSoundEngine.PostEvent("Play_Grenade_launcher_shoot", gameObject);
-        }
-        private bool HasReloaded;
-        public override void Update()
-        {
-            if (gun.CurrentOwner)
-            {
-
-                if (!gun.PreventNormalFireAudio)
-                {
-                    this.gun.PreventNormalFireAudio = true;
-                }
-                if (!gun.IsReloading && !HasReloaded)
-                {
-                    this.HasReloaded = true;
-                }
-            }
-        }
-
-        public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
-        {
-            if (gun.IsReloading && this.HasReloaded)
-            {
-                HasReloaded = false;
-                AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-                base.OnReloadPressed(player, gun, bSOMETHING);
-                AkSoundEngine.PostEvent("Play_Grenade_launcher_drum_close", base.gameObject);
-            }
         }
 
         public static ExplosionData pipeexplosion = new ExplosionData

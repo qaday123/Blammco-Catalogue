@@ -16,8 +16,6 @@ namespace TF2Stuff
 {
     public class StockRocket : AdvancedGunBehavior
     {
-        public static ExplosionData genericSmallExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultSmallExplosionData;
-        public static ExplosionData genericLargeExplosion = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
         public static string consoleID;
         public static void Add()
         {

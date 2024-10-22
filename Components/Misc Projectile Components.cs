@@ -35,7 +35,7 @@ namespace TF2Stuff
         }
         public void Update()
         {
-            if (proj != null)
+            if (proj != null && enabled)
             {
                 float z = base.transform.rotation.eulerAngles.z;
                 int spinDirection = 1;
