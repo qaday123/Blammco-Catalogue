@@ -1,4 +1,5 @@
 ﻿using Alexandria.CharacterAPI;
+using Alexandria.cAPI;
 
 /* GENERAL NOTES:
  * Sprites are not good, don't remake them now (except shortstop and forcanature those look horrific), but keep in mind for future
@@ -17,7 +18,7 @@ namespace TF2Stuff
     public class Module : BaseUnityPlugin
     {
         public const string NAME = "BlammCo Catalogue";
-        public const string VERSION = "2.1.0";
+        public const string VERSION = "2.2.1";
         public const string GUID = "qaday.etg.blammcocatalogue";
         public static readonly string TEXT_COLOR = "#FFFF10";
 
@@ -112,7 +113,7 @@ namespace TF2Stuff
 
             // UNFINISHED - COMMENT OUT NEXT UPDATE
             //Airstrike.Add();
-            Dispenser.Register();
+            //Dispenser.Register();
             
 
             // ----- GOOPS ----- thanks nn 
@@ -145,7 +146,8 @@ namespace TF2Stuff
                      0, //Hegemony Cost
                      false, //HasPast
                      ""); //Past ID String*/
-
+            HatUtility.SetupHatOffsets(TF2Characters.scoutObjectName, 1, -5, 1, -11);
+            HatUtility.SetupFlippedHatOffsets(TF2Characters.scoutObjectName, -1, -5, -1, -11);
             var doer = scout.idleDoer;
             doer.phases = new CharacterSelectIdlePhase[]
             {
@@ -168,12 +170,17 @@ namespace TF2Stuff
                      0, //Hegemony Cost
                      false, //HasPast
                      ""); //Past ID String
+            HatUtility.SetupHatOffsets(TF2Characters.soldierObjectName, 0, -9, 0, -14);
+            HatUtility.SetupFlippedHatOffsets(TF2Characters.soldierObjectName, 0, -9, 0, -14);
+
+            CharacterHatOffsets.AddAllHatOffsets();
 
             // SYNERGY SETUP
             SynergyInitialiser.Initialise();
 
             ETGMod.StartGlobalCoroutine(this.DelayedStartHandler());
-            
+
+            //Log(scout.sprite.spriteAnimator.library.name);
             Log($"{NAME} v{VERSION} supplies have dropped!", TEXT_COLOR);
         }
         public static void Log(string text, string color="#FFFFFF")

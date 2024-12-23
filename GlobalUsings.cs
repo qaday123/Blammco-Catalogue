@@ -17,3 +17,4 @@ global using Random = UnityEngine.Random;
 global using static PlayerStats;
 global using static TF2Stuff.Module;
 global using static TF2Stuff.CodeShortcuts;
+global using Console = ETGModConsole;

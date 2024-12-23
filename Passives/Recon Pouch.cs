@@ -47,7 +47,7 @@ namespace TF2Stuff
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);
-            
+
         }
 
         public override void DisableEffect(PlayerController player)
