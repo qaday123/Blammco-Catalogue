@@ -61,7 +61,7 @@ namespace TF2Stuff
             projectile.baseData.range = 24f; //1112f;
             projectile.transform.parent = gun.barrelOffset;
             gun.barrelOffset.transform.localPosition += new Vector3(0.5f, 0, 0);
-            projectile.SetProjectileSpriteRight("pipeprojectile", 8, 4, false, tk2dBaseSprite.Anchor.MiddleCenter);
+            projectile.SetProjectileSpriteRight("pipeprojectile", 8, 4, false, tk2dBaseSprite.Anchor.MiddleCenter, 6, 2);
             ETGMod.Databases.Items.Add(gun, false, "ANY");
 
             // Projectile Modifiers
@@ -70,20 +70,20 @@ namespace TF2Stuff
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Pipe Launcher", 
                 "TF2Items/Resources/CustomGunAmmoTypes/pipelauncher/pipelauncher_clipfull", 
                 "TF2Items/Resources/CustomGunAmmoTypes/pipelauncher/pipelauncher_clipempty");
-            BounceProjModifier bounce = projectile.gameObject.GetOrAddComponent<BounceProjModifier>();
-            bounce.numberOfBounces = 1;
+            //BounceProjModifier bounce = projectile.gameObject.GetOrAddComponent<BounceProjModifier>();
+            //bounce.numberOfBounces = 9999;
             ID = gun.PickupObjectId;
 
             ProjectileSpin spin = projectile.gameObject.GetOrAddComponent<ProjectileSpin>();
             spin.directionOfSpinDependsOnVelocity = true;
             spin.degreesPerSecond = 1080;
 
-            /*TF2GrenadeProjectile pipe = projectile.gameObject.GetOrAddComponent<TF2GrenadeProjectile>();
-            pipe.expsionData = pipeexplosion;*/ // TO FINISH
+            TF2GrenadeProjectile pipe = projectile.gameObject.GetOrAddComponent<TF2GrenadeProjectile>();
+            pipe.expsionData = pipeexplosion; // TO FINISH
 
             // IT WORKS :DDDDDDDDDDDDDDDDDDDDDDDDDDD
-            ExplosiveModifier explode = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
-            explode.explosionData = pipeexplosion;
+            //ExplosiveModifier explode = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
+            //explode.explosionData = pipeexplosion;
         }
 
         public static ExplosionData pipeexplosion = new ExplosionData
